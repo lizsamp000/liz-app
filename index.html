@@ -146,8 +146,8 @@ const RB=[
   {id:1,cat:'café da manhã',n:'tapioca com frango desfiado e requeijão',req:['tapioca','frango desfiado','requeijão']},
   {id:3,cat:'café da manhã',n:'cuscuz com leite de coco e ovo',req:['cuscuz','ovo','leite de coco']},
   // almoço/jantar — preparo
-  {id:11,cat:'almoço/jantar',n:'frango desfiado + purê de mandioquinha + salada',req:['frango desfiado','mandioquinha','alface','tomate cereja']},
-  {id:10,cat:'almoço/jantar',n:'carne moída + purê de abóbora + salada',req:['carne moída','abóbora','alface','tomate cereja']},
+  {id:11,cat:'almoço/jantar',n:'frango desfiado + purê de mandioquinha + salada',req:['frango desfiado','purê de mandioquinha','alface','tomate cereja']},
+  {id:10,cat:'almoço/jantar',n:'carne moída + purê de abóbora + salada',req:['carne moída','purê de abóbora','alface','tomate cereja']},
   {id:61,cat:'almoço/jantar',n:'crepe de frango desfiado + salada',req:['ovo','tapioca','frango desfiado','requeijão','tomate cereja','muçarela','alface']},
   {id:13,cat:'almoço/jantar',n:'batata assada recheada com carne moída e requeijão + salada',req:['batata','carne moída','requeijão','alface','tomate cereja']},
   {id:48,cat:'almoço/jantar',n:'salada com batata frita e carne moída',req:['batata','carne moída','alface','tomate cereja']},
@@ -228,9 +228,9 @@ const HABITS=['meditar','ler','alongar','escrever','treinar','separar roupa'];
 const WATER_GOAL=4;
 const WATER_ML=750;
 const PREP_ITEMS=['frango desfiado','carne moída cozida','purê de mandioquinha','purê de abóbora','alface lavada','tomate cereja lavado','cuscuz hidratado','hambúrgueres no freezer','torta de frango comprada','sunomono marinado','frutas cortadas','batatas assadas','crepe de frango pronto','crepe de atum pronto'];
-const PREP_LINK={'frango desfiado':'frango desfiado','carne moída':'carne moída cozida','mandioquinha':'purê de mandioquinha','abóbora':'purê de abóbora','alface':'alface lavada','tomate cereja':'tomate cereja lavado','cuscuz':'cuscuz hidratado','batata':'batatas assadas'};
+const PREP_LINK={'frango desfiado':'frango desfiado','carne moída':'carne moída cozida','alface':'alface lavada','tomate cereja':'tomate cereja lavado','cuscuz':'cuscuz hidratado','batata':'batatas assadas'};
 st.prepItems=ld('liz_prepitems',null)||PREP_ITEMS.slice();
-st.prepLink=ld('liz_preplink',null)||JSON.parse(JSON.stringify(PREP_LINK));
+st.prepLink=JSON.parse(JSON.stringify(PREP_LINK));try{localStorage.removeItem('liz_preplink');}catch(e){}
 st.editPrep=false;
 function today(){return new Date().toDateString();}
 function getWkStart(){const d=new Date(),s=new Date(d);s.setDate(d.getDate()-d.getDay()+1);return s.toDateString();}
@@ -647,7 +647,7 @@ function togglePrep(item){const ws=getWkStart();if(!st.prep[ws])st.prep[ws]={};s
 function clearPrep(){const ws=getWkStart();st.prep[ws]={};sv('liz_prep',st.prep);render();}
 function addPrepItem(){const el=document.getElementById('prep-new');const val=el?el.value.trim().toLowerCase():'';if(!val)return;if(!st.prepItems.includes(val)){st.prepItems.push(val);sv('liz_prepitems',st.prepItems);}render();}
 function removePrepItem(item){st.prepItems=st.prepItems.filter(p=>p!==item);sv('liz_prepitems',st.prepItems);render();}
-function flushState(){sv('liz_ci',st.ci);sv('liz_pl',st.places);sv('liz_cp',st.customPlaces);sv('liz_fr',st.fridge);sv('liz_pn',st.plan);sv('liz_cat',st.catOrder);sv('liz_ro',st.recOrd);sv('liz_ov',st.ov);sv('liz_fi',st.fi);sv('liz_nt',st.notes);sv('liz_acts',st.acts);sv('liz_locais',st.locais);sv('liz_bairros',st.bairros);sv('liz_mods',st.mods);sv('liz_sc',st.sc);sv('liz_se',st.se);sv('liz_hb',st.hb);sv('liz_wt',st.wt);sv('liz_prep',st.prep);sv('liz_prepitems',st.prepItems);sv('liz_preplink',st.prepLink);}
+function flushState(){sv('liz_ci',st.ci);sv('liz_pl',st.places);sv('liz_cp',st.customPlaces);sv('liz_fr',st.fridge);sv('liz_pn',st.plan);sv('liz_cat',st.catOrder);sv('liz_ro',st.recOrd);sv('liz_ov',st.ov);sv('liz_fi',st.fi);sv('liz_nt',st.notes);sv('liz_acts',st.acts);sv('liz_locais',st.locais);sv('liz_bairros',st.bairros);sv('liz_mods',st.mods);sv('liz_sc',st.sc);sv('liz_se',st.se);sv('liz_hb',st.hb);sv('liz_wt',st.wt);sv('liz_prep',st.prep);sv('liz_prepitems',st.prepItems);}
 function exportData(){flushState();const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf('liz_')===0)o[k]=localStorage.getItem(k);}return JSON.stringify(o);}
 function genBackup(){const t=exportData();const el=document.getElementById('backup-out');if(el)el.value=t;try{if(navigator.clipboard)navigator.clipboard.writeText(t);}catch(e){}}
 function restoreBackup(){const el=document.getElementById('backup-in');if(!el||!el.value.trim())return;let o;try{o=JSON.parse(el.value);}catch(e){alert('backup inválido — confira o texto colado');return;}if(!confirm('isso vai substituir os dados atuais do app por esse backup. continuar?'))return;Object.keys(o).forEach(k=>{if(k.indexOf('liz_')===0)localStorage.setItem(k,o[k]);});location.reload();}
