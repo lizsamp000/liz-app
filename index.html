@@ -229,6 +229,9 @@ const WATER_GOAL=4;
 const WATER_ML=750;
 const PREP_ITEMS=['frango desfiado','carne moída cozida','purê de mandioquinha','purê de abóbora','alface lavada','tomate cereja lavado','cuscuz hidratado','hambúrgueres no freezer','torta de frango comprada','sunomono marinado','frutas cortadas','batatas assadas','crepe de frango pronto','crepe de atum pronto'];
 const PREP_LINK={'frango desfiado':'frango desfiado','carne moída':'carne moída cozida','mandioquinha':'purê de mandioquinha','abóbora':'purê de abóbora','alface':'alface lavada','tomate cereja':'tomate cereja lavado','cuscuz':'cuscuz hidratado','batata':'batatas assadas'};
+st.prepItems=ld('liz_prepitems',null)||PREP_ITEMS.slice();
+st.prepLink=ld('liz_preplink',null)||JSON.parse(JSON.stringify(PREP_LINK));
+st.editPrep=false;
 function today(){return new Date().toDateString();}
 function getWkStart(){const d=new Date(),s=new Date(d);s.setDate(d.getDate()-d.getDay()+1);return s.toDateString();}
 
@@ -245,22 +248,22 @@ function fridgeHas(i){return!!st.fridge[i];}
 function recAvail(r){
   const pd=st.prep[getWkStart()]||{};
   return r.req.every(i=>{
-    if(PREP_ITEMS.includes(i))return!!pd[i];
+    if(st.prepItems.includes(i))return!!pd[i];
     if(!fridgeHas(i))return false;
-    if(PREP_LINK[i])return!!pd[PREP_LINK[i]];
+    if(st.prepLink[i]&&st.prepItems.includes(st.prepLink[i]))return!!pd[st.prepLink[i]];
     return true;
   });
 }
 function missing(r){
   const pd=st.prep[getWkStart()]||{};
   return r.req.filter(i=>{
-    if(PREP_ITEMS.includes(i))return!pd[i];
+    if(st.prepItems.includes(i))return!pd[i];
     if(!fridgeHas(i))return true;
-    if(PREP_LINK[i])return!pd[PREP_LINK[i]];
+    if(st.prepLink[i]&&st.prepItems.includes(st.prepLink[i]))return!pd[st.prepLink[i]];
     return false;
   });
 }
-function missingType(i){return(PREP_ITEMS.includes(i)||PREP_LINK[i])?'prep':'comprar';}
+function missingType(i){return(st.prepItems.includes(i)||(st.prepLink[i]&&st.prepItems.includes(st.prepLink[i])))?'prep':'comprar';}
 function allFI(){return Object.values(st.fi).flat();}
 function getPK(d,m){return`${wk()}_${d}_${m}`;}
 function computeShoppingList(){
@@ -323,7 +326,7 @@ function render(){
 
   // ── ALIMENTAÇÃO ──
   if(st.tab==='alim'){
-    h+=`<div class="stabs">`;['geladeira','receitas','semana','compras','prep'].forEach(t=>{h+=`<span class="${st.sub===t?'a':''}" onclick="setSub('${t}')">${t}</span>`;});h+=`</div>`;
+    h+=`<div class="stabs">`;['geladeira','receitas','prep'].forEach(t=>{h+=`<span class="${st.sub===t?'a':''}" onclick="setSub('${t}')">${t}</span>`;});h+=`</div>`;
 
     if(st.sub==='geladeira'){
       const tot=allFI().length,have=allFI().filter(i=>fridgeHas(i)).length;
@@ -343,6 +346,7 @@ function render(){
         h+=`</div>`;
       });
       if(st.editFr){h+=`<div class="sec"><div class="slbl">nova categoria</div><div class="arow"><input id="fi-newcat" class="inp" style="flex:1;font-size:12px" placeholder="nome da categoria"><button class="abtn" onclick="addFICat()">+</button></div></div>`;}
+      h+=`<div class="sec"><div class="slbl">backup dos dados</div><div style="font-size:11px;color:var(--mu);text-transform:none;line-height:1.5;margin-bottom:8px">salva TUDO do app (geladeira, receitas, prep, treino, hábitos, água) num texto. toque em gerar pra copiar e guardar, ou cole um backup pra restaurar / passar pra outro aparelho.</div><button style="width:100%;background:var(--wl);color:var(--w);border:1.5px solid var(--w);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer" onclick="genBackup()">gerar backup (copia automático)</button><textarea id="backup-out" class="nta" readonly placeholder="o backup vai aparecer aqui" style="text-transform:none;min-height:54px"></textarea><textarea id="backup-in" class="nta" placeholder="cole um backup aqui pra restaurar" style="text-transform:none;min-height:54px"></textarea><button style="width:100%;background:var(--wh);color:var(--w);border:1.5px solid var(--bd);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer" onclick="restoreBackup()">restaurar backup</button></div>`;
       h+=`<div class="spacer"></div>`;
     }
 
@@ -378,80 +382,26 @@ function render(){
       h+=`</div><div class="spacer"></div>`;
     }
 
-    if(st.sub==='semana'){
-      h+=`<div class="sec"><div class="slbl">plano da semana <button class="eb ${st.editSem?'on':''}" onclick="st.editSem=!st.editSem;render()">${st.editSem?'pronto':'reordenar'}</button></div>`;
-      WEEK.forEach(di=>{
-        h+=`<div class="dpc"><div class="dph">${DF[di]}</div><div class="ms">`;
-        MEALS.forEach((meal,mi)=>{
-          const recId=st.plan[getPK(di,mi)],rec=recId?getRecipe(recId):null;
-          const kc=getPK(di,mi),kp=getPK(di,mi-1),kn=getPK(di,mi+1);
-          h+=`<div onclick="${!st.editSem?`openModal(${di},${mi})`:''}" style="cursor:${st.editSem?'default':'pointer'}"><span class="msl">${meal}</span>${rec?`<span class="msv">${rec.n}</span>`:`<span class="mse">— toque pra escolher</span>`}`;
-          if(st.editSem){h+=`<div style="display:flex;gap:3px"><button style="width:24px;height:24px;border-radius:6px;border:1px solid var(--bd);background:var(--wh);font-size:12px;cursor:pointer;color:var(--w)" ${mi===0?'disabled':''} onclick="event.stopPropagation();swapMeal('${kc}','${kp}')">↑</button><button style="width:24px;height:24px;border-radius:6px;border:1px solid var(--bd);background:var(--wh);font-size:12px;cursor:pointer;color:var(--w)" ${mi===MEALS.length-1?'disabled':''} onclick="event.stopPropagation();swapMeal('${kc}','${kn}')">↓</button></div>`;}
-          else{h+=`<span class="msed">${rec?'trocar':'+'}</span>`;}
-          h+=`</div>`;
-        });
-        h+=`</div></div>`;
-      });
-      h+=`</div><div class="spacer"></div>`;
-    }
-
-    if(st.sub==='compras'){
-      const {grouped,needed}=computeShoppingList();
-      const totalNeeded=[...needed].length;
-      const missing2=[...needed].filter(i=>!fridgeHas(i)&&!st.sc[i]);
-      const alreadyHave=[...needed].filter(i=>fridgeHas(i));
-      const ticked=[...needed].filter(i=>!fridgeHas(i)&&st.sc[i]);
-      const extraMissing=st.se.filter(i=>!st.sc['extra_'+i]);
-      const allDone=missing2.length===0&&extraMissing.length===0;
-      h+=`<div class="sec"><div class="slbl">lista de compras`;
-      if(totalNeeded===0){h+=`</div><div class="empty" style="margin-top:0">planeja a semana primeiro para gerar a lista automaticamente</div>`;}
-      else{
-        const toBuy=missing2.length+extraMissing.length;
-        h+=` <span>${toBuy} pra comprar · ${alreadyHave.length+ticked.length} ok</span>`;
-        if(ticked.length||toBuy===0)h+=`<span style="font-weight:400;color:#c0392b;cursor:pointer;letter-spacing:0" onclick="clearShopChecked()">limpar</span>`;
-        h+=`</div>`;
-        // grouped missing items
-        let hasItems=false;
-        st.catOrder.forEach(cat=>{
-          const items=grouped[cat];if(!items||!items.length)return;
-          const catMissing=items.filter(i=>!fridgeHas(i));
-          const catHave=items.filter(i=>fridgeHas(i));
-          if(!catMissing.length&&!catHave.length)return;
-          hasItems=true;
-          h+=`<div style="margin-bottom:1rem"><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--mu);padding:0 1.25rem;margin-bottom:6px">${cat}</div>`;
-          catMissing.forEach(item=>{const done=!!st.sc[item];h+=`<div style="display:flex;align-items:center;padding:10px 1.25rem;background:var(--wh);border-bottom:1px solid var(--br);cursor:pointer;gap:12px" onclick="toggleShopItem('${item.replace(/'/g,"\\'")}')"><div style="width:18px;height:18px;border-radius:5px;border:1.5px solid ${done?'var(--w)':'var(--bd)'};flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:${done?'var(--w)':'transparent'};color:${done?'#fff':'transparent'}">${done?'✓':''}</div><span style="font-size:13px;font-weight:500;flex:1;color:${done?'var(--mu)':'var(--tx)'};text-decoration:${done?'line-through':'none'}">${item}</span></div>`;});
-          catHave.forEach(item=>{h+=`<div style="display:flex;align-items:center;padding:10px 1.25rem;background:var(--wh);border-bottom:1px solid var(--br);gap:12px"><div style="width:18px;height:18px;border-radius:5px;border:1.5px solid var(--gn);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--gn);color:#fff">✓</div><span style="font-size:13px;color:var(--mu);flex:1;text-decoration:line-through">${item}</span><span style="font-size:10px;color:var(--gn);font-weight:600">já tem</span></div>`;});
-          h+=`</div>`;
-        });
-        if('outros' in grouped){
-          const items=grouped['outros'];
-          h+=`<div style="margin-bottom:1rem"><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--mu);padding:0 1.25rem;margin-bottom:6px">outros</div>`;
-          items.filter(i=>!fridgeHas(i)).forEach(item=>{const done=!!st.sc[item];h+=`<div style="display:flex;align-items:center;padding:10px 1.25rem;background:var(--wh);border-bottom:1px solid var(--br);cursor:pointer;gap:12px" onclick="toggleShopItem('${item.replace(/'/g,"\\'")}')"><div style="width:18px;height:18px;border-radius:5px;border:1.5px solid ${done?'var(--w)':'var(--bd)'};flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:${done?'var(--w)':'transparent'};color:${done?'#fff':'transparent'}">${done?'✓':''}</div><span style="font-size:13px;font-weight:500;flex:1;color:${done?'var(--mu)':'var(--tx)'};text-decoration:${done?'line-through':'none'}">${item}</span></div>`;});
-          h+=`</div>`;
-        }
-        // extras
-        h+=`<div class="sec"><div class="slbl">extras</div>`;
-        st.se.forEach((item,i)=>{const done=!!st.sc['extra_'+item];h+=`<div style="display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--br);cursor:pointer;gap:12px" onclick="toggleShopItem('extra_${item.replace(/'/g,"\\'")}')"><div style="width:18px;height:18px;border-radius:5px;border:1.5px solid ${done?'var(--w)':'var(--bd)'};flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:${done?'var(--w)':'transparent'};color:${done?'#fff':'transparent'}">${done?'✓':''}</div><span style="font-size:13px;flex:1;color:${done?'var(--mu)':'var(--tx)'};text-decoration:${done?'line-through':'none'}">${item}</span><span style="font-size:11px;color:var(--mu);cursor:pointer" onclick="event.stopPropagation();removeShopExtra(${i})">✕</span></div>`;});
-        h+=`<div class="arow" style="margin-top:10px"><input id="se-new" class="inp" style="flex:1;font-size:12px" placeholder="adicionar item extra"><button class="abtn" onclick="addShopExtra()">+</button></div></div>`;
-      }
-      h+=`</div><div class="spacer"></div>`;
-    }
-
     if(st.sub==='prep'){
       const wkStart=getWkStart();
-      const prepDone=PREP_ITEMS.filter(i=>(st.prep[wkStart]||{})[i]).length;
+      const prepDone=st.prepItems.filter(i=>(st.prep[wkStart]||{})[i]).length;
       h+=`<div class="sec">`;
-      h+=`<div class="slbl">prep do domingo <span>${prepDone}/${PREP_ITEMS.length}</span> <span style="font-weight:400;color:#c0392b;cursor:pointer;letter-spacing:0" onclick="clearPrep()">limpar</span></div>`;
+      h+=`<div class="slbl">prep do domingo <span>${prepDone}/${st.prepItems.length}</span> <button class="eb ${st.editPrep?'on':''}" onclick="st.editPrep=!st.editPrep;render()">${st.editPrep?'pronto':'editar'}</button>${!st.editPrep?` <span style="font-weight:400;color:#c0392b;cursor:pointer;letter-spacing:0" onclick="clearPrep()">limpar</span>`:''}</div>`;
       h+=`<div style="display:flex;flex-direction:column;gap:1px;background:var(--br);border-radius:14px;overflow:hidden;border:1px solid var(--br)">`;
-      PREP_ITEMS.forEach(item=>{
+      st.prepItems.forEach(item=>{
         const done=!!((st.prep[wkStart]||{})[item]);
-        h+=`<div style="background:${done?'var(--wl)':'var(--wh)'};display:flex;align-items:center;padding:14px 16px;gap:14px;cursor:pointer" onclick="togglePrep('${item.replace(/'/g,"\\'")}')">
+        if(st.editPrep){
+          h+=`<div style="background:var(--wh);display:flex;align-items:center;padding:14px 16px;gap:14px"><span style="font-size:14px;font-weight:500;flex:1">${item}</span><button class="del-act" onclick="removePrepItem('${item.replace(/'/g,"\\'")}')">✕</button></div>`;
+        }else{
+          h+=`<div style="background:${done?'var(--wl)':'var(--wh)'};display:flex;align-items:center;padding:14px 16px;gap:14px;cursor:pointer" onclick="togglePrep('${item.replace(/'/g,"\\'")}')">
           <div style="width:22px;height:22px;border-radius:6px;border:1.5px solid ${done?'var(--w)':'var(--bd)'};flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:${done?'var(--w)':'transparent'};color:${done?'#fff':'transparent'}">${done?'✓':''}</div>
           <span style="font-size:14px;font-weight:500;flex:1;color:${done?'var(--w)':'var(--tx)'}">${item}</span>
         </div>`;
+        }
       });
       h+=`</div>`;
-      if(prepDone===PREP_ITEMS.length)h+=`<div style="text-align:center;padding:1rem;font-size:13px;color:var(--gn);font-weight:500">geladeira pronta pra semana</div>`;
+      if(st.editPrep){h+=`<div class="arow" style="margin-top:8px"><input id="prep-new" class="inp" style="flex:1;font-size:12px" placeholder="novo item de prep"><button class="abtn" onclick="addPrepItem()">+</button></div>`;}
+      if(!st.editPrep&&st.prepItems.length&&prepDone===st.prepItems.length)h+=`<div style="text-align:center;padding:1rem;font-size:13px;color:var(--gn);font-weight:500">geladeira pronta pra semana</div>`;
       h+=`</div><div class="spacer"></div>`;
     }
   }
@@ -475,10 +425,12 @@ function render(){
     const isNew=!RB.find(r=>r.id===st.editModal)&&!st.ov[st.editModal];
     let picker='';
     st.catOrder.forEach(cat=>{const items=st.fi[cat];if(!items||!items.length)return;picker+=`<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin-bottom:5px">${cat}</div><div style="display:flex;flex-wrap:wrap;gap:5px">`;items.forEach(item=>{picker+=`<div class="fchip ${reqSet.has(item)?'on':''}" style="font-size:11px;padding:4px 10px" onclick="toggleEI('${item.replace(/'/g,"\\'")}')"> ${item}</div>`;});picker+=`</div></div>`;});
+    let prepPicker='';st.prepItems.forEach(item=>{prepPicker+=`<div class="fchip ${reqSet.has(item)?'on':''}" style="font-size:11px;padding:4px 10px" onclick="toggleEI('${item.replace(/'/g,"\\'")}')"> ${item}</div>`;});
     h+=`<div class="ov" onclick="st.editModal=null;render()"><div class="mo" onclick="event.stopPropagation()"><div class="mot">${isNew?'nova receita':'editar receita'}</div>`;
     h+=`<div class="fi2"><label class="fl">nome</label><input id="re-n" class="inp" value="${(st.em.n||'').replace(/"/g,'&quot;')}" placeholder="nome da receita"></div>`;
     h+=`<div class="fi2"><label class="fl">categoria</label><select id="re-c" class="inp">${CATS.map(c=>`<option value="${c}" ${st.em.cat===c?'selected':''}>${c}</option>`).join('')}</select></div>`;
     h+=`<div class="fi2"><label class="fl">ingredientes ${st.em.req.length?`<span style="font-weight:400;color:var(--w)">${st.em.req.join(', ')}</span>`:''}</label>${picker}<div class="arow"><input id="re-ni" class="inp" style="flex:1" placeholder="outro ingrediente"><button class="abtn" onclick="addEI()">+</button></div></div>`;
+    h+=`<div class="fi2"><label class="fl">dá pra deixar pronto <span style="font-weight:400;color:var(--mu)">(prep)</span></label><div style="display:flex;flex-wrap:wrap;gap:5px">${prepPicker}</div></div>`;
     h+=`<button style="width:100%;background:var(--w);color:#fff;font-size:15px;font-weight:600;border:none;border-radius:14px;padding:16px;cursor:pointer;margin-top:1rem" onclick="saveEdit()">salvar</button>`;
     if(!isNew)h+=`<div class="del" onclick="deleteRec(${st.editModal})">excluir receita</div>`;
     h+=`<button class="moc" onclick="st.editModal=null;render()">cancelar</button></div></div>`;
@@ -693,6 +645,12 @@ function saveAct(){
 function toggleHabit(hab,ds){const k=ds||today();if(!st.hb[k])st.hb[k]={};st.hb[k][hab]=!st.hb[k][hab];sv('liz_hb',st.hb);render();}
 function togglePrep(item){const ws=getWkStart();if(!st.prep[ws])st.prep[ws]={};st.prep[ws][item]=!st.prep[ws][item];sv('liz_prep',st.prep);render();}
 function clearPrep(){const ws=getWkStart();st.prep[ws]={};sv('liz_prep',st.prep);render();}
+function addPrepItem(){const el=document.getElementById('prep-new');const val=el?el.value.trim().toLowerCase():'';if(!val)return;if(!st.prepItems.includes(val)){st.prepItems.push(val);sv('liz_prepitems',st.prepItems);}render();}
+function removePrepItem(item){st.prepItems=st.prepItems.filter(p=>p!==item);sv('liz_prepitems',st.prepItems);render();}
+function flushState(){sv('liz_ci',st.ci);sv('liz_pl',st.places);sv('liz_cp',st.customPlaces);sv('liz_fr',st.fridge);sv('liz_pn',st.plan);sv('liz_cat',st.catOrder);sv('liz_ro',st.recOrd);sv('liz_ov',st.ov);sv('liz_fi',st.fi);sv('liz_nt',st.notes);sv('liz_acts',st.acts);sv('liz_locais',st.locais);sv('liz_bairros',st.bairros);sv('liz_mods',st.mods);sv('liz_sc',st.sc);sv('liz_se',st.se);sv('liz_hb',st.hb);sv('liz_wt',st.wt);sv('liz_prep',st.prep);sv('liz_prepitems',st.prepItems);sv('liz_preplink',st.prepLink);}
+function exportData(){flushState();const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf('liz_')===0)o[k]=localStorage.getItem(k);}return JSON.stringify(o);}
+function genBackup(){const t=exportData();const el=document.getElementById('backup-out');if(el)el.value=t;try{if(navigator.clipboard)navigator.clipboard.writeText(t);}catch(e){}}
+function restoreBackup(){const el=document.getElementById('backup-in');if(!el||!el.value.trim())return;let o;try{o=JSON.parse(el.value);}catch(e){alert('backup inválido — confira o texto colado');return;}if(!confirm('isso vai substituir os dados atuais do app por esse backup. continuar?'))return;Object.keys(o).forEach(k=>{if(k.indexOf('liz_')===0)localStorage.setItem(k,o[k]);});location.reload();}
 function addWater(){const td=today();st.wt[td]=(st.wt[td]||0)+1;sv('liz_wt',st.wt);render();}
 function removeWater(){const td=today();if((st.wt[td]||0)>0)st.wt[td]--;sv('liz_wt',st.wt);render();}
 function deleteAct(id){st.acts=st.acts.filter(a=>a.id!==id);sv('liz_acts',st.acts);if(st.actEditId===id)closeActModal();else render();}
