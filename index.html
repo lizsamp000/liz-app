@@ -136,41 +136,101 @@ const DS=['dom','seg','ter','qua','qui','sex','sáb'];
 const DF=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
 const WEEK=[1,2,3,4,5,6,0];
 const MEALS=['café','almoço','lanche','jantar'];
+const MEAL_TIME={'café da manhã':'06:30','almoço':'12:30','lanche':'16:00','jantar':'21:30'};
 const PLACES_DEFAULT=['calçadão spark','espaço ágata','casa de pedra','posto 11 butantã','posto 11 villalobos','riplay jardins','sivananda yoga','bodytech eldorado','renata samora','gracie school pinheiros','bego spa','casa transcende','action 360'];
-const FRIDGE_DEF={'proteína':['ovo','frango desfiado','peito de frango','carne moída','atum','peixe','salmão','camarão'],'carbo':['pão','macaxeira','batata','batata doce','tapioca','cuscuz','macarrão','risoni','arroz','wrap','gyoza','aveia','oats','bagel','nachos'],'fruta':['banana','manga','mamão','uva','abacate'],'laticínio':['requeijão','parmesão','queijo','muçarela','iogurte','cream cheese','ricota'],'vegetal':['alface','legumes','tomate cereja','abóbora','mandioquinha','edamame','pepino','cenoura baby'],'outros':['mel','doce de leite','chia','granola','castanha','molho de tomate','azeite','vinagre de arroz','gergelim','manjericão','alga nori','caldo de galinha','maionese','mostarda','leite de coco','homus','pimenta do reino','tomilho','alecrim']};
+const FRIDGE_DEF={
+  'proteína':['ovo','clara de ovo','peito de frango','patinho moído','patinho em iscas','filé mignon','atum sólido em óleo','atum ralado','tilápia','salmão','camarão','carpaccio de carne'],
+  'carbo':['pão francês','pão de forma integral','pão de hambúrguer','rap10','goma de tapioca','flocão de milho','macarrão','risoni','arroz','batata inglesa','batata doce','abóbora cabotiá','mandioquinha','aveia em flocos finos','farelo de aveia','granola','granola salgada','chocopops'],
+  'fruta':['mamão formosa','manga','uva','banana prata','melancia','melão','abacate','morango','kiwi'],
+  'laticínio':['creme de ricota light','requeijão light','cottage lacfree','cottage proteico yorgus','queijo muçarela','queijo coalho','minas frescal light','minas padrão sem lactose','iogurte natural desnatado','iogurte pense zero','iogurte grego pense zero','leite desnatado'],
+  'vegetal':['alface americana','rúcula','tomate','tomate cereja','pepino','cenoura','brócolis','abobrinha','berinjela'],
+  'sementes':['mix de sementes','semente de chia','castanha de caju','gergelim'],
+  'temperos e molhos':['molho de tomate','ketchup','mostarda','azeite','orégano','canela','cacau em pó','fermento químico','molho ranch','molho caesar','páprica defumada','lemon pepper','alecrim'],
+  'doces':['mel','geleia de frutas vermelhas diet','geleia de amora diet','calda de caramelo'],
+  'suplementos e chás':['creatina','cúrcuma','gengibre em pó','extrato de própolis','limão','hibisco','chá verde','cavalinha','camomila','erva-doce','hortelã']
+};
 const RB=[
-  // café da manhã
-  {id:2,cat:'café da manhã',n:'pão francês com ovo',req:['pão','ovo']},
-  {id:40,cat:'café da manhã',n:'avocado toast com ovo',req:['pão','abacate','ovo']},
-  {id:60,cat:'café da manhã',n:'avocado toast com salmão',req:['pão','abacate','salmão']},
-  {id:1,cat:'café da manhã',n:'tapioca com frango desfiado e requeijão',req:['tapioca','frango desfiado','requeijão']},
-  {id:3,cat:'café da manhã',n:'cuscuz com leite de coco e ovo',req:['cuscuz','ovo','leite de coco']},
-  // almoço/jantar — preparo
-  {id:11,cat:'almoço/jantar',n:'frango desfiado + purê de mandioquinha + salada',req:['frango desfiado','purê de mandioquinha','alface','tomate cereja']},
-  {id:10,cat:'almoço/jantar',n:'carne moída + purê de abóbora + salada',req:['carne moída','purê de abóbora','alface','tomate cereja']},
-  {id:61,cat:'almoço/jantar',n:'crepe de frango desfiado + salada',req:['ovo','tapioca','frango desfiado','requeijão','tomate cereja','muçarela','alface']},
-  {id:13,cat:'almoço/jantar',n:'batata assada recheada com carne moída e requeijão + salada',req:['batata','carne moída','requeijão','alface','tomate cereja']},
-  {id:48,cat:'almoço/jantar',n:'salada com batata frita e carne moída',req:['batata','carne moída','alface','tomate cereja']},
-  {id:49,cat:'almoço/jantar',n:'macarrão com manjericão, tomate, ricota e frango',req:['macarrão','frango desfiado','ricota','manjericão','tomate cereja']},
-  // almoço/jantar — rápido
-  {id:45,cat:'almoço/jantar',n:'torta de frango ripito',req:['torta de frango comprada']},
-  {id:16,cat:'almoço/jantar',n:'gyoza + edamame',req:['gyoza','edamame']},
-  {id:17,cat:'almoço/jantar',n:'macarrão com atum, requeijão, cenoura e alface',req:['macarrão','atum','requeijão','alface']},
-  {id:12,cat:'almoço/jantar',n:'wrap de carne moída com alface, queijo, maionese e tomate',req:['wrap','carne moída','alface','muçarela','maionese','tomate cereja']},
-  {id:46,cat:'almoço/jantar',n:'hambúrguer: pão francês com carne moída, alface, queijo, maionese e tomate',req:['pão','carne moída','alface','muçarela','maionese','tomate cereja']},
-  {id:62,cat:'almoço/jantar',n:'steak salad com pepino',req:['carne moída','pepino','alface','tomate cereja']},
-  {id:42,cat:'almoço/jantar',n:'chicken orzo',req:['risoni','peito de frango']},
-  {id:63,cat:'almoço/jantar',n:'carpaccio de carne com alface, tomate e molho de mostarda',req:['alface','tomate cereja','mostarda']},
-  {id:67,cat:'almoço/jantar',n:'salada no pote — salmão, cream cheese e pepino',req:['salmão','cream cheese','pepino','alface']},
-  // lanche
-  {id:30,cat:'lanche',n:'edamame',req:['edamame']},
-  {id:31,cat:'lanche',n:'frutas: manga, mamão ou uva',req:['manga','frutas cortadas']},
-  {id:65,cat:'lanche',n:'crepe de frango',req:['crepe de frango pronto']},
-  {id:64,cat:'lanche',n:'crepe de atum',req:['crepe de atum pronto']},
-  {id:36,cat:'lanche',n:'cenoura baby + homus',req:['cenoura baby','homus']},
-  {id:56,cat:'lanche',n:'guacamole com nachos',req:['abacate','nachos']},
-  {id:66,cat:'lanche',n:'gyoza + sunomono',req:['gyoza','sunomono marinado']},
-  {id:54,cat:'lanche',n:'salada no pote — salmão, cream cheese e pepino',req:['salmão','cream cheese','pepino','alface']},
+  // ── café da manhã (06:30) ──
+  {id:101,cat:'café da manhã',n:'pão com ovo',req:['pão francês','ovo','creme de ricota light','mamão formosa','mix de sementes'],
+   p:['pão francês 1un (50g)','ovo médio 2un (90g)','creme de ricota light 30g','mamão formosa 150g','mix de sementes 5g'],
+   s:['pão francês → 2 fatias de pão integral (50g) · artesano integral 2 fatias · goma de tapioca 45g','creme de ricota → requeijão light 20g · cottage 30g · muçarela 12g · coalho 10g · minas frescal 20g','mamão → uva 125g · manga 90g · melancia 220g · melão 275g · banana 65g · abacate 40g'],
+   mp:'chia por cima da fruta e o mix de abóbora+linhaça por cima do ovo. dá pra variar com patê de ovo cozido: cozinhar 10-12min, amassar com garfo e misturar com o creme de ricota, sal, pimenta e cebolinha.'},
+  {id:102,cat:'café da manhã',n:'pão com ovo, tomatinhos ou avocado',req:['pão francês','ovo','cottage lacfree','tomate','mamão formosa','mix de sementes'],
+   p:['pão francês 1un (50g)','ovo médio 2un (90g)','cottage lacfree 30g','tomate à vontade','mamão formosa 150g','mix de sementes 5g'],
+   s:['pão francês → 2 fatias de pão integral (50g) · goma de tapioca 45g','cottage → requeijão light 20g · creme de ricota 30g · muçarela 12g · minas frescal 20g','mamão → uva 120g · manga 85g · melancia 220g · melão 275g · banana 65g · abacate 40g'],
+   mp:'avocado toast: trocar o mamão por 40g de abacate (dá pra deixar guacamole pronta pra semana e pesar na hora). toast de banana: metade do pão com ovo/tomate/sementes e a outra metade com banana fatiada dourada na frigideira + queijo cremoso.'},
+  {id:103,cat:'café da manhã',n:'bowl de iogurte',req:['iogurte pense zero','aveia em flocos finos','granola','manga','mel'],
+   p:['iogurte pense zero 250g','aveia em flocos finos 10g','granola low carb 15g','manga 110g','mel 20g'],
+   s:['iogurte → lacfree 210g · danone natural 145ml · yorgus grego 125g','granola → chocopops 15g','manga → mamão 175g · uva 135g · banana 70g · morango congelado 230g'],
+   mp:'dá pra bater a fruta com o iogurte no liquidificador (fica tipo mousse). ou fazer banana caramelizada: rodelas de banana na frigideira com a aveia e o mel, em fogo baixo, até dourar — e usar como topping.'},
+  {id:104,cat:'café da manhã',n:'tapioca de frango',req:['goma de tapioca','frango desfiado','requeijão light','mamão formosa','mix de sementes'],
+   p:['goma de tapioca 50g','frango desfiado 40g','requeijão light 20g','mamão formosa 115g','mix de sementes 5g'],
+   s:['requeijão → creme de ricota 30g · cottage 30g · muçarela 12g · coalho 10g · minas frescal 20g','mamão → uva 95g · manga 65g · melancia 170g · melão 220g · banana 50g · abacate 30g']},
+  {id:105,cat:'café da manhã',n:'cuscuz com ovo',req:['flocão de milho','ovo','requeijão light','mamão formosa','semente de chia'],
+   p:['flocão de milho cru 40g','ovo médio 2un (90g)','requeijão light 20g','mamão formosa 100g','semente de chia 3g'],
+   s:['flocão cru → cuscuz de milho cozido 125g','requeijão → creme de ricota 30g · cottage 30g · muçarela 15g · minas frescal 20g','mamão → uva 95g · manga 65g · melancia 170g · melão 220g · banana 50g · abacate 30g'],
+   mp:'tapioca crocante de cuscuz: hidratar o flocão por 5min, espalhar o requeijão na frigideira untada em movimentos circulares, cobrir com o flocão, tampar, e fechar com os ovos mexidos por cima. versão com queijo: derreter o queijo de um lado da frigideira e o flocão do outro, com os ovos por cima.'},
+
+  // ── almoço (12:30) ──
+  {id:111,cat:'almoço',n:'frango com abóbora cabotiá',req:['peito de frango','abóbora cabotiá','legumes cozidos'],
+   p:['peito de frango grelhado 100g','abóbora cabotiá cozida 300g','legumes cozidos ou salada crua 150g'],
+   s:['frango → patinho 90g · tilápia 170g · salmão 120g · camarão 185g · filé mignon 95g · atum sólido 120g','abóbora → batata doce 130g · mandioquinha 150g + 25g creme de ricota (purê) · batata inglesa cozida 260g · assada 160g · macarrão 120g · arroz 115g'],
+   mp:'começar o prato pelas fibras (legumes e salada), depois carboidrato e o resto da proteína — ajuda na saciedade e no controle glicêmico.'},
+  {id:112,cat:'almoço',n:'atum com risoni',req:['atum sólido em óleo','risoni','legumes cozidos','creme de ricota light'],
+   p:['atum sólido em óleo 120g','risoni cozido 110g','legumes cozidos ou salada crua 150g','creme de ricota light 20g'],
+   s:['atum → patinho 90g · tilápia 170g · salmão 120g · camarão 185g · filé mignon 95g · frango 100g','creme de ricota → cottage yorgus 24g · cottage verde campo 25g · requeijão light 15g'],
+   mp:'preferir atum sólido em pedaços no óleo (mais proteína que o ralado) e escorrer bem o excesso de óleo antes de usar.'},
+  {id:113,cat:'almoço',n:'carpaccio com croutons',req:['carpaccio de carne','alface americana','cottage proteico yorgus','pão de forma integral'],
+   p:['carpaccio de carne 80g','salada crua livre 150g','cottage proteico yorgus 20g','pão integral 2 fatias (50g) — fazer croutons'],
+   s:['cottage yorgus → creme de ricota 20g · cottage verde campo 25g · requeijão light 15g','croutons → granola salgada 15g']},
+  {id:114,cat:'almoço',n:'salada de frango com manga',req:['peito de frango','macarrão','manga','alface americana','rúcula','tomate','pepino','cenoura'],
+   p:['peito de frango grelhado 100g','macarrão cozido 95g','manga em cubinhos 60g','alface, rúcula, tomate, pepino e cenoura à vontade'],
+   s:['frango → patinho em iscas 115g · tilápia 220g · camarão 235g','macarrão → integral 95g · batata inglesa cozida 210g · assada 125g · croutons 1,5 fatia'],
+   mp:'molhos: mostarda com mel · mel + azeite + limão + mostarda · iogurte grego com mostarda · cottage com mostarda · limão + mostarda + ketchup + 8g azeite + adoçante e sal · ranch mr taste · caesar hellmann\'s 12g. gergelim torrado e triturado por cima fica ótimo.'},
+
+  // ── lanche (16:00) ──
+  {id:121,cat:'lanche',n:'iogurte com uva e granola',req:['iogurte natural desnatado','uva','granola'],
+   p:['iogurte natural desnatado 1un (160ml)','uva 90g','granola low carb 15g'],
+   s:['uva → manga 70g · banana 50g','granola → castanha de caju 5un (12,5g)']},
+  {id:122,cat:'lanche',n:'sanduíche de frango',req:['pão de forma integral','frango desfiado','requeijão light','cenoura'],
+   p:['pão integral 2 fatias (50g)','frango desfiado 40g','requeijão light 1 colher de sobremesa (23g)','cenoura ralada 1 colher de sopa (12g)'],
+   s:['frango desfiado → atum ralado 70g','requeijão → creme de ricota 30g · cottage yorgus 30g'],
+   mp:'dá pra montar vários no domingo e guardar na geladeira embrulhados em papel-filme.'},
+  {id:123,cat:'lanche',n:'crepioca de frango',req:['ovo','goma de tapioca','frango desfiado','requeijão light'],
+   p:['ovo médio 1un (45g)','goma de tapioca 2 colheres de sopa (30g)','frango desfiado 40g','requeijão light 25g'],
+   s:['frango desfiado → atum ralado 55g','requeijão → cottage yorgus 35g · creme de ricota 30g'],
+   mp:'misturar bem o ovo, a goma e o sal até ficar uniforme. frigideira antiaderente, tampar por 3-4min e rechear.'},
+  {id:124,cat:'lanche',n:'panqueca de banana',req:['ovo','clara de ovo','banana prata','aveia em flocos finos','cacau em pó','calda de caramelo'],
+   p:['ovo médio 1un (45g)','clara de ovo 1un (30g)','banana prata 1un grande (55g)','aveia em flocos finos 15g','cacau em pó 7g','canela à vontade','calda de caramelo saucy 1 colher de sopa (20g)'],
+   s:['calda de caramelo → mel 10g · geleia de frutas vermelhas diet 20g'],
+   mp:'misturar o ovo com a canela e o cacau, adicionar a aveia, depois a banana amassada. frigideira untada, fogo baixo com tampa por ~2min, virar por 1min. uma colherzinha de fermento na massa deixa com cara de bolinho.'},
+  {id:125,cat:'lanche',n:'overnight oats',req:['aveia em flocos finos','semente de chia','iogurte pense zero','leite desnatado','uva','granola'],
+   p:['aveia em flocos finos 15g','semente de chia 10g','iogurte pense zero 100g','leite desnatado 30ml','uva 30g','granola 10g'],
+   s:['uva → banana 30g · morango 4un (48g) · kiwi 1un (76g)']},
+  {id:126,cat:'lanche',n:'panqueca de iogurte',req:['ovo','iogurte grego pense zero','farelo de aveia','fermento químico','geleia de amora diet','mel'],
+   p:['ovo médio 1un (45g)','iogurte grego pense zero 45g','farelo de aveia oat bran 30g','fermento químico 5g','canela à vontade','geleia de amora diet 20g','mel 5g'],
+   s:['farelo de aveia → aveia em flocos finos 20g'],
+   mp:'ovo + farelo de aveia + meio potinho de iogurte grego, canela e cacau a gosto e uma pitada de fermento. frigideira em fogo baixo até dourar dos dois lados. finalizar com a geleia e o mel.'},
+
+  // ── jantar (21:30) ──
+  {id:131,cat:'jantar',n:'hambúrguer',req:['hambúrgueres no freezer','pão de hambúrguer','alface americana','tomate','queijo muçarela'],
+   p:['pão de hambúrguer 1un (50g)','patinho cru 135g','alface e tomate à vontade','queijo muçarela 1 fatia média (20g)'],
+   s:['pão → pão integral 2 fatias (50g) · pão de hambúrguer plusvita 1un','patinho → filé de peito de frango cru 135g','muçarela → minas frescal light 20g · requeijão light 25g'],
+   mp:'hambúrguer de frango: triturar o peito (dá pra pedir no açougue) batendo junto com cebola, alho, azeite e temperos secos. moldar pesando a quantidade do plano. de carne moída é só moldar e temperar na hora com sal e pimenta. dá pra empanar no flocão de cuscuz e finalizar na air fryer.'},
+  {id:132,cat:'jantar',n:'tortilla de carne',req:['tortillas no freezer','requeijão light','alface americana','tomate','ketchup'],
+   p:['rap10 muito fit 1un (40g)','patinho cru moído 110g','requeijão light 25g','alface e tomate à vontade','ketchup 1 colher de sopa (12g)'],
+   s:['patinho → filé de peito de frango cru moído 120g','requeijão → creme de ricota 35g · cottage lacfree 35g · minas frescal 30g · muçarela 20g'],
+   mp:'espalhar a carne moída crua por todo o rap10, montar vários, guardar em saquinhos no freezer. na hora é só ir pra frigideira e rechear com o queijo e a alface.'},
+  {id:133,cat:'jantar',n:'pizza fake',req:['rap10','molho de tomate','frango desfiado','queijo muçarela','orégano'],
+   p:['rap10 muito fit 1un (40g)','molho de tomate 2 colheres de sopa cheias (40g)','frango desfiado 70g','queijo muçarela 1 fatia (20g)','orégano à vontade'],
+   mp:'rap10 na frigideira, molho, queijo, frango e orégano por cima. tampar em fogo baixo por 1 minutinho.'},
+  {id:134,cat:'jantar',n:'crepioca de frango',req:['ovo','goma de tapioca','frango desfiado','requeijão light'],
+   p:['ovo médio 1un (45g)','goma de tapioca 2 colheres de sopa (30g)','frango desfiado 70g','requeijão light 25g'],
+   s:['frango desfiado → atum ralado 95g · carne moída 60g','requeijão → cottage yorgus 35g · creme de ricota 30g'],
+   mp:'misturar bem o ovo, a goma e o sal. frigideira antiaderente, tampar por 3-4min e rechear.'},
+  {id:135,cat:'jantar',n:'tapioca de frango',req:['goma de tapioca','frango desfiado','requeijão light'],
+   p:['goma de tapioca 50g','frango desfiado 80g','requeijão light 20g'],
+   s:['requeijão → creme de ricota 30g · cottage lacfree 30g · muçarela 12g · coalho 10g · minas frescal 20g']},
 ];
 const MOD_DEF=['futevôlei','yoga','boxe','funcional'];
 const BAIRRO_DEF=['vila madalena','barra funda'];
@@ -191,6 +251,13 @@ function seedFromActs(def,key){const s=ld('liz_'+key,null);if(s)return s;const s
 function initLocais(){return seedFromActs(LOCAIS_DEF,'locais');}
 function initBairros(){return seedFromActs(BAIRRO_DEF,'bairros');}
 function initMods(){return seedFromActs(MOD_DEF,'mods');}
+
+// troca de plano alimentar: limpa receitas, geladeira e prep antigos, preservando treino/hábitos/água
+const PLAN_VER='2026-08-10';
+if(ld('liz_planver',null)!==PLAN_VER){
+  ['liz_ro','liz_ov','liz_fi','liz_cat','liz_fr','liz_pn','liz_nt','liz_prepitems','liz_prep','liz_sc','liz_se'].forEach(k=>{try{localStorage.removeItem(k);}catch(e){}});
+  sv('liz_planver',PLAN_VER);
+}
 
 const st={
   tab:'treino',sub:'geladeira',vd:new Date().getDay(),
@@ -215,7 +282,7 @@ const st={
   lugaresOpen:false,
   openNotes:{},
   modal:null,editModal:null,actModal:false,actEditId:null,editLocais:false,
-  em:{n:'',cat:'almoço/jantar',req:[]},newIngr:'',
+  em:{n:'',cat:'almoço',req:[]},newIngr:'',
   na:{n:'',sub:'',b:'',m:'',days:[],start:'09:00',end:''},
   sc:ld('liz_sc',{}),
   se:ld('liz_se',[]),
@@ -224,11 +291,11 @@ const st={
   prep:ld('liz_prep',{}),
 };
 
-const HABITS=['meditar','ler','alongar','escrever','treinar','separar roupa'];
-const WATER_GOAL=4;
+const HABITS=['água em jejum','raspar a língua','shot matinal','creatina','chá','meditar','ler','alongar','escrever','treinar','separar roupa'];
+const WATER_GOAL=3;
 const WATER_ML=750;
-const PREP_ITEMS=['frango desfiado','carne moída cozida','purê de mandioquinha','purê de abóbora','alface lavada','tomate cereja lavado','cuscuz hidratado','hambúrgueres no freezer','torta de frango comprada','sunomono marinado','frutas cortadas','batatas assadas','crepe de frango pronto','crepe de atum pronto'];
-const PREP_LINK={'frango desfiado':'frango desfiado','carne moída':'carne moída cozida','alface':'alface lavada','tomate cereja':'tomate cereja lavado','cuscuz':'cuscuz hidratado','batata':'batatas assadas'};
+const PREP_ITEMS=['frango desfiado','carne moída cozida','peito de frango grelhado','hambúrgueres no freezer','tortillas no freezer','abóbora cabotiá cozida','purê de mandioquinha','batata inglesa assada','macarrão cozido','legumes cozidos','salada lavada','frutas cortadas','guacamole','sanduíches montados','gergelim torrado','chá diurético na garrafa','molho de salada'];
+const PREP_LINK={'peito de frango':'peito de frango grelhado','patinho moído':'carne moída cozida','abóbora cabotiá':'abóbora cabotiá cozida','mandioquinha':'purê de mandioquinha','batata inglesa':'batata inglesa assada','macarrão':'macarrão cozido','risoni':'macarrão cozido','alface americana':'salada lavada'};
 st.prepItems=ld('liz_prepitems',null)||PREP_ITEMS.slice();
 st.prepLink=JSON.parse(JSON.stringify(PREP_LINK));try{localStorage.removeItem('liz_preplink');}catch(e){}
 st.editPrep=false;
@@ -352,7 +419,7 @@ function render(){
 
     if(st.sub==='receitas'){
       h+=`<div class="sec"><div class="slbl">receitas <button class="eb ${st.editRec?'on':''}" onclick="st.editRec=!st.editRec;render()">${st.editRec?'pronto':'reordenar'}</button><span class="addnew" onclick="openNew()">+ nova receita</span></div></div>`;
-      h+=`<div class="stabs">`;['todas','café da manhã','almoço/jantar','lanche'].forEach(c=>{h+=`<span class="${st.recFilt===c?'a':''}" onclick="setRecFilt('${c}')">${c}</span>`;});h+=`</div>`;
+      h+=`<div class="stabs">`;['todas','café da manhã','almoço','lanche','jantar'].forEach(c=>{h+=`<span class="${st.recFilt===c?'a':''}" onclick="setRecFilt('${c}')">${c}</span>`;});h+=`</div>`;
       h+=`<div class="sec">`;
       function rcCard(r,isAv){
         const gi=st.recOrd.indexOf(r.id),vi=filtIds.indexOf(r.id);
@@ -363,8 +430,9 @@ function render(){
         const missComprar=miss.filter(i=>missingType(i)==='comprar');
         let c=`<div class="rc ${isAv?'av':''}"><div class="rr"><div class="rb"><div class="rn">${r.n}</div>`;
         c+=`<div style="display:flex;gap:5px;margin-top:3px;flex-wrap:wrap">`;
-        c+=`<span style="font-size:10px;color:var(--mu)">${r.cat}</span>`;
+        c+=`<span style="font-size:10px;color:var(--mu)">${r.cat}${MEAL_TIME[r.cat]?' · '+MEAL_TIME[r.cat]:''}</span>`;
         c+=`</div>`;
+        if(r.p&&r.p.length)c+=`<div style="font-size:11px;color:var(--tx);margin-top:4px;line-height:1.5">${r.p.join(' · ')}</div>`;
         if(!isAv){
           if(missPrep.length)c+=`<div style="font-size:11px;color:var(--w);margin-top:3px">prep: ${missPrep.join(', ')}</div>`;
           if(missComprar.length)c+=`<div style="font-size:11px;color:#c0392b;margin-top:2px">comprar: ${missComprar.join(', ')}</div>`;
@@ -372,8 +440,13 @@ function render(){
         c+=`</div>`;
         if(st.editRec){c+=`<div class="rord"><button onclick="swapRec(${gi},${pg})" ${pg===-1?'disabled':''}>↑</button><button onclick="swapRec(${gi},${ng})" ${ng===-1?'disabled':''}>↓</button></div>`;}
         else{c+=`<div style="display:flex;gap:6px;align-items:center;flex-shrink:0">${isAv?`<span class="rav2">disponível</span>`:`<span class="rnav">faltam ${miss.length}</span>`}<button class="reb" onclick="openEdit(${r.id})">editar</button></div>`;}
-        c+=`</div><span class="nt" onclick="toggleNote(${r.id},event)">${noteOpen?'▴':'▾'} notas${noteText?' ·':''}</span>`;
-        if(noteOpen)c+=`<textarea class="nta" id="nta-${r.id}" onblur="saveNote(${r.id})" placeholder="anotações, links do tiktok...">${noteText}</textarea>`;
+        const hasDet=(r.s&&r.s.length)||r.mp;
+        c+=`</div><span class="nt" onclick="toggleNote(${r.id},event)">${noteOpen?'▴':'▾'} ${hasDet?'substituições e preparo':'notas'}${noteText?' ·':''}</span>`;
+        if(noteOpen){
+          if(r.s&&r.s.length){c+=`<div style="margin-top:6px"><div style="font-size:9px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin-bottom:3px">substituições</div>`;r.s.forEach(x=>{c+=`<div style="font-size:11px;color:var(--mu);line-height:1.5;text-transform:none">${x}</div>`;});c+=`</div>`;}
+          if(r.mp)c+=`<div style="margin-top:6px"><div style="font-size:9px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin-bottom:3px">preparo</div><div style="font-size:11px;color:var(--tx);line-height:1.6;text-transform:none">${r.mp}</div></div>`;
+          c+=`<textarea class="nta" id="nta-${r.id}" onblur="saveNote(${r.id})" placeholder="anotações, links do tiktok...">${noteText}</textarea>`;
+        }
         c+=`</div>`;return c;
       }
       if(availR.length){h+=`<div class="slbl">disponível agora <span>${availR.length}</span></div>`;availR.forEach(r=>{h+=rcCard(r,true);});}
@@ -407,7 +480,7 @@ function render(){
   }
   if(st.modal){
     const {day,meal}=st.modal;
-    const relCats=meal===0?['café da manhã']:meal===2?['lanche']:['almoço/jantar'];
+    const relCats=[['café da manhã'],['almoço'],['lanche'],['jantar']][meal];
     const relR=allRecipes().filter(r=>relCats.includes(r.cat));
     const aR=relR.filter(r=>recAvail(r)),nR=relR.filter(r=>!recAvail(r));
     const curId=st.plan[getPK(day,meal)];
@@ -420,7 +493,7 @@ function render(){
 
   // ── RECIPE EDIT MODAL ──
   if(st.editModal!==null){
-    const CATS=['café da manhã','almoço/jantar','lanche'];
+    const CATS=['café da manhã','almoço','lanche','jantar'];
     const reqSet=new Set(st.em.req);
     const isNew=!RB.find(r=>r.id===st.editModal)&&!st.ov[st.editModal];
     let picker='';
@@ -506,10 +579,10 @@ function render(){
     // Grid
     const cellW=32;
     h+=`<div style="overflow-x:auto;-webkit-overflow-scrolling:touch">`;
-    h+=`<table style="border-collapse:collapse;width:100%;min-width:360px">`;
+    h+=`<table style="border-collapse:collapse;width:100%;min-width:330px">`;
 
     // Header row - day labels
-    h+=`<thead><tr><td style="width:40%;padding-bottom:8px;font-size:10px;color:var(--mu)"></td>`;
+    h+=`<thead><tr><td style="width:36%;padding-bottom:8px;font-size:10px;color:var(--mu)"></td>`;
     weekDates.forEach((d,i)=>{
       const isToday=d.toDateString()===td;
       h+=`<td style="text-align:center;padding-bottom:8px;font-size:10px;font-weight:${isToday?700:500};color:${isToday?'var(--w)':'var(--mu)'}">${dayLabels[i]}<br><span style="font-size:9px">${d.getDate()}</span></td>`;
@@ -521,7 +594,7 @@ function render(){
     HABITS.forEach(hab=>{
       const weekDone=weekDates.filter(d=>(st.hb[d.toDateString()]||{})[hab]).length;
       h+=`<tr>`;
-      h+=`<td style="padding:4px 8px 4px 0;font-size:12px;font-weight:500;color:var(--tx);vertical-align:middle">${hab}</td>`;
+      h+=`<td style="padding:4px 6px 4px 0;font-size:11px;font-weight:500;color:var(--tx);vertical-align:middle">${hab}</td>`;
       weekDates.forEach(d=>{
         const ds=d.toDateString();
         const checked=!!(st.hb[ds]&&st.hb[ds][hab]);
@@ -531,7 +604,7 @@ function render(){
         const safeDs=ds.replace(/'/g,"\\'");
         const clickAttr=isFuture?'':'onclick="toggleHabit(\''+safeHab+'\',\''+safeDs+'\')"';
         h+=`<td style="text-align:center;padding:4px 2px;vertical-align:middle">
-          <div ${clickAttr} style="width:28px;height:28px;border-radius:7px;border:1.5px solid ${checked?'var(--w)':isToday?'var(--w)':'var(--bd)'};background:${checked?'var(--w)':isToday?'var(--wl)':'transparent'};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:${checked?'#fff':'transparent'};cursor:${isFuture?'default':'pointer'};margin:0 auto;opacity:${isFuture?0.35:1}">${checked?'✓':''}</div>
+          <div ${clickAttr} style="width:26px;height:26px;border-radius:7px;border:1.5px solid ${checked?'var(--w)':isToday?'var(--w)':'var(--bd)'};background:${checked?'var(--w)':isToday?'var(--wl)':'transparent'};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:${checked?'#fff':'transparent'};cursor:${isFuture?'default':'pointer'};margin:0 auto;opacity:${isFuture?0.35:1}">${checked?'✓':''}</div>
         </td>`;
       });
       h+=`</tr>`;
@@ -607,7 +680,7 @@ function openModal(d,m){st.modal={day:d,meal:m};render();}
 function pickMeal(id){if(!st.modal)return;st.plan[getPK(st.modal.day,st.modal.meal)]=id;sv('liz_pn',st.plan);st.modal=null;render();}
 function clearMeal(){if(!st.modal)return;delete st.plan[getPK(st.modal.day,st.modal.meal)];sv('liz_pn',st.plan);st.modal=null;render();}
 function swapMeal(ka,kb){const ta=st.plan[ka],tb=st.plan[kb];if(tb)st.plan[ka]=tb;else delete st.plan[ka];if(ta)st.plan[kb]=ta;else delete st.plan[kb];sv('liz_pn',st.plan);render();}
-function openNew(){const newId=Date.now();st.editModal=newId;st.em={n:'',cat:'almoço/jantar',req:[]};st.newIngr='';render();}
+function openNew(){const newId=Date.now();st.editModal=newId;st.em={n:'',cat:'almoço',req:[]};st.newIngr='';render();}
 function openEdit(id){const r=getRecipe(id);if(!r)return;st.editModal=id;st.em={n:r.n,cat:r.cat,req:[...r.req]};st.newIngr='';render();}
 function saveEdit(){const n=(document.getElementById('re-n')||{}).value||'';const c=(document.getElementById('re-c')||{}).value||'';if(!n.trim())return;const id=st.editModal;st.ov[id]={n:n.trim().toLowerCase(),cat:c,req:st.em.req};sv('liz_ov',st.ov);if(!st.recOrd.includes(id)){st.recOrd.push(id);sv('liz_ro',st.recOrd);}st.editModal=null;render();}
 function deleteRec(id){st.ov[id]={...(st.ov[id]||{}),deleted:true};sv('liz_ov',st.ov);st.recOrd=st.recOrd.filter(x=>x!==id);sv('liz_ro',st.recOrd);st.editModal=null;render();}
