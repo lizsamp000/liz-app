@@ -214,10 +214,9 @@ const RB=[
 
 {id:123,m:'lanche',n:'crepioca de frango',t:6,
  sl:[{l:'massa',o:['ovo médio 1un (45g) + goma de tapioca 30g']},
-     {l:'proteína',o:['frango desfiado 40g','frango desfiado 50g','atum ralado 55g','atum ralado 65g']},
+     {l:'proteína',o:['frango desfiado 50g','atum ralado 65g']},
      {l:'cremoso',o:['requeijão light 25g','cottage yorgus 35g','creme de ricota 30g']}],
- mp:'misturar bem o ovo, a goma e o sal até ficar uniforme. frigideira antiaderente, tampar por 3-4min e rechear.',
- chk:'o PDF traz dois valores nesta opção: frango desfiado "40 grama(s) (50g)" e atum ralado "55 grama(s) (65g)" — os pares 40/55 e 50/65. na crepioca do jantar os dois valores batem, então aqui é erro de digitação em algum dos campos. como a diferença é de ~10g (uns 3g de proteína), os dois estão na lista pra você escolher — vale confirmar com a Sara qual vale.'},
+ mp:'misturar bem o ovo, a goma e o sal até ficar uniforme. frigideira antiaderente, tampar por 3-4min e rechear. o PDF trazia dois valores aqui — frango "40 grama(s) (50g)" e atum "55 grama(s) (65g)" — e ficou definido o par 50g e 65g.'},
 
 {id:124,m:'lanche',n:'panqueca de banana',t:8,
  sl:[{l:'massa',o:['ovo médio 1un (45g) + clara 1un (30g)']},
@@ -425,7 +424,9 @@ const ALIAS={
  'pão de hambúrguer plusvita 1un':'pão de hambúrguer plusvita 1un (50g)',
  'risoni cozido 110g':'macarrão ou risoni cozido 110g',
  'minas frescal 20g':'minas frescal light 20g',
- 'cottage 30g':'cottage lacfree 30g'
+ 'cottage 30g':'cottage lacfree 30g',
+ 'frango desfiado 40g':'frango desfiado 50g',
+ 'atum ralado 55g':'atum ralado 65g'
 };
 function pickOf(rid,si){
   const r=rec(rid);if(!r||!r.sl[si])return 0;
