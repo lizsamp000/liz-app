@@ -11,726 +11,578 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{--w:#6b1a2a;--wl:#f5eef0;--wm:#d9b8be;--bg:#fafaf8;--wh:#fff;--br:#ebebeb;--bd:#d0d0d0;--tx:#1a1a1a;--mu:#888;--hb:#f4f4f2;--gn:#2d7a4f;--gl:#eef5f1}
-body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;padding-bottom:80px;text-transform:lowercase}
-.hd{background:var(--w);padding:2.5rem 1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-end}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;padding-bottom:40px;text-transform:lowercase}
+.prose{text-transform:none}
+.hd{background:var(--w);padding:2.5rem 1.25rem 1.25rem;display:flex;justify-content:space-between;align-items:flex-end}
 .hd h1{font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:.08em;margin-bottom:4px}
-.hn{font-size:28px;font-weight:700;color:#fff;letter-spacing:-.5px}
-.hc{font-size:34px;font-weight:700;color:#fff;line-height:1;text-align:right}
-.hl{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px;text-align:right}
-.ws{background:var(--w);padding:0 1.25rem 1.25rem;display:flex;gap:4px}
-.wi{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
-.wl2{font-size:9px;color:rgba(255,255,255,.35)}
-.wl2.a{color:rgba(255,255,255,.9)}
-.wd{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,.4)}
-.wd.a{border-color:rgba(255,255,255,.85);color:#fff}
-.wd.c{background:#fff;border-color:#fff;color:var(--w);font-size:12px;font-weight:700}
-.mt{display:flex;background:var(--w);border-top:1px solid rgba(255,255,255,.1);overflow-x:auto;scrollbar-width:none}
-.mt::-webkit-scrollbar{display:none}
-.mt div{flex-shrink:0;padding:10px 16px;text-align:center;font-size:12px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.hn{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.5px}
+.hc{font-size:15px;font-weight:700;color:#fff;text-align:right;line-height:1.2}
+.hl{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px;text-align:right}
+.mt{display:flex;background:var(--w);border-top:1px solid rgba(255,255,255,.1)}
+.mt div{flex:1;padding:11px 8px;text-align:center;font-size:12px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;border-bottom:2px solid transparent}
 .mt div.a{color:#fff;border-bottom-color:#fff}
-.stabs{display:flex;gap:6px;padding:1rem 1.25rem 0;overflow-x:auto;scrollbar-width:none}
-.stabs::-webkit-scrollbar{display:none}
-.stabs span{flex-shrink:0;font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;border:1.5px solid var(--bd);background:var(--wh);color:var(--mu);cursor:pointer;white-space:nowrap}
-.stabs span.a{background:var(--wl);border-color:var(--w);color:var(--w)}
-.dn{display:flex;gap:6px;padding:1rem 1.25rem 0;overflow-x:auto;scrollbar-width:none}
-.dn::-webkit-scrollbar{display:none}
-.dn span{flex-shrink:0;font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;border:1.5px solid var(--bd);background:var(--wh);color:var(--mu);cursor:pointer;white-space:nowrap}
-.dn span.a{background:var(--wl);border-color:var(--w);color:var(--w)}
-.fwrap{padding:1rem 1.25rem 0;display:flex;flex-direction:column;gap:8px}
-.frow{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;align-items:center}
-.frow::-webkit-scrollbar{display:none}
-.flbl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mu);flex-shrink:0;width:62px}
-.fc{flex-shrink:0;font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;border:1.5px solid var(--bd);background:var(--wh);color:var(--mu);cursor:pointer;white-space:nowrap}
-.fc.on{background:var(--wl);border-color:var(--w);color:var(--w)}
 .sec{padding:1.25rem 1.25rem 0}
 .slbl{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--mu);margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .slbl::after{content:'';flex:1;height:1px;background:var(--br)}
-.slbl span{font-weight:400;color:var(--w);letter-spacing:0}
-.eb{font-size:10px;font-weight:600;color:var(--w);cursor:pointer;background:var(--wl);padding:2px 8px;border-radius:5px;border:none;text-transform:lowercase}
+.slbl b{font-weight:400;color:var(--w);letter-spacing:0}
+.eb{font-size:10px;font-weight:600;color:var(--w);cursor:pointer;background:var(--wl);padding:3px 9px;border-radius:6px;border:none;text-transform:lowercase;flex-shrink:0}
 .eb.on{background:var(--w);color:#fff}
-.addnew{font-size:11px;font-weight:600;color:var(--w);cursor:pointer;background:var(--wl);padding:4px 12px;border-radius:20px;border:1.5px solid var(--w);flex-shrink:0}
-.sl{display:flex;flex-direction:column;gap:1px;background:var(--br);border-radius:14px;overflow:hidden;border:1px solid var(--br)}
-.sr{background:var(--wh);display:flex;align-items:center;padding:12px 14px;gap:12px;cursor:pointer}
-.sr.on{background:var(--wl)}
-.st2{font-size:13px;font-weight:600;color:var(--w);width:98px;flex-shrink:0}
-.sn{font-size:13px;font-weight:500}
-.ss{font-size:11px;color:var(--mu);margin-top:1px}
-.stags{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
-.tb{font-size:10px;padding:2px 7px;border-radius:5px;font-weight:500;background:#eef0f5;color:#444}
-.tt{font-size:10px;padding:2px 7px;border-radius:5px;font-weight:500;background:#f0f5ee;color:#3a6b2a}
-.cib{font-size:10px;padding:3px 8px;border-radius:6px;font-weight:600;flex-shrink:0;background:var(--wl);color:var(--w)}
-.cib.on{background:var(--w);color:#fff}
-.ml{display:flex;flex-direction:column;gap:8px}
-.mc{background:var(--wh);border:1.5px solid var(--bd);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.mc.on{border-color:var(--w);background:var(--wl)}
-.mi{flex:1}
-.mn{font-size:13px;font-weight:600}
-.md{font-size:11px;color:var(--mu);margin-top:2px;line-height:1.4}
-.mb{font-size:10px;padding:3px 8px;border-radius:6px;font-weight:600;flex-shrink:0;background:var(--wl);color:var(--w)}
-.mb.on{background:var(--w);color:#fff}
-.hg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.hc2{background:var(--wh);border:1.5px solid var(--br);border-radius:12px;padding:12px}
-.hn2{font-size:13px;font-weight:600}
-.hd2{font-size:11px;color:var(--mu);margin-top:2px;line-height:1.4}
-.hb{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.06em;color:var(--mu);background:var(--hb);border-radius:4px;padding:2px 6px;margin-top:6px}
-.lt{margin:1.25rem 1.25rem 0;border:1.5px solid var(--bd);border-radius:14px;overflow:hidden;background:var(--wh)}
-.lhd{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;cursor:pointer}
-.pr{background:var(--wh);display:flex;align-items:center;padding:12px 14px;gap:12px;cursor:pointer;border-top:1px solid var(--br)}
-.pc{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
-.pc.on{background:var(--w);border-color:var(--w);color:#fff}
-.fi{display:flex;flex-wrap:wrap;gap:6px}
-.fchip{font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;border:1.5px solid var(--bd);background:var(--wh);color:var(--mu);cursor:pointer;display:flex;align-items:center;gap:6px}
-.fchip.on{background:var(--wl);border-color:var(--w);color:var(--w)}
-.rc{background:var(--wh);border:1.5px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:8px}
-.rc.av{border-color:var(--gn)}
-.rr{display:flex;align-items:flex-start;gap:8px}
-.rb{flex:1;min-width:0}
-.rn{font-size:13px;font-weight:600}
-.rcat{font-size:11px;color:var(--mu);margin-top:2px}
-.rm{font-size:11px;color:#c0392b;margin-top:3px}
-.rav2{font-size:10px;padding:3px 8px;border-radius:6px;font-weight:600;flex-shrink:0;background:var(--gl);color:var(--gn)}
-.rnav{font-size:10px;padding:3px 8px;border-radius:6px;font-weight:600;flex-shrink:0;background:#fef0f0;color:#c0392b}
-.reb{font-size:10px;padding:3px 8px;border-radius:6px;font-weight:600;cursor:pointer;background:var(--hb);color:var(--mu);flex-shrink:0;border:none}
-.rord{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
-.rord button,.orb button{width:24px;height:24px;border-radius:6px;border:1px solid var(--bd);background:var(--wh);font-size:12px;cursor:pointer;color:var(--w)}
-.nt{font-size:10px;color:var(--mu);cursor:pointer;padding-top:8px;display:block}
-.nta{width:100%;margin-top:6px;font-size:12px;line-height:1.6;padding:8px 10px;border:1.5px solid var(--br);border-radius:8px;resize:vertical;min-height:70px;font-family:inherit;color:var(--tx);background:var(--bg);display:block}
+.now{margin:1.25rem 1.25rem 0;background:var(--wh);border:2px solid var(--w);border-radius:16px;overflow:hidden}
+.nowh{background:var(--w);color:#fff;padding:9px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:700;letter-spacing:.06em}
+.nowh span{font-weight:500;color:rgba(255,255,255,.65);letter-spacing:0}
+.nowb{padding:14px 16px}
+.nwn{font-size:19px;font-weight:700;letter-spacing:-.3px}
+.nwt{font-size:11px;color:var(--mu);margin-top:3px}
+.nwi{font-size:12px;line-height:1.65;margin-top:9px;color:var(--tx)}
+.nwa{display:flex;gap:8px;margin-top:13px}
+.nwa button{flex:1;padding:12px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--wh);color:var(--mu)}
+.nwa button.pri{background:var(--w);color:#fff;border-color:var(--w)}
+.nwa button.done{background:var(--gl);color:var(--gn);border-color:var(--gn)}
+.lnk{display:block;text-align:center;font-size:12px;font-weight:600;color:var(--w);padding:11px;cursor:pointer;border-top:1px solid var(--br)}
+.nxt{margin:10px 1.25rem 0;font-size:11px;color:var(--mu);text-align:center}
+.card{background:var(--wh);border:1.5px solid var(--br);border-radius:14px;padding:14px;margin:0 0 10px}
+.rc{background:var(--wh);border:1.5px solid var(--br);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.rc.on{border-color:var(--w)}
+.rch{padding:13px 14px;cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+.rn{font-size:14px;font-weight:600}
+.rt{font-size:10px;color:var(--mu);margin-top:2px}
+.ri{font-size:11.5px;color:var(--tx);line-height:1.6;margin-top:6px}
+.pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;flex-shrink:0;background:var(--hb);color:var(--mu)}
+.pill.f{background:var(--gl);color:var(--gn)}
+.pill.d{background:var(--w);color:#fff}
+.rbody{padding:12px 14px 14px;border-top:1px solid var(--br)}
+.slot{margin-bottom:11px}
+.sll{font-size:9px;font-weight:700;letter-spacing:.07em;color:var(--mu);margin-bottom:5px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:11.5px;font-weight:500;padding:5px 11px;border-radius:20px;border:1.5px solid var(--bd);background:var(--wh);color:var(--mu);cursor:pointer}
+.chip.on{background:var(--wl);border-color:var(--w);color:var(--w);font-weight:600}
+.mp{font-size:11.5px;line-height:1.65;color:var(--tx);background:var(--hb);border-radius:10px;padding:10px 12px;margin-top:4px}
+.mph{font-size:9px;font-weight:700;letter-spacing:.07em;color:var(--mu);margin-bottom:4px}
+.nta{width:100%;margin-top:9px;font-size:12px;line-height:1.6;padding:9px 10px;border:1.5px solid var(--br);border-radius:9px;resize:vertical;min-height:56px;font-family:inherit;color:var(--tx);background:var(--bg);display:block;text-transform:none}
 .nta:focus{outline:none;border-color:var(--w)}
-.dpc{background:var(--wh);border:1.5px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:10px}
-.dph{background:var(--wl);padding:8px 14px;font-size:12px;font-weight:700;color:var(--w)}
-.ms{display:flex;flex-direction:column;gap:1px;background:var(--br)}
-.ms>div{background:var(--wh);display:flex;align-items:center;padding:10px 14px;gap:10px;min-height:46px}
-.msl{font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--mu);width:58px;flex-shrink:0}
-.msv{font-size:12px;font-weight:500;flex:1}
-.mse{font-size:12px;color:var(--mu);flex:1}
-.msed{font-size:11px;color:var(--w);flex-shrink:0}
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:flex-end}
-.mo{background:var(--wh);border-radius:20px 20px 0 0;width:100%;max-height:82vh;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
-.mot{font-size:14px;font-weight:700;margin-bottom:1rem;color:var(--w)}
-.mor{padding:10px 0;border-bottom:1px solid var(--br);cursor:pointer;display:flex;align-items:center;justify-content:space-between}
-.moc{width:100%;padding:12px;background:var(--hb);border:none;border-radius:10px;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer;margin-top:1rem}
-.del{font-size:11px;color:#c0392b;padding:8px 0;cursor:pointer;text-align:center}
-.fi2{margin-bottom:14px}
-.fl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mu);display:block;margin-bottom:5px}
-.inp{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--bd);border-radius:8px;background:var(--wh);color:var(--tx);outline:none;font-family:inherit}
+.fseg{display:flex;gap:6px;padding:1rem 1.25rem 0;overflow-x:auto;scrollbar-width:none}
+.fseg::-webkit-scrollbar{display:none}
+.fseg span{flex-shrink:0;font-size:12px;font-weight:600;padding:7px 14px;border-radius:20px;border:1.5px solid var(--bd);background:var(--wh);color:var(--mu);cursor:pointer;white-space:nowrap}
+.fseg span.a{background:var(--wl);border-color:var(--w);color:var(--w)}
+.wbar{height:10px;background:var(--br);border-radius:5px;overflow:hidden;margin:10px 0 6px}
+.wbar div{height:10px;background:var(--w);border-radius:5px;transition:width .3s}
+.wbtn{display:flex;gap:8px;margin-top:10px}
+.wbtn button{flex:1;padding:12px;border-radius:11px;border:1.5px solid var(--bd);background:var(--wh);font-size:12px;font-weight:600;cursor:pointer;color:var(--tx)}
+.wbtn button.pri{background:var(--w);color:#fff;border-color:var(--w)}
+.hrow{display:flex;align-items:center;gap:11px;padding:11px 0;cursor:pointer;border-bottom:1px solid var(--br)}
+.hrow:last-child{border-bottom:none}
+.hbx{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:transparent}
+.hbx.on{background:var(--w);border-color:var(--w);color:#fff}
+.hnm{font-size:13px;font-weight:500;flex:1}
+.hnm.on{color:var(--mu);text-decoration:line-through}
+.acc{margin:0 0 10px;background:var(--wh);border:1.5px solid var(--br);border-radius:14px;overflow:hidden}
+.acch{padding:13px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.acct{font-size:13px;font-weight:600}
+.accs{font-size:11px;color:var(--mu);margin-top:2px}
+.accb{padding:12px 14px 14px;border-top:1px solid var(--br)}
+.prow{display:flex;align-items:flex-start;gap:11px;padding:10px 0;cursor:pointer;border-bottom:1px solid var(--br)}
+.prow:last-child{border-bottom:none}
+.pnm{font-size:12.5px;font-weight:500}
+.pnm.on{color:var(--mu);text-decoration:line-through}
+.pds{font-size:10.5px;color:var(--mu);margin-top:2px;line-height:1.45}
+.gtbl{border-collapse:collapse;width:100%}
+.gtbl td{padding:3px 2px;vertical-align:middle}
+.gcel{width:26px;height:26px;border-radius:7px;border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:transparent;margin:0 auto;cursor:pointer}
+.gcel.on{background:var(--w);border-color:var(--w);color:#fff}
+.gcel.td{border-color:var(--w);background:var(--wl)}
+.gcel.fu{opacity:.3;cursor:default}
+.glbl{font-size:10.5px;font-weight:500;padding-right:6px}
+.gday{text-align:center;font-size:10px;color:var(--mu);padding-bottom:7px}
+.gday.td{color:var(--w);font-weight:700}
+.inp{width:100%;font-size:13px;padding:9px 10px;border:1.5px solid var(--bd);border-radius:9px;background:var(--wh);color:var(--tx);outline:none;font-family:inherit}
 .inp:focus{border-color:var(--w)}
-.arow{display:flex;gap:6px;align-items:center;margin-top:6px}
-.abtn{background:var(--w);color:#fff;border:none;border-radius:8px;width:34px;height:34px;font-size:18px;cursor:pointer;flex-shrink:0}
-.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:5px}
-.day-cb{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
-.day-cb input{width:16px;height:16px;accent-color:var(--w)}
-.day-cb span{font-size:9px;color:var(--mu)}
-.empty{text-align:center;padding:1.5rem;color:var(--mu);font-size:13px;background:var(--wh);border-radius:14px;border:1px solid var(--br)}
-.cib2{position:fixed;bottom:0;left:0;right:0;padding:1rem 1.25rem;background:linear-gradient(to top,var(--bg) 75%,transparent)}
-.cib2 button{width:100%;background:var(--w);color:#fff;font-size:15px;font-weight:600;border:none;border-radius:14px;padding:16px;cursor:pointer}
-.cib2 button.dn2{background:var(--wm);color:var(--w)}
-.spacer{height:1.25rem}
-.dvd{height:1px;background:var(--br);margin:1rem 1.25rem 0}
-.del-act{font-size:10px;color:#c0392b;cursor:pointer;padding:2px 8px;border-radius:5px;border:none;background:none;flex-shrink:0}
+.arow{display:flex;gap:7px;align-items:center;margin-top:8px}
+.abtn{background:var(--w);color:#fff;border:none;border-radius:9px;width:36px;height:36px;font-size:19px;cursor:pointer;flex-shrink:0}
+.xb{font-size:11px;color:#c0392b;cursor:pointer;background:none;border:none;flex-shrink:0;padding:4px 6px}
+.big{width:100%;background:var(--w);color:#fff;font-size:14px;font-weight:600;border:none;border-radius:12px;padding:14px;cursor:pointer;margin-top:10px}
+.ghost{width:100%;background:var(--wh);color:var(--w);font-size:13px;font-weight:600;border:1.5px solid var(--bd);border-radius:12px;padding:12px;cursor:pointer;margin-top:8px}
+.spacer{height:2rem}
+.mini{display:flex;gap:4px;align-items:stretch;height:48px;margin-top:8px}
+.mini div{flex:1;background:var(--wl);border-radius:4px;position:relative;overflow:hidden}
+.mini div i{position:absolute;bottom:0;left:0;right:0;background:var(--w);border-radius:4px;display:block;min-height:2px}
+.minix{display:flex;gap:4px;margin-top:4px}
+.minix span{flex:1;text-align:center;font-size:9px;color:var(--mu)}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-const DS=['dom','seg','ter','qua','qui','sex','sáb'];
+// ═══════════════ dados do plano ═══════════════
+const DS=['seg','ter','qua','qui','sex','sáb','dom'];
 const DF=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
-const WEEK=[1,2,3,4,5,6,0];
-const MEALS=['café','almoço','lanche','jantar'];
-const MEAL_TIME={'café da manhã':'06:30','almoço':'12:30','lanche':'16:00','jantar':'21:30'};
-const PLACES_DEFAULT=['calçadão spark','espaço ágata','casa de pedra','posto 11 butantã','posto 11 villalobos','riplay jardins','sivananda yoga','bodytech eldorado','renata samora','gracie school pinheiros','bego spa','casa transcende','action 360'];
-const FRIDGE_DEF={
-  'proteína':['ovo','clara de ovo','peito de frango','patinho moído','patinho em iscas','filé mignon','atum sólido em óleo','atum ralado','tilápia','salmão','camarão','carpaccio de carne'],
-  'carbo':['pão francês','pão de forma integral','pão de hambúrguer','rap10','goma de tapioca','flocão de milho','macarrão','risoni','arroz','batata inglesa','batata doce','abóbora cabotiá','mandioquinha','aveia em flocos finos','farelo de aveia','granola','granola salgada','chocopops'],
-  'fruta':['mamão formosa','manga','uva','banana prata','melancia','melão','abacate','morango','kiwi'],
-  'laticínio':['creme de ricota light','requeijão light','cottage lacfree','cottage proteico yorgus','queijo muçarela','queijo coalho','minas frescal light','minas padrão sem lactose','iogurte natural desnatado','iogurte pense zero','iogurte grego pense zero','leite desnatado'],
-  'vegetal':['alface americana','rúcula','tomate','tomate cereja','pepino','cenoura','brócolis','abobrinha','berinjela'],
-  'sementes':['mix de sementes','semente de chia','castanha de caju','gergelim'],
-  'temperos e molhos':['molho de tomate','ketchup','mostarda','azeite','orégano','canela','cacau em pó','fermento químico','molho ranch','molho caesar','páprica defumada','lemon pepper','alecrim'],
-  'doces':['mel','geleia de frutas vermelhas diet','geleia de amora diet','calda de caramelo'],
-  'suplementos e chás':['creatina','cúrcuma','gengibre em pó','extrato de própolis','limão','hibisco','chá verde','cavalinha','camomila','erva-doce','hortelã']
-};
-const RB=[
-  // ── café da manhã (06:30) ──
-  {id:101,cat:'café da manhã',n:'pão com ovo',req:['pão francês','ovo','creme de ricota light','mamão formosa','mix de sementes'],
-   p:['pão francês 1un (50g)','ovo médio 2un (90g)','creme de ricota light 30g','mamão formosa 150g','mix de sementes 5g'],
-   s:['pão francês → 2 fatias de pão integral (50g) · artesano integral 2 fatias · goma de tapioca 45g','creme de ricota → requeijão light 20g · cottage 30g · muçarela 12g · coalho 10g · minas frescal 20g','mamão → uva 125g · manga 90g · melancia 220g · melão 275g · banana 65g · abacate 40g'],
-   mp:'chia por cima da fruta e o mix de abóbora+linhaça por cima do ovo. dá pra variar com patê de ovo cozido: cozinhar 10-12min, amassar com garfo e misturar com o creme de ricota, sal, pimenta e cebolinha.'},
-  {id:102,cat:'café da manhã',n:'pão com ovo, tomatinhos ou avocado',req:['pão francês','ovo','cottage lacfree','tomate','mamão formosa','mix de sementes'],
-   p:['pão francês 1un (50g)','ovo médio 2un (90g)','cottage lacfree 30g','tomate à vontade','mamão formosa 150g','mix de sementes 5g'],
-   s:['pão francês → 2 fatias de pão integral (50g) · goma de tapioca 45g','cottage → requeijão light 20g · creme de ricota 30g · muçarela 12g · minas frescal 20g','mamão → uva 120g · manga 85g · melancia 220g · melão 275g · banana 65g · abacate 40g'],
-   mp:'avocado toast: trocar o mamão por 40g de abacate (dá pra deixar guacamole pronta pra semana e pesar na hora). toast de banana: metade do pão com ovo/tomate/sementes e a outra metade com banana fatiada dourada na frigideira + queijo cremoso.'},
-  {id:103,cat:'café da manhã',n:'bowl de iogurte',req:['iogurte pense zero','aveia em flocos finos','granola','manga','mel'],
-   p:['iogurte pense zero 250g','aveia em flocos finos 10g','granola low carb 15g','manga 110g','mel 20g'],
-   s:['iogurte → lacfree 210g · danone natural 145ml · yorgus grego 125g','granola → chocopops 15g','manga → mamão 175g · uva 135g · banana 70g · morango congelado 230g'],
-   mp:'dá pra bater a fruta com o iogurte no liquidificador (fica tipo mousse). ou fazer banana caramelizada: rodelas de banana na frigideira com a aveia e o mel, em fogo baixo, até dourar — e usar como topping.'},
-  {id:104,cat:'café da manhã',n:'tapioca de frango',req:['goma de tapioca','frango desfiado','requeijão light','mamão formosa','mix de sementes'],
-   p:['goma de tapioca 50g','frango desfiado 40g','requeijão light 20g','mamão formosa 115g','mix de sementes 5g'],
-   s:['requeijão → creme de ricota 30g · cottage 30g · muçarela 12g · coalho 10g · minas frescal 20g','mamão → uva 95g · manga 65g · melancia 170g · melão 220g · banana 50g · abacate 30g']},
-  {id:105,cat:'café da manhã',n:'cuscuz com ovo',req:['flocão de milho','ovo','requeijão light','mamão formosa','semente de chia'],
-   p:['flocão de milho cru 40g','ovo médio 2un (90g)','requeijão light 20g','mamão formosa 100g','semente de chia 3g'],
-   s:['flocão cru → cuscuz de milho cozido 125g','requeijão → creme de ricota 30g · cottage 30g · muçarela 15g · minas frescal 20g','mamão → uva 95g · manga 65g · melancia 170g · melão 220g · banana 50g · abacate 30g'],
-   mp:'tapioca crocante de cuscuz: hidratar o flocão por 5min, espalhar o requeijão na frigideira untada em movimentos circulares, cobrir com o flocão, tampar, e fechar com os ovos mexidos por cima. versão com queijo: derreter o queijo de um lado da frigideira e o flocão do outro, com os ovos por cima.'},
 
-  // ── almoço (12:30) ──
-  {id:111,cat:'almoço',n:'frango com abóbora cabotiá',req:['peito de frango','abóbora cabotiá','legumes cozidos'],
-   p:['peito de frango grelhado 100g','abóbora cabotiá cozida 300g','legumes cozidos ou salada crua 150g'],
-   s:['frango → patinho 90g · tilápia 170g · salmão 120g · camarão 185g · filé mignon 95g · atum sólido 120g','abóbora → batata doce 130g · mandioquinha 150g + 25g creme de ricota (purê) · batata inglesa cozida 260g · assada 160g · macarrão 120g · arroz 115g'],
-   mp:'começar o prato pelas fibras (legumes e salada), depois carboidrato e o resto da proteína — ajuda na saciedade e no controle glicêmico.'},
-  {id:112,cat:'almoço',n:'atum com risoni',req:['atum sólido em óleo','risoni','legumes cozidos','creme de ricota light'],
-   p:['atum sólido em óleo 120g','risoni cozido 110g','legumes cozidos ou salada crua 150g','creme de ricota light 20g'],
-   s:['atum → patinho 90g · tilápia 170g · salmão 120g · camarão 185g · filé mignon 95g · frango 100g','creme de ricota → cottage yorgus 24g · cottage verde campo 25g · requeijão light 15g'],
-   mp:'preferir atum sólido em pedaços no óleo (mais proteína que o ralado) e escorrer bem o excesso de óleo antes de usar.'},
-  {id:113,cat:'almoço',n:'carpaccio com croutons',req:['carpaccio de carne','alface americana','cottage proteico yorgus','pão de forma integral'],
-   p:['carpaccio de carne 80g','salada crua livre 150g','cottage proteico yorgus 20g','pão integral 2 fatias (50g) — fazer croutons'],
-   s:['cottage yorgus → creme de ricota 20g · cottage verde campo 25g · requeijão light 15g','croutons → granola salgada 15g']},
-  {id:114,cat:'almoço',n:'salada de frango com manga',req:['peito de frango','macarrão','manga','alface americana','rúcula','tomate','pepino','cenoura'],
-   p:['peito de frango grelhado 100g','macarrão cozido 95g','manga em cubinhos 60g','alface, rúcula, tomate, pepino e cenoura à vontade'],
-   s:['frango → patinho em iscas 115g · tilápia 220g · camarão 235g','macarrão → integral 95g · batata inglesa cozida 210g · assada 125g · croutons 1,5 fatia'],
-   mp:'molhos: mostarda com mel · mel + azeite + limão + mostarda · iogurte grego com mostarda · cottage com mostarda · limão + mostarda + ketchup + 8g azeite + adoçante e sal · ranch mr taste · caesar hellmann\'s 12g. gergelim torrado e triturado por cima fica ótimo.'},
-
-  // ── lanche (16:00) ──
-  {id:121,cat:'lanche',n:'iogurte com uva e granola',req:['iogurte natural desnatado','uva','granola'],
-   p:['iogurte natural desnatado 1un (160ml)','uva 90g','granola low carb 15g'],
-   s:['uva → manga 70g · banana 50g','granola → castanha de caju 5un (12,5g)']},
-  {id:122,cat:'lanche',n:'sanduíche de frango',req:['pão de forma integral','frango desfiado','requeijão light','cenoura'],
-   p:['pão integral 2 fatias (50g)','frango desfiado 40g','requeijão light 1 colher de sobremesa (23g)','cenoura ralada 1 colher de sopa (12g)'],
-   s:['frango desfiado → atum ralado 70g','requeijão → creme de ricota 30g · cottage yorgus 30g'],
-   mp:'dá pra montar vários no domingo e guardar na geladeira embrulhados em papel-filme.'},
-  {id:123,cat:'lanche',n:'crepioca de frango',req:['ovo','goma de tapioca','frango desfiado','requeijão light'],
-   p:['ovo médio 1un (45g)','goma de tapioca 2 colheres de sopa (30g)','frango desfiado 40g','requeijão light 25g'],
-   s:['frango desfiado → atum ralado 55g','requeijão → cottage yorgus 35g · creme de ricota 30g'],
-   mp:'misturar bem o ovo, a goma e o sal até ficar uniforme. frigideira antiaderente, tampar por 3-4min e rechear.'},
-  {id:124,cat:'lanche',n:'panqueca de banana',req:['ovo','clara de ovo','banana prata','aveia em flocos finos','cacau em pó','calda de caramelo'],
-   p:['ovo médio 1un (45g)','clara de ovo 1un (30g)','banana prata 1un grande (55g)','aveia em flocos finos 15g','cacau em pó 7g','canela à vontade','calda de caramelo saucy 1 colher de sopa (20g)'],
-   s:['calda de caramelo → mel 10g · geleia de frutas vermelhas diet 20g'],
-   mp:'misturar o ovo com a canela e o cacau, adicionar a aveia, depois a banana amassada. frigideira untada, fogo baixo com tampa por ~2min, virar por 1min. uma colherzinha de fermento na massa deixa com cara de bolinho.'},
-  {id:125,cat:'lanche',n:'overnight oats',req:['aveia em flocos finos','semente de chia','iogurte pense zero','leite desnatado','uva','granola'],
-   p:['aveia em flocos finos 15g','semente de chia 10g','iogurte pense zero 100g','leite desnatado 30ml','uva 30g','granola 10g'],
-   s:['uva → banana 30g · morango 4un (48g) · kiwi 1un (76g)']},
-  {id:126,cat:'lanche',n:'panqueca de iogurte',req:['ovo','iogurte grego pense zero','farelo de aveia','fermento químico','geleia de amora diet','mel'],
-   p:['ovo médio 1un (45g)','iogurte grego pense zero 45g','farelo de aveia oat bran 30g','fermento químico 5g','canela à vontade','geleia de amora diet 20g','mel 5g'],
-   s:['farelo de aveia → aveia em flocos finos 20g'],
-   mp:'ovo + farelo de aveia + meio potinho de iogurte grego, canela e cacau a gosto e uma pitada de fermento. frigideira em fogo baixo até dourar dos dois lados. finalizar com a geleia e o mel.'},
-
-  // ── jantar (21:30) ──
-  {id:131,cat:'jantar',n:'hambúrguer',req:['hambúrgueres no freezer','pão de hambúrguer','alface americana','tomate','queijo muçarela'],
-   p:['pão de hambúrguer 1un (50g)','patinho cru 135g','alface e tomate à vontade','queijo muçarela 1 fatia média (20g)'],
-   s:['pão → pão integral 2 fatias (50g) · pão de hambúrguer plusvita 1un','patinho → filé de peito de frango cru 135g','muçarela → minas frescal light 20g · requeijão light 25g'],
-   mp:'hambúrguer de frango: triturar o peito (dá pra pedir no açougue) batendo junto com cebola, alho, azeite e temperos secos. moldar pesando a quantidade do plano. de carne moída é só moldar e temperar na hora com sal e pimenta. dá pra empanar no flocão de cuscuz e finalizar na air fryer.'},
-  {id:132,cat:'jantar',n:'tortilla de carne',req:['tortillas no freezer','requeijão light','alface americana','tomate','ketchup'],
-   p:['rap10 muito fit 1un (40g)','patinho cru moído 110g','requeijão light 25g','alface e tomate à vontade','ketchup 1 colher de sopa (12g)'],
-   s:['patinho → filé de peito de frango cru moído 120g','requeijão → creme de ricota 35g · cottage lacfree 35g · minas frescal 30g · muçarela 20g'],
-   mp:'espalhar a carne moída crua por todo o rap10, montar vários, guardar em saquinhos no freezer. na hora é só ir pra frigideira e rechear com o queijo e a alface.'},
-  {id:133,cat:'jantar',n:'pizza fake',req:['rap10','molho de tomate','frango desfiado','queijo muçarela','orégano'],
-   p:['rap10 muito fit 1un (40g)','molho de tomate 2 colheres de sopa cheias (40g)','frango desfiado 70g','queijo muçarela 1 fatia (20g)','orégano à vontade'],
-   mp:'rap10 na frigideira, molho, queijo, frango e orégano por cima. tampar em fogo baixo por 1 minutinho.'},
-  {id:134,cat:'jantar',n:'crepioca de frango',req:['ovo','goma de tapioca','frango desfiado','requeijão light'],
-   p:['ovo médio 1un (45g)','goma de tapioca 2 colheres de sopa (30g)','frango desfiado 70g','requeijão light 25g'],
-   s:['frango desfiado → atum ralado 95g · carne moída 60g','requeijão → cottage yorgus 35g · creme de ricota 30g'],
-   mp:'misturar bem o ovo, a goma e o sal. frigideira antiaderente, tampar por 3-4min e rechear.'},
-  {id:135,cat:'jantar',n:'tapioca de frango',req:['goma de tapioca','frango desfiado','requeijão light'],
-   p:['goma de tapioca 50g','frango desfiado 80g','requeijão light 20g'],
-   s:['requeijão → creme de ricota 30g · cottage lacfree 30g · muçarela 12g · coalho 10g · minas frescal 20g']},
+// janelas: café até 10h, almoço até 14h30, lanche até 19h, jantar depois
+const MEALS=[
+ {k:'café',   full:'café da manhã', t:'06:30', to:600},
+ {k:'almoço', full:'almoço',        t:'12:30', to:870},
+ {k:'lanche', full:'lanche',        t:'16:00', to:1140},
+ {k:'jantar', full:'jantar',        t:'21:30', to:1440}
 ];
-const MOD_DEF=['futevôlei','yoga','boxe','funcional'];
-const BAIRRO_DEF=['vila madalena','barra funda'];
-const LOCAIS_DEF=['hot yoga','iyengar yoga','boxe','mowhouse','futevôlei','posto 11','calçadão','riplay jardins','021 fight club'];
-function turno(s){return s<720?'manhã':s<1080?'tarde':'noite'}
-function fmt(m){const h=Math.floor(m/60),mi=m%60;return mi?`${h}h${String(mi).padStart(2,'0')}`:`${h}h`}
-function wkKey(){const d=new Date(),s=new Date(d);s.setDate(d.getDate()-d.getDay());return s.toDateString()}
-const RAW={0:[{s:540,e:'10h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:540,e:'10h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:600,e:'11h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:630,e:'11:45h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:660,e:'12h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:720,e:'13h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:750,e:'13:30h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'}],1:[{s:360,e:'7h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:420,e:'8h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:420,e:'8h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:420,e:'8h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:450,e:'9h',n:'iyengar yoga',sub:'',b:'vila madalena',m:'yoga'},{s:480,e:'9h',n:'futevôlei',sub:'alef · barra funda',b:'barra funda',m:'futevôlei'},{s:480,e:'9h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:510,e:'9:30h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:1020,e:'18h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:1110,e:'19:45h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:1200,e:'21h',n:'futevôlei',sub:'alef · barra funda',b:'barra funda',m:'futevôlei'},{s:1230,e:'21:30h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'}],2:[{s:360,e:'7h',n:'futevôlei',sub:'maico · barra funda',b:'barra funda',m:'futevôlei'},{s:360,e:'7h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:390,e:'7:30h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:420,e:'8h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:420,e:'8h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:450,e:'9h',n:'iyengar yoga',sub:'',b:'vila madalena',m:'yoga'},{s:480,e:'9h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:1260,e:'22h',n:'futevôlei',sub:'alef · barra funda',b:'barra funda',m:'futevôlei'}],3:[{s:360,e:'7h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:420,e:'8h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:420,e:'8h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:420,e:'8h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:450,e:'9h',n:'iyengar yoga',sub:'',b:'vila madalena',m:'yoga'},{s:480,e:'9h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:510,e:'9:30h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:1020,e:'18h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:1110,e:'19:45h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:1230,e:'21:30h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'}],4:[{s:360,e:'7h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:390,e:'7:30h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:420,e:'8h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:420,e:'8h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:450,e:'9h',n:'iyengar yoga',sub:'',b:'vila madalena',m:'yoga'},{s:480,e:'9h',n:'futevôlei',sub:'maico · barra funda',b:'barra funda',m:'futevôlei'},{s:480,e:'9h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:1260,e:'22h',n:'futevôlei',sub:'alef · barra funda',b:'barra funda',m:'futevôlei'}],5:[{s:360,e:'7h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:420,e:'8h',n:'mowhouse',sub:'treino integrado',b:'vila madalena',m:'funcional'},{s:420,e:'8h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:420,e:'8h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:450,e:'9h',n:'iyengar yoga',sub:'',b:'vila madalena',m:'yoga'},{s:480,e:'9h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:510,e:'9:30h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:1020,e:'18h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:1110,e:'19:45h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'}],6:[{s:540,e:'10h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:540,e:'10h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:600,e:'11h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:630,e:'11:45h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'},{s:660,e:'12h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:720,e:'13h',n:'boxe',sub:'one to one',b:'vila madalena',m:'boxe'},{s:750,e:'13:30h',n:'hot yoga',sub:'são paulo',b:'vila madalena',m:'yoga'}]};
 
-const SEED_ACTS=(()=>{const out=[];let id=1000;Object.keys(RAW).forEach(day=>{(RAW[day]||[]).forEach(a=>{out.push({id:id++,n:a.n,sub:a.sub||'',b:a.b||'',m:a.m||'',s:a.s,e:a.e||'',days:[+day]});});});return out;})();
+const RB=[
+// ─────────── café da manhã ───────────
+{id:101,m:'café',n:'pão com ovo',t:8,
+ sl:[{l:'pão',o:['pão francês 1un (50g)','pão integral 2 fatias (50g)','artesano integral 2 fatias','goma de tapioca 45g']},
+     {l:'proteína',o:['ovo médio 2un (90g)']},
+     {l:'cremoso',o:['creme de ricota light 30g','requeijão light 20g','cottage 30g','muçarela 12g','queijo coalho 10g','minas frescal 20g']},
+     {l:'fruta',o:['mamão formosa 150g','uva 125g','manga 90g','melancia 220g','melão 275g','banana 65g','abacate 40g']},
+     {l:'finalizar',o:['mix de sementes 5g']}],
+ mp:'chia por cima da fruta e o mix de abóbora+linhaça por cima do ovo. dá pra variar com patê de ovo cozido: cozinhar 10-12min, amassar com garfo e misturar com o creme de ricota, sal, pimenta e cebolinha.'},
 
-function ld(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def}catch{return def}}
+{id:102,m:'café',n:'pão com ovo e tomatinhos',t:8,
+ sl:[{l:'pão',o:['pão francês 1un (50g)','pão integral 2 fatias (50g)','goma de tapioca 45g']},
+     {l:'proteína',o:['ovo médio 2un (90g)']},
+     {l:'cremoso',o:['cottage lacfree 30g','requeijão light 20g','creme de ricota 30g','muçarela 12g','minas frescal 20g']},
+     {l:'vegetal',o:['tomate à vontade','tomate cereja à vontade']},
+     {l:'fruta',o:['mamão formosa 150g','uva 120g','manga 85g','melancia 220g','melão 275g','banana 65g','abacate 40g']},
+     {l:'finalizar',o:['mix de sementes 5g']}],
+ mp:'avocado toast: trocar a fruta por 40g de abacate (dá pra deixar guacamole pronta pra semana e pesar na hora). toast de banana: metade do pão com ovo/tomate/sementes e a outra metade com banana fatiada dourada na frigideira + queijo cremoso.'},
+
+{id:103,m:'café',n:'bowl de iogurte',t:3,
+ sl:[{l:'iogurte',o:['pense zero 250g','lacfree 210g','danone natural 145ml','yorgus grego 125g']},
+     {l:'aveia',o:['aveia em flocos finos 10g']},
+     {l:'crocante',o:['granola low carb 15g','chocopops 15g']},
+     {l:'fruta',o:['manga 110g','mamão 175g','uva 135g','banana 70g','morango congelado 230g']},
+     {l:'doce',o:['mel 20g']}],
+ mp:'dá pra bater a fruta com o iogurte no liquidificador (fica tipo mousse). ou fazer banana caramelizada: rodelas de banana na frigideira com a aveia e o mel, em fogo baixo, até dourar — e usar como topping.'},
+
+{id:104,m:'café',n:'tapioca de frango',t:7,
+ sl:[{l:'massa',o:['goma de tapioca 50g']},
+     {l:'proteína',o:['frango desfiado 40g']},
+     {l:'cremoso',o:['requeijão light 20g','creme de ricota 30g','cottage 30g','muçarela 12g','queijo coalho 10g','minas frescal 20g']},
+     {l:'fruta',o:['mamão formosa 115g','uva 95g','manga 65g','melancia 170g','melão 220g','banana 50g','abacate 30g']},
+     {l:'finalizar',o:['mix de sementes 5g']}]},
+
+{id:105,m:'café',n:'cuscuz com ovo',t:10,
+ sl:[{l:'carbo',o:['flocão de milho cru 40g','cuscuz de milho cozido 125g']},
+     {l:'proteína',o:['ovo médio 2un (90g)']},
+     {l:'cremoso',o:['requeijão light 20g','creme de ricota 30g','cottage 30g','muçarela 15g','minas frescal 20g']},
+     {l:'fruta',o:['mamão formosa 100g','uva 95g','manga 65g','melancia 170g','melão 220g','banana 50g','abacate 30g']},
+     {l:'finalizar',o:['semente de chia 3g']}],
+ mp:'tapioca crocante de cuscuz: hidratar o flocão por 5min, espalhar o requeijão na frigideira untada em movimentos circulares, cobrir com o flocão, tampar, e fechar com os ovos mexidos por cima. versão com queijo: derreter o queijo de um lado da frigideira e o flocão do outro, com os ovos por cima.'},
+
+// ─────────── almoço ───────────
+{id:111,m:'almoço',n:'frango com abóbora cabotiá',t:10,
+ sl:[{l:'proteína',o:['peito de frango grelhado 100g','patinho 90g','tilápia 170g','salmão 120g','camarão 185g','filé mignon 95g','atum sólido 120g']},
+     {l:'carbo',o:['abóbora cabotiá cozida 300g','batata doce 130g','purê de mandioquinha 150g + creme de ricota 25g','batata inglesa cozida 260g','batata inglesa assada 160g','macarrão 120g','arroz 115g']},
+     {l:'vegetais',o:['legumes cozidos 150g','salada crua 150g']}],
+ mp:'começar o prato pelas fibras (legumes e salada), depois o carboidrato e a proteína por último — ajuda na saciedade e no controle glicêmico.'},
+
+{id:112,m:'almoço',n:'atum com risoni',t:6,
+ sl:[{l:'proteína',o:['atum sólido em óleo 120g','patinho 90g','tilápia 170g','salmão 120g','camarão 185g','filé mignon 95g','frango 100g']},
+     {l:'carbo',o:['risoni cozido 110g']},
+     {l:'vegetais',o:['legumes cozidos 150g','salada crua 150g']},
+     {l:'cremoso',o:['creme de ricota light 20g','cottage yorgus 24g','cottage verde campo 25g','requeijão light 15g']}],
+ mp:'preferir atum sólido em pedaços no óleo (tem mais proteína que o ralado) e escorrer bem o excesso de óleo antes de usar.'},
+
+{id:113,m:'almoço',n:'carpaccio com croutons',t:8,
+ sl:[{l:'proteína',o:['carpaccio de carne 80g']},
+     {l:'salada',o:['salada crua livre 150g']},
+     {l:'cremoso',o:['cottage proteico yorgus 20g','creme de ricota 20g','cottage verde campo 25g','requeijão light 15g']},
+     {l:'crocante',o:['pão integral 2 fatias (50g) em croutons','granola salgada 15g']}]},
+
+{id:114,m:'almoço',n:'salada de frango com manga',t:10,
+ sl:[{l:'proteína',o:['peito de frango grelhado 100g','patinho em iscas 115g','tilápia 220g','camarão 235g']},
+     {l:'carbo',o:['macarrão cozido 95g','macarrão integral 95g','batata inglesa cozida 210g','batata inglesa assada 125g','croutons 1,5 fatia']},
+     {l:'fruta',o:['manga em cubinhos 60g']},
+     {l:'folhas',o:['alface, rúcula, tomate, pepino e cenoura à vontade']},
+     {l:'molho',o:['mostarda com mel','mel + azeite + limão + mostarda','iogurte grego com mostarda','cottage com mostarda','limão + mostarda + ketchup + azeite 8g + adoçante e sal','ranch mr taste','caesar hellmann 12g']}],
+ mp:'gergelim torrado e triturado por cima fica ótimo. dá pra deixar o molho pronto num potinho no domingo.'},
+
+// ─────────── lanche ───────────
+{id:121,m:'lanche',n:'iogurte com uva e granola',t:2,
+ sl:[{l:'iogurte',o:['iogurte natural desnatado 1un (160ml)']},
+     {l:'fruta',o:['uva 90g','manga 70g','banana 50g']},
+     {l:'crocante',o:['granola low carb 15g','castanha de caju 5un (12,5g)']}]},
+
+{id:122,m:'lanche',n:'sanduíche de frango',t:3,
+ sl:[{l:'pão',o:['pão integral 2 fatias (50g)']},
+     {l:'proteína',o:['frango desfiado 40g','atum ralado 70g']},
+     {l:'cremoso',o:['requeijão light 23g','creme de ricota 30g','cottage yorgus 30g']},
+     {l:'vegetal',o:['cenoura ralada 1 colher de sopa (12g)']}],
+ mp:'dá pra montar vários no domingo e guardar na geladeira embrulhados em papel-filme.'},
+
+{id:123,m:'lanche',n:'crepioca de frango',t:6,
+ sl:[{l:'massa',o:['ovo médio 1un (45g) + goma de tapioca 30g']},
+     {l:'proteína',o:['frango desfiado 40g','atum ralado 55g']},
+     {l:'cremoso',o:['requeijão light 25g','cottage yorgus 35g','creme de ricota 30g']}],
+ mp:'misturar bem o ovo, a goma e o sal até ficar uniforme. frigideira antiaderente, tampar por 3-4min e rechear.'},
+
+{id:124,m:'lanche',n:'panqueca de banana',t:8,
+ sl:[{l:'massa',o:['ovo médio 1un (45g) + clara 1un (30g)']},
+     {l:'fruta',o:['banana prata 1un grande (55g)']},
+     {l:'seco',o:['aveia em flocos finos 15g + cacau em pó 7g + canela']},
+     {l:'cobertura',o:['calda de caramelo saucy 20g','mel 10g','geleia de frutas vermelhas diet 20g']}],
+ mp:'misturar o ovo com a canela e o cacau, adicionar a aveia, depois a banana amassada. frigideira untada, fogo baixo com tampa por ~2min, virar por 1min. uma colherzinha de fermento na massa deixa com cara de bolinho.'},
+
+{id:125,m:'lanche',n:'overnight oats',t:3,
+ sl:[{l:'base',o:['aveia em flocos finos 15g + chia 10g']},
+     {l:'líquido',o:['iogurte pense zero 100g + leite desnatado 30ml']},
+     {l:'fruta',o:['uva 30g','banana 30g','morango 4un (48g)','kiwi 1un (76g)']},
+     {l:'crocante',o:['granola 10g']}],
+ mp:'montar na noite anterior e deixar na geladeira. de manhã já está pronto — é o lanche mais fácil da lista pra dias corridos.'},
+
+{id:126,m:'lanche',n:'panqueca de iogurte',t:8,
+ sl:[{l:'massa',o:['ovo médio 1un (45g) + iogurte grego pense zero 45g']},
+     {l:'seco',o:['farelo de aveia oat bran 30g','aveia em flocos finos 20g']},
+     {l:'crescimento',o:['fermento químico 5g + canela']},
+     {l:'cobertura',o:['geleia de amora diet 20g + mel 5g']}],
+ mp:'ovo + farelo de aveia + meio potinho de iogurte grego, canela e cacau a gosto e uma pitada de fermento. frigideira em fogo baixo até dourar dos dois lados. finalizar com a geleia e o mel.'},
+
+// ─────────── jantar ───────────
+{id:131,m:'jantar',n:'hambúrguer',t:12,
+ sl:[{l:'pão',o:['pão de hambúrguer 1un (50g)','pão integral 2 fatias (50g)','pão de hambúrguer plusvita 1un']},
+     {l:'proteína',o:['patinho cru 135g','filé de peito de frango cru 135g']},
+     {l:'queijo',o:['muçarela 1 fatia média (20g)','minas frescal light 20g','requeijão light 25g']},
+     {l:'vegetal',o:['alface e tomate à vontade']}],
+ mp:'hambúrguer de frango: triturar o peito (dá pra pedir no açougue) batendo junto com cebola, alho, azeite e temperos secos. moldar pesando a quantidade do plano. de carne moída é só moldar e temperar na hora com sal e pimenta. dá pra empanar no flocão de cuscuz e finalizar na air fryer.'},
+
+{id:132,m:'jantar',n:'tortilla de carne',t:8,
+ sl:[{l:'massa',o:['rap10 muito fit 1un (40g)']},
+     {l:'proteína',o:['patinho cru moído 110g','filé de peito de frango cru moído 120g']},
+     {l:'cremoso',o:['requeijão light 25g','creme de ricota 35g','cottage lacfree 35g','minas frescal 30g','muçarela 20g']},
+     {l:'vegetal',o:['alface e tomate à vontade']},
+     {l:'molho',o:['ketchup 1 colher de sopa (12g)']}],
+ mp:'espalhar a carne moída crua por todo o rap10, montar vários e guardar em saquinhos no freezer. na hora é só ir pra frigideira e rechear com o queijo e a alface.'},
+
+{id:133,m:'jantar',n:'pizza fake',t:5,
+ sl:[{l:'massa',o:['rap10 muito fit 1un (40g)']},
+     {l:'molho',o:['molho de tomate 2 colheres de sopa cheias (40g)']},
+     {l:'proteína',o:['frango desfiado 70g']},
+     {l:'queijo',o:['queijo muçarela 1 fatia (20g)']},
+     {l:'finalizar',o:['orégano à vontade']}],
+ mp:'rap10 na frigideira, molho, queijo, frango e orégano por cima. tampar em fogo baixo por 1 minutinho.'},
+
+{id:134,m:'jantar',n:'crepioca de frango',t:6,
+ sl:[{l:'massa',o:['ovo médio 1un (45g) + goma de tapioca 30g']},
+     {l:'proteína',o:['frango desfiado 70g','atum ralado 95g','carne moída 60g']},
+     {l:'cremoso',o:['requeijão light 25g','cottage yorgus 35g','creme de ricota 30g']}],
+ mp:'misturar bem o ovo, a goma e o sal. frigideira antiaderente, tampar por 3-4min e rechear.'},
+
+{id:135,m:'jantar',n:'tapioca de frango',t:5,
+ sl:[{l:'massa',o:['goma de tapioca 50g']},
+     {l:'proteína',o:['frango desfiado 80g']},
+     {l:'cremoso',o:['requeijão light 20g','creme de ricota 30g','cottage lacfree 30g','muçarela 12g','queijo coalho 10g','minas frescal 20g']}]}
+];
+
+// atalhos do domingo — aceleram receitas, nunca bloqueiam
+const ATALHOS=[
+ {n:'frango desfiado',d:'cozinhar e desfiar ~400g de peito',r:[104,122,123,133,134,135]},
+ {n:'peito de frango grelhado',d:'grelhar em porções de 100g',r:[111,114]},
+ {n:'carne moída refogada',d:'patinho temperado',r:[134]},
+ {n:'hambúrgueres moldados',d:'135g cada, em saquinhos no freezer',r:[131]},
+ {n:'tortillas montadas',d:'rap10 com a carne crua espalhada, no freezer',r:[132]},
+ {n:'abóbora cabotiá cozida',d:'porções de 300g',r:[111]},
+ {n:'purê de mandioquinha',d:'150g + 25g de creme de ricota',r:[111]},
+ {n:'batata inglesa assada',d:'porções pesadas',r:[111,114]},
+ {n:'macarrão / risoni cozido',d:'',r:[112,114]},
+ {n:'legumes cozidos',d:'porções de 150g',r:[111,112]},
+ {n:'salada lavada e seca',d:'alface, rúcula, tomate, pepino, cenoura',r:[113,114,131,132]},
+ {n:'frutas cortadas e pesadas',d:'mamão, manga e uva em potinhos',r:[101,102,103,104,105,121]},
+ {n:'guacamole',d:'pro avocado toast',r:[102]},
+ {n:'sanduíches montados',d:'embrulhados em papel-filme',r:[122]},
+ {n:'gergelim torrado e triturado',d:'pra salada',r:[114]},
+ {n:'molho de salada',d:'escolher um dos molhos da salada de frango',r:[114]},
+ {n:'overnight oats da noite',d:'deixar pronto na véspera',r:[125]},
+ {n:'chá diurético na garrafa',d:'hibisco, cavalinha e gengibre',r:[]}
+];
+
+const LISTA_DEF={
+ 'proteína':['ovo','clara de ovo','peito de frango','patinho moído','patinho em iscas','filé mignon','atum sólido em óleo','atum ralado','tilápia','salmão','camarão','carpaccio de carne'],
+ 'carbo':['pão francês','pão de forma integral','pão de hambúrguer','rap10','goma de tapioca','flocão de milho','macarrão','risoni','arroz','batata inglesa','batata doce','abóbora cabotiá','mandioquinha','aveia em flocos finos','farelo de aveia','granola low carb','granola salgada','chocopops'],
+ 'fruta':['mamão formosa','manga','uva','banana prata','melancia','melão','abacate','morango','kiwi'],
+ 'laticínio':['creme de ricota light','requeijão light','cottage lacfree','cottage proteico yorgus','queijo muçarela','queijo coalho','minas frescal light','minas padrão sem lactose','iogurte natural desnatado','iogurte pense zero','iogurte grego pense zero','leite desnatado'],
+ 'vegetal':['alface americana','rúcula','tomate','tomate cereja','pepino','cenoura','brócolis','abobrinha','berinjela'],
+ 'sementes':['mix de sementes','semente de chia','castanha de caju','gergelim'],
+ 'temperos e molhos':['molho de tomate','ketchup','mostarda','azeite','orégano','canela','cacau em pó','fermento químico','molho ranch','molho caesar','páprica defumada','lemon pepper','alecrim'],
+ 'doces':['mel','geleia de frutas vermelhas diet','geleia de amora diet','calda de caramelo'],
+ 'suplementos e chás':['creatina','cúrcuma','gengibre em pó','extrato de própolis','limão','hibisco','chá verde','cavalinha','camomila','erva-doce','hortelã']
+};
+
+const HABITS_DEF=['água em jejum','raspar a língua','shot matinal','creatina','chá','alongar','meditar','ler','escrever','treinar','separar roupa'];
+const WATER_GOAL=2250;
+
+const FORA=[
+ 'monte o prato na mesma proporção do plano: 1 proteína + 1 carbo + salada e legumes à vontade.',
+ 'proteína: 100g de frango · 90g de patinho · 170g de tilápia · 120g de salmão · 95g de filé mignon.',
+ 'carbo: 115g de arroz · 120g de macarrão · 130g de batata doce · 160g de batata assada · 300g de abóbora.',
+ 'começar pelas fibras, depois o carbo, e a proteína por último.',
+ 'lanche na rua: iogurte natural + fruta, ou um sanduíche natural de frango.',
+ 'se não der pra pesar nada: prioriza a proteína e a salada, e vai com pouco carbo. um dia fora do padrão não desmancha a semana.'
+];
+
+// ═══════════════ estado ═══════════════
+function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
-function initCO(){const s=ld('liz_cat',null);const fi=ld('liz_fi',null)||FRIDGE_DEF;const fk=Object.keys(fi);if(!s)return fk;const ss=new Set(s);return[...s,...fk.filter(k=>!ss.has(k))];}
-function initRO(){const s=ld('liz_ro',null);const ov=ld('liz_ov',{})||{};if(!s)return RB.map(r=>r.id);const ss=new Set(s);return[...s,...RB.map(r=>r.id).filter(id=>!ss.has(id)&&!(ov[id]&&ov[id].deleted))];}
-function initActs(){const s=ld('liz_acts',null);if(s)return s;const seed=SEED_ACTS.map(a=>({...a,days:[...a.days]}));const ca=ld('liz_ca',[]);(ca||[]).forEach(a=>seed.push({id:a.id||Date.now()+Math.random(),n:a.n||'',sub:a.sub||'',b:a.b||'',m:a.m||'',s:a.s,e:a.e||'',days:[...(a.days||[])]}));return seed;}
-function seedFromActs(def,key){const s=ld('liz_'+key,null);if(s)return s;const set=[...def];[...SEED_ACTS,...(ld('liz_ca',[])||[])].forEach(a=>{const v=a[key==='locais'?'n':key==='bairros'?'b':'m'];if(v&&!set.includes(v))set.push(v);});return set;}
-function initLocais(){return seedFromActs(LOCAIS_DEF,'locais');}
-function initBairros(){return seedFromActs(BAIRRO_DEF,'bairros');}
-function initMods(){return seedFromActs(MOD_DEF,'mods');}
 
-// troca de plano alimentar: limpa receitas, geladeira e prep antigos, preservando treino/hábitos/água
-const PLAN_VER='2026-08-10';
-if(ld('liz_planver',null)!==PLAN_VER){
-  ['liz_ro','liz_ov','liz_fi','liz_cat','liz_fr','liz_pn','liz_nt','liz_prepitems','liz_prep','liz_sc','liz_se'].forEach(k=>{try{localStorage.removeItem(k);}catch(e){}});
-  sv('liz_planver',PLAN_VER);
+// reestruturação do app: limpa dados do formato antigo, preserva hábitos e água
+const APP_VER='2026-08-13-comer';
+if(ld('liz_appver',null)!==APP_VER){
+  ['liz_ro','liz_ov','liz_fi','liz_cat','liz_fr','liz_pn','liz_nt','liz_prepitems','liz_prep','liz_sc','liz_se',
+   'liz_ci','liz_pl','liz_cp','liz_acts','liz_locais','liz_bairros','liz_mods','liz_ca','liz_planver'
+  ].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
+  // água: formato antigo guardava nº de garrafas por dia → converte pra lista de ml
+  const old=ld('liz_wt',null);
+  if(old&&typeof old==='object'&&!ld('liz_water',null)){
+    const novo={};
+    Object.keys(old).forEach(d=>{const v=old[d];if(typeof v==='number'&&v>0)novo[d]=Array(v).fill(750)});
+    if(Object.keys(novo).length)sv('liz_water',novo);
+  }
+  sv('liz_appver',APP_VER);
 }
 
 const st={
-  tab:'treino',sub:'geladeira',vd:new Date().getDay(),
-  ci:ld('liz_ci',{}),
-  places:ld('liz_pl',{}),
-  customPlaces:ld('liz_cp',[]),
-  fridge:ld('liz_fr',{}),
-  plan:ld('liz_pn',{}),
-  catOrder:initCO(),
-  recOrd:initRO(),
-  ov:ld('liz_ov',{}),
-  fi:ld('liz_fi',null)||JSON.parse(JSON.stringify(FRIDGE_DEF)),
-  notes:ld('liz_nt',{}),
-  acts:initActs(),
-  locais:initLocais(),
-  bairros:initBairros(),
-  mods:initMods(),
-  fMod:[],fTurno:[],fBairro:[],
-  recFilt:'todas',
-  selSlot:null,
-  editFr:false,editRec:false,editSem:false,
-  lugaresOpen:false,
-  openNotes:{},
-  modal:null,editModal:null,actModal:false,actEditId:null,editLocais:false,
-  em:{n:'',cat:'almoço',req:[]},newIngr:'',
-  na:{n:'',sub:'',b:'',m:'',days:[],start:'09:00',end:''},
-  sc:ld('liz_sc',{}),
-  se:ld('liz_se',[]),
-  hb:ld('liz_hb',{}),
-  wt:ld('liz_wt',{}),
-  prep:ld('liz_prep',{}),
+ tab:'hoje',
+ mealFilt:null,
+ fast:false,
+ pick:ld('liz_pick',{}),
+ open:{},
+ notes:ld('liz_notes',{}),
+ log:ld('liz_log',{}),
+ swap:ld('liz_swap',{}),
+ water:ld('liz_water',{}),
+ hb:ld('liz_hb',{}),
+ habits:ld('liz_habits',null)||HABITS_DEF.slice(),
+ lista:ld('liz_lista',null)||JSON.parse(JSON.stringify(LISTA_DEF)),
+ buy:ld('liz_buy',{}),
+ atalhos:ld('liz_atalhos',{}),
+ accOpen:{},
+ editH:false,editL:false
 };
 
-const HABITS=['água em jejum','raspar a língua','shot matinal','creatina','chá','meditar','ler','alongar','escrever','treinar','separar roupa'];
-const WATER_GOAL=3;
-const WATER_ML=750;
-const PREP_ITEMS=['frango desfiado','carne moída cozida','peito de frango grelhado','hambúrgueres no freezer','tortillas no freezer','abóbora cabotiá cozida','purê de mandioquinha','batata inglesa assada','macarrão cozido','legumes cozidos','salada lavada','frutas cortadas','guacamole','sanduíches montados','gergelim torrado','chá diurético na garrafa','molho de salada'];
-const PREP_LINK={'peito de frango':'peito de frango grelhado','patinho moído':'carne moída cozida','abóbora cabotiá':'abóbora cabotiá cozida','mandioquinha':'purê de mandioquinha','batata inglesa':'batata inglesa assada','macarrão':'macarrão cozido','risoni':'macarrão cozido','alface americana':'salada lavada'};
-st.prepItems=ld('liz_prepitems',null)||PREP_ITEMS.slice();
-st.prepLink=JSON.parse(JSON.stringify(PREP_LINK));try{localStorage.removeItem('liz_preplink');}catch(e){}
-st.editPrep=false;
-function today(){return new Date().toDateString();}
-function getWkStart(){const d=new Date(),s=new Date(d);s.setDate(d.getDate()-d.getDay()+1);return s.toDateString();}
+// ═══════════════ helpers ═══════════════
+function today(){return new Date().toDateString()}
+function wkStart(){const d=new Date(),s=new Date(d);s.setDate(d.getDate()-((d.getDay()+6)%7));return s.toDateString()}
+function weekDates(){const n=new Date(),off=-((n.getDay()+6)%7);return Array.from({length:7},(_,i)=>{const d=new Date(n);d.setDate(n.getDate()+off+i);return d})}
+function nowMin(){const d=new Date();return d.getHours()*60+d.getMinutes()}
+function curMealIdx(){const m=nowMin();for(let i=0;i<MEALS.length;i++)if(m<MEALS[i].to)return i;return 3}
+function byMeal(k){return RB.filter(r=>r.m===k)}
+function rec(id){return RB.find(r=>r.id===id)}
+function pickOf(rid,si){const p=st.pick[rid];return(p&&p[si]!==undefined)?p[si]:0}
+function lineOf(r){return r.sl.map((s,i)=>s.o[pickOf(r.id,i)]||s.o[0]).join(' · ')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+function logged(mk,ds){return(st.log[ds||today()]||{})[mk]}
+function hashDay(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
+function suggest(mi){
+  const list=byMeal(MEALS[mi].k);
+  const base=hashDay(today()+MEALS[mi].k);
+  const off=st.swap[today()+'_'+mi]||0;
+  const pool=st.fast?list.filter(r=>r.t<=6):list;
+  const use=pool.length?pool:list;
+  return use[(base+off)%use.length];
+}
+function waterMl(ds){const a=st.water[ds||today()];return Array.isArray(a)?a.reduce((x,y)=>x+y,0):0}
+function atalhoDone(n){return!!((st.atalhos[wkStart()]||{})[n])}
+function buyCount(){return Object.keys(st.buy).filter(k=>st.buy[k]).length}
 
-function wk(){return wkKey();}
-function getAllPlaces(){return[...PLACES_DEFAULT,...st.customPlaces];}
-function getAllMods(){const ex=[...new Set(st.acts.map(a=>a.m))].filter(m=>m&&!st.mods.includes(m));return[...st.mods,...ex];}
-function getAllBairros(){const ex=[...new Set(st.acts.map(a=>a.b))].filter(b=>b&&!st.bairros.includes(b));return[...st.bairros,...ex];}
-function getAllLocais(){const ex=(st.na&&st.na.n&&!st.locais.includes(st.na.n)&&!st.editLocais)?[st.na.n]:[];return[...ex,...st.locais];}
-function getSlots(day){return st.acts.filter(a=>a.days.includes(day)).slice().sort((a,b)=>a.s-b.s);}
-function applyF(slots){return slots.filter(s=>{if(st.fMod.length&&!st.fMod.includes(s.m))return false;if(st.fTurno.length&&!st.fTurno.includes(turno(s.s)))return false;if(st.fBairro.length&&!st.fBairro.includes(s.b))return false;return true;});}
-function getRecipe(id){const b=RB.find(r=>r.id===id);const o=st.ov[id]||{};if(o.deleted)return null;if(!b&&!o.n)return null;return{...(b||{id,n:'',cat:'',req:[]}),...o};}
-function allRecipes(){return st.recOrd.map(id=>getRecipe(id)).filter(Boolean);}
-function fridgeHas(i){return!!st.fridge[i];}
-function recAvail(r){
-  const pd=st.prep[getWkStart()]||{};
-  return r.req.every(i=>{
-    if(st.prepItems.includes(i))return!!pd[i];
-    if(!fridgeHas(i))return false;
-    if(st.prepLink[i]&&st.prepItems.includes(st.prepLink[i]))return!!pd[st.prepLink[i]];
-    return true;
-  });
-}
-function missing(r){
-  const pd=st.prep[getWkStart()]||{};
-  return r.req.filter(i=>{
-    if(st.prepItems.includes(i))return!pd[i];
-    if(!fridgeHas(i))return true;
-    if(st.prepLink[i]&&st.prepItems.includes(st.prepLink[i]))return!pd[st.prepLink[i]];
-    return false;
-  });
-}
-function missingType(i){return(st.prepItems.includes(i)||(st.prepLink[i]&&st.prepItems.includes(st.prepLink[i])))?'prep':'comprar';}
-function allFI(){return Object.values(st.fi).flat();}
-function getPK(d,m){return`${wk()}_${d}_${m}`;}
-function computeShoppingList(){
-  const needed=new Set();
-  WEEK.forEach(di=>{MEALS.forEach((_,mi)=>{const r=getRecipe(st.plan[getPK(di,mi)]);if(r)r.req.forEach(i=>needed.add(i));});});
-  const grouped={};const uncat=[];
-  needed.forEach(item=>{
-    let found=false;
-    for(const cat of st.catOrder){if(st.fi[cat]&&st.fi[cat].includes(item)){if(!grouped[cat])grouped[cat]=[];grouped[cat].push(item);found=true;break;}}
-    if(!found)uncat.push(item);
-  });
-  if(uncat.length)grouped['outros']=uncat;
-  return{grouped,needed};
-}
-function toggleF(key,v){const i=st[key].indexOf(v);if(i>=0)st[key].splice(i,1);else st[key].push(v);}
-
+// ═══════════════ render ═══════════════
 function render(){
-  const vd=st.vd;
-  const ciToday=!!(st.ci[wk()]&&st.ci[wk()][vd]);
-  const allSlots=getSlots(vd);
-  const fSlots=applyF(allSlots);
-  const hasF=st.fMod.length||st.fTurno.length||st.fBairro.length;
-  const allR=allRecipes();
-  const filtR=st.recFilt==='todas'?allR:allR.filter(r=>r.cat===st.recFilt);
-  const availR=filtR.filter(r=>recAvail(r));
-  const noAvailR=filtR.filter(r=>!recAvail(r));
-  const filtIds=filtR.map(r=>r.id);
-  const allPlaces=getAllPlaces();
-  const placeDone=allPlaces.filter((_,i)=>st.places[i]).length;
-  const allMods=getAllMods();
-  const allBairros=getAllBairros();
-
+  const mi=curMealIdx(),M=MEALS[mi],td=today(),d=new Date();
   let h='';
-  h+=`<div class="hd"><div><h1>liz</h1><div class="hn">${DF[vd]}</div></div><div><div class="hc">${ciToday?'✓':'—'}</div><div class="hl">${ciToday?'check-in feito':'disponível hoje'}</div></div></div>`;
-  h+=`<div class="ws">`;WEEK.forEach(i=>{const c=!!(st.ci[wk()]&&st.ci[wk()][i]),a=i===vd;h+=`<div class="wi" onclick="setDay(${i})"><div class="wd ${c?'c':a?'a':''}">${c?'✓':DS[i][0]}</div><div class="wl2 ${a?'a':''}">${DS[i]}</div></div>`;});h+=`</div>`;
-  h+=`<div class="mt"><div class="${st.tab==='treino'?'a':''}" onclick="setTab('treino')">treino</div><div class="${st.tab==='alim'?'a':''}" onclick="setTab('alim')">alimentação</div><div class="${st.tab==='hab'?'a':''}" onclick="setTab('hab')">hábitos</div><div class="${st.tab==='agua'?'a':''}" onclick="setTab('agua')">água</div></div>`;
-
-  // ── TREINO ──
-  if(st.tab==='treino'){
-    h+=`<div class="dn">`;WEEK.forEach(i=>{h+=`<span class="${i===vd?'a':''}" onclick="setDay(${i})">${DF[i]}</span>`;});h+=`</div>`;
-    h+=`<div class="fwrap">`;
-    h+=`<div class="frow"><span class="flbl">modalidade</span>`;allMods.forEach(v=>{h+=`<span class="fc ${st.fMod.includes(v)?'on':''}" onclick="fToggle('fMod','${v}')">${v}</span>`;});h+=`</div>`;
-    h+=`<div class="frow"><span class="flbl">turno</span>`;['manhã','tarde','noite'].forEach(v=>{h+=`<span class="fc ${st.fTurno.includes(v)?'on':''}" onclick="fToggle('fTurno','${v}')">${v}</span>`;});h+=`</div>`;
-    h+=`<div class="frow"><span class="flbl">bairro</span>`;allBairros.forEach(v=>{h+=`<span class="fc ${st.fBairro.includes(v)?'on':''}" onclick="fToggle('fBairro','${v}')">${v}</span>`;});h+=`</div>`;
-    h+=`</div><div class="dvd"></div>`;
-    h+=`<div class="sec"><div class="slbl">gympass — check-in${hasF?` <span>${fSlots.length} resultado${fSlots.length!==1?'s':''}</span>`:''}<span class="addnew" onclick="openNewAct()">+ nova atividade</span></div>`;
-    if(!fSlots.length){h+=`<div class="empty">${hasF?'nenhum resultado':'nenhuma atividade gympass hoje'}</div>`;}
-    else{h+=`<div class="sl">`;fSlots.forEach((sl,i)=>{const k=`${vd}_${i}`,sel=st.selSlot===k;h+=`<div class="sr ${sel?'on':''}" onclick="selSlot('${k}')"><div class="st2">${fmt(sl.s)}${sl.e?'–'+sl.e:''}</div><div style="flex:1"><div class="sn">${sl.n}</div>${sl.sub?`<div class="ss">${sl.sub}</div>`:''}<div class="stags">${sl.b?`<span class="tb">${sl.b}</span>`:''}<span class="tt">${turno(sl.s)}</span></div></div><div style="display:flex;align-items:center;gap:6px"><button class="reb" onclick="event.stopPropagation();openEditAct(${sl.id})">editar</button><button class="del-act" onclick="event.stopPropagation();deleteAct(${sl.id})">✕</button><div class="cib ${sel?'on':''}">${sel?'marcado':'check-in'}</div></div></div>`;});h+=`</div>`;}
-    h+=`</div>`;
-    // lugares
-    h+=`<div class="lt"><div class="lhd" onclick="st.lugaresOpen=!st.lugaresOpen;render()"><span style="font-size:13px;font-weight:600">lugares pra conhecer</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;color:var(--mu)">${placeDone}/${allPlaces.length}</span><span style="font-size:12px;color:var(--mu);display:inline-block;transform:${st.lugaresOpen?'rotate(180deg)':'none'}">▾</span></div></div>`;
-    if(st.lugaresOpen){
-      allPlaces.forEach((p,i)=>{const done=!!st.places[i];h+=`<div class="pr" onclick="togglePlace(${i})"><div class="pc ${done?'on':''}">${done?'✓':''}</div><span style="font-size:13px;font-weight:500;flex:1;color:${done?'var(--mu)':'var(--tx)'};text-decoration:${done?'line-through':'none'}">${p}</span>${i>=PLACES_DEFAULT.length?`<button class="del-act" onclick="event.stopPropagation();deletePlace(${i})">✕</button>`:''}</div>`;});
-      h+=`<div style="padding:10px 14px;border-top:1px solid var(--br)"><div class="arow" style="margin:0"><input id="pl-new" class="inp" style="flex:1;font-size:12px" placeholder="novo lugar"><button class="abtn" onclick="addPlace()">+</button></div></div>`;
-    }
-    h+=`</div>`;
-    h+=`<div class="spacer"></div>`;
-    h+=`<div class="cib2"><button class="${ciToday?'dn2':''}" onclick="toggleCI()">${ciToday?'check-in feito — desfazer':'registrar check-in hoje'}</button></div>`;
-  }
-
-  // ── ALIMENTAÇÃO ──
-  if(st.tab==='alim'){
-    h+=`<div class="stabs">`;['geladeira','receitas','prep'].forEach(t=>{h+=`<span class="${st.sub===t?'a':''}" onclick="setSub('${t}')">${t}</span>`;});h+=`</div>`;
-
-    if(st.sub==='geladeira'){
-      const tot=allFI().length,have=allFI().filter(i=>fridgeHas(i)).length;
-      h+=`<div class="sec"><div class="slbl">o que tem em casa <span>${have}/${tot}</span> <button class="eb ${st.editFr?'on':''}" onclick="st.editFr=!st.editFr;render()">${st.editFr?'pronto':'editar'}</button></div></div>`;
-      st.catOrder.forEach((cat,ci2)=>{
-        const items=st.fi[cat];if(!items)return;
-        const sid=cat.replace(/\W/g,'');
-        h+=`<div style="margin-bottom:1rem"><div style="display:flex;align-items:center;padding:0 1.25rem;margin-bottom:6px"><span style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--mu);flex:1">${cat}</span>`;
-        if(st.editFr){h+=`<div style="display:flex;gap:4px"><button style="width:24px;height:24px;border-radius:6px;border:1px solid var(--bd);background:var(--wh);font-size:12px;cursor:pointer;color:var(--w)" onclick="moveCat(${ci2},-1)" ${ci2===0?'disabled':''}>↑</button><button style="width:24px;height:24px;border-radius:6px;border:1px solid var(--bd);background:var(--wh);font-size:12px;cursor:pointer;color:var(--w)" onclick="moveCat(${ci2},1)" ${ci2===st.catOrder.length-1?'disabled':''}>↓</button></div>`;}
-        h+=`</div><div class="fi" style="padding:0 1.25rem">`;
-        items.forEach(item=>{
-          if(st.editFr){h+=`<div class="fchip on">${item}<span style="color:var(--w);cursor:pointer;font-size:12px" onclick="removeFI('${cat.replace(/'/g,"\\'")}','${item.replace(/'/g,"\\'")}')">✕</span></div>`;}
-          else{h+=`<div class="fchip ${fridgeHas(item)?'on':''}" onclick="toggleFridge('${item.replace(/'/g,"\\'")}')"> ${item}</div>`;}
-        });
-        h+=`</div>`;
-        if(st.editFr){h+=`<div class="arow" style="padding:6px 1.25rem"><input id="fi-${sid}" class="inp" style="flex:1;font-size:12px" placeholder="novo item em ${cat}"><button class="abtn" onclick="addFI('${cat.replace(/'/g,"\\'")}','${sid}')">+</button></div>`;}
-        h+=`</div>`;
-      });
-      if(st.editFr){h+=`<div class="sec"><div class="slbl">nova categoria</div><div class="arow"><input id="fi-newcat" class="inp" style="flex:1;font-size:12px" placeholder="nome da categoria"><button class="abtn" onclick="addFICat()">+</button></div></div>`;}
-      h+=`<div class="sec"><div class="slbl">backup dos dados</div><div style="font-size:11px;color:var(--mu);text-transform:none;line-height:1.5;margin-bottom:8px">salva TUDO do app (geladeira, receitas, prep, treino, hábitos, água) num texto. toque em gerar pra copiar e guardar, ou cole um backup pra restaurar / passar pra outro aparelho.</div><button style="width:100%;background:var(--wl);color:var(--w);border:1.5px solid var(--w);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer" onclick="genBackup()">gerar backup (copia automático)</button><textarea id="backup-out" class="nta" readonly placeholder="o backup vai aparecer aqui" style="text-transform:none;min-height:54px"></textarea><textarea id="backup-in" class="nta" placeholder="cole um backup aqui pra restaurar" style="text-transform:none;min-height:54px"></textarea><button style="width:100%;background:var(--wh);color:var(--w);border:1.5px solid var(--bd);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer" onclick="restoreBackup()">restaurar backup</button></div>`;
-      h+=`<div class="spacer"></div>`;
-    }
-
-    if(st.sub==='receitas'){
-      h+=`<div class="sec"><div class="slbl">receitas <button class="eb ${st.editRec?'on':''}" onclick="st.editRec=!st.editRec;render()">${st.editRec?'pronto':'reordenar'}</button><span class="addnew" onclick="openNew()">+ nova receita</span></div></div>`;
-      h+=`<div class="stabs">`;['todas','café da manhã','almoço','lanche','jantar'].forEach(c=>{h+=`<span class="${st.recFilt===c?'a':''}" onclick="setRecFilt('${c}')">${c}</span>`;});h+=`</div>`;
-      h+=`<div class="sec">`;
-      function rcCard(r,isAv){
-        const gi=st.recOrd.indexOf(r.id),vi=filtIds.indexOf(r.id);
-        const pg=filtIds[vi-1]!==undefined?st.recOrd.indexOf(filtIds[vi-1]):-1;
-        const ng=filtIds[vi+1]!==undefined?st.recOrd.indexOf(filtIds[vi+1]):-1;
-        const miss=isAv?[]:missing(r),noteOpen=!!st.openNotes[r.id],noteText=st.notes[r.id]||'';
-        const missPrep=miss.filter(i=>missingType(i)==='prep');
-        const missComprar=miss.filter(i=>missingType(i)==='comprar');
-        let c=`<div class="rc ${isAv?'av':''}"><div class="rr"><div class="rb"><div class="rn">${r.n}</div>`;
-        c+=`<div style="display:flex;gap:5px;margin-top:3px;flex-wrap:wrap">`;
-        c+=`<span style="font-size:10px;color:var(--mu)">${r.cat}${MEAL_TIME[r.cat]?' · '+MEAL_TIME[r.cat]:''}</span>`;
-        c+=`</div>`;
-        if(r.p&&r.p.length)c+=`<div style="font-size:11px;color:var(--tx);margin-top:4px;line-height:1.5">${r.p.join(' · ')}</div>`;
-        if(!isAv){
-          if(missPrep.length)c+=`<div style="font-size:11px;color:var(--w);margin-top:3px">prep: ${missPrep.join(', ')}</div>`;
-          if(missComprar.length)c+=`<div style="font-size:11px;color:#c0392b;margin-top:2px">comprar: ${missComprar.join(', ')}</div>`;
-        }
-        c+=`</div>`;
-        if(st.editRec){c+=`<div class="rord"><button onclick="swapRec(${gi},${pg})" ${pg===-1?'disabled':''}>↑</button><button onclick="swapRec(${gi},${ng})" ${ng===-1?'disabled':''}>↓</button></div>`;}
-        else{c+=`<div style="display:flex;gap:6px;align-items:center;flex-shrink:0">${isAv?`<span class="rav2">disponível</span>`:`<span class="rnav">faltam ${miss.length}</span>`}<button class="reb" onclick="openEdit(${r.id})">editar</button></div>`;}
-        const hasDet=(r.s&&r.s.length)||r.mp;
-        c+=`</div><span class="nt" onclick="toggleNote(${r.id},event)">${noteOpen?'▴':'▾'} ${hasDet?'substituições e preparo':'notas'}${noteText?' ·':''}</span>`;
-        if(noteOpen){
-          if(r.s&&r.s.length){c+=`<div style="margin-top:6px"><div style="font-size:9px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin-bottom:3px">substituições</div>`;r.s.forEach(x=>{c+=`<div style="font-size:11px;color:var(--mu);line-height:1.5;text-transform:none">${x}</div>`;});c+=`</div>`;}
-          if(r.mp)c+=`<div style="margin-top:6px"><div style="font-size:9px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin-bottom:3px">preparo</div><div style="font-size:11px;color:var(--tx);line-height:1.6;text-transform:none">${r.mp}</div></div>`;
-          c+=`<textarea class="nta" id="nta-${r.id}" onblur="saveNote(${r.id})" placeholder="anotações, links do tiktok...">${noteText}</textarea>`;
-        }
-        c+=`</div>`;return c;
-      }
-      if(availR.length){h+=`<div class="slbl">disponível agora <span>${availR.length}</span></div>`;availR.forEach(r=>{h+=rcCard(r,true);});}
-      if(noAvailR.length){h+=`<div class="slbl" style="margin-top:1rem">faltam ingredientes <span>${noAvailR.length}</span></div>`;noAvailR.forEach(r=>{h+=rcCard(r,false);});}
-      if(!availR.length&&!noAvailR.length){h+=`<div class="empty">nenhuma receita nessa categoria</div>`;}
-      h+=`</div><div class="spacer"></div>`;
-    }
-
-    if(st.sub==='prep'){
-      const wkStart=getWkStart();
-      const prepDone=st.prepItems.filter(i=>(st.prep[wkStart]||{})[i]).length;
-      h+=`<div class="sec">`;
-      h+=`<div class="slbl">prep do domingo <span>${prepDone}/${st.prepItems.length}</span> <button class="eb ${st.editPrep?'on':''}" onclick="st.editPrep=!st.editPrep;render()">${st.editPrep?'pronto':'editar'}</button>${!st.editPrep?` <span style="font-weight:400;color:#c0392b;cursor:pointer;letter-spacing:0" onclick="clearPrep()">limpar</span>`:''}</div>`;
-      h+=`<div style="display:flex;flex-direction:column;gap:1px;background:var(--br);border-radius:14px;overflow:hidden;border:1px solid var(--br)">`;
-      st.prepItems.forEach(item=>{
-        const done=!!((st.prep[wkStart]||{})[item]);
-        if(st.editPrep){
-          h+=`<div style="background:var(--wh);display:flex;align-items:center;padding:14px 16px;gap:14px"><span style="font-size:14px;font-weight:500;flex:1">${item}</span><button class="del-act" onclick="removePrepItem('${item.replace(/'/g,"\\'")}')">✕</button></div>`;
-        }else{
-          h+=`<div style="background:${done?'var(--wl)':'var(--wh)'};display:flex;align-items:center;padding:14px 16px;gap:14px;cursor:pointer" onclick="togglePrep('${item.replace(/'/g,"\\'")}')">
-          <div style="width:22px;height:22px;border-radius:6px;border:1.5px solid ${done?'var(--w)':'var(--bd)'};flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:${done?'var(--w)':'transparent'};color:${done?'#fff':'transparent'}">${done?'✓':''}</div>
-          <span style="font-size:14px;font-weight:500;flex:1;color:${done?'var(--w)':'var(--tx)'}">${item}</span>
-        </div>`;
-        }
-      });
-      h+=`</div>`;
-      if(st.editPrep){h+=`<div class="arow" style="margin-top:8px"><input id="prep-new" class="inp" style="flex:1;font-size:12px" placeholder="novo item de prep"><button class="abtn" onclick="addPrepItem()">+</button></div>`;}
-      if(!st.editPrep&&st.prepItems.length&&prepDone===st.prepItems.length)h+=`<div style="text-align:center;padding:1rem;font-size:13px;color:var(--gn);font-weight:500">geladeira pronta pra semana</div>`;
-      h+=`</div><div class="spacer"></div>`;
-    }
-  }
-  if(st.modal){
-    const {day,meal}=st.modal;
-    const relCats=[['café da manhã'],['almoço'],['lanche'],['jantar']][meal];
-    const relR=allRecipes().filter(r=>relCats.includes(r.cat));
-    const aR=relR.filter(r=>recAvail(r)),nR=relR.filter(r=>!recAvail(r));
-    const curId=st.plan[getPK(day,meal)];
-    h+=`<div class="ov" onclick="st.modal=null;render()"><div class="mo" onclick="event.stopPropagation()"><div class="mot">${DF[day]} — ${MEALS[meal]}</div>`;
-    if(aR.length){h+=`<div style="font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin-bottom:6px">disponível agora</div>`;aR.forEach(r=>{h+=`<div class="mor" onclick="pickMeal(${r.id})"><div><div style="font-size:13px;font-weight:500">${r.n}${r.id===curId?' ✓':''}</div><div style="font-size:11px;color:var(--mu)">${r.cat}</div></div><span class="rav2">ok</span></div>`;});}
-    if(nR.length){h+=`<div style="font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin:10px 0 6px">faltam ingredientes</div>`;nR.forEach(r=>{const m=missing(r);h+=`<div class="mor" onclick="pickMeal(${r.id})"><div><div style="font-size:13px;font-weight:500">${r.n}${r.id===curId?' ✓':''}</div><div style="font-size:11px;color:var(--mu)">falta: ${m.join(', ')}</div></div></div>`;});}
-    if(curId)h+=`<div class="del" onclick="clearMeal()">remover refeição</div>`;
-    h+=`<button class="moc" onclick="st.modal=null;render()">fechar</button></div></div>`;
-  }
-
-  // ── RECIPE EDIT MODAL ──
-  if(st.editModal!==null){
-    const CATS=['café da manhã','almoço','lanche','jantar'];
-    const reqSet=new Set(st.em.req);
-    const isNew=!RB.find(r=>r.id===st.editModal)&&!st.ov[st.editModal];
-    let picker='';
-    st.catOrder.forEach(cat=>{const items=st.fi[cat];if(!items||!items.length)return;picker+=`<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin-bottom:5px">${cat}</div><div style="display:flex;flex-wrap:wrap;gap:5px">`;items.forEach(item=>{picker+=`<div class="fchip ${reqSet.has(item)?'on':''}" style="font-size:11px;padding:4px 10px" onclick="toggleEI('${item.replace(/'/g,"\\'")}')"> ${item}</div>`;});picker+=`</div></div>`;});
-    let prepPicker='';st.prepItems.forEach(item=>{prepPicker+=`<div class="fchip ${reqSet.has(item)?'on':''}" style="font-size:11px;padding:4px 10px" onclick="toggleEI('${item.replace(/'/g,"\\'")}')"> ${item}</div>`;});
-    h+=`<div class="ov" onclick="st.editModal=null;render()"><div class="mo" onclick="event.stopPropagation()"><div class="mot">${isNew?'nova receita':'editar receita'}</div>`;
-    h+=`<div class="fi2"><label class="fl">nome</label><input id="re-n" class="inp" value="${(st.em.n||'').replace(/"/g,'&quot;')}" placeholder="nome da receita"></div>`;
-    h+=`<div class="fi2"><label class="fl">categoria</label><select id="re-c" class="inp">${CATS.map(c=>`<option value="${c}" ${st.em.cat===c?'selected':''}>${c}</option>`).join('')}</select></div>`;
-    h+=`<div class="fi2"><label class="fl">ingredientes ${st.em.req.length?`<span style="font-weight:400;color:var(--w)">${st.em.req.join(', ')}</span>`:''}</label>${picker}<div class="arow"><input id="re-ni" class="inp" style="flex:1" placeholder="outro ingrediente"><button class="abtn" onclick="addEI()">+</button></div></div>`;
-    h+=`<div class="fi2"><label class="fl">dá pra deixar pronto <span style="font-weight:400;color:var(--mu)">(prep)</span></label><div style="display:flex;flex-wrap:wrap;gap:5px">${prepPicker}</div></div>`;
-    h+=`<button style="width:100%;background:var(--w);color:#fff;font-size:15px;font-weight:600;border:none;border-radius:14px;padding:16px;cursor:pointer;margin-top:1rem" onclick="saveEdit()">salvar</button>`;
-    if(!isNew)h+=`<div class="del" onclick="deleteRec(${st.editModal})">excluir receita</div>`;
-    h+=`<button class="moc" onclick="st.editModal=null;render()">cancelar</button></div></div>`;
-  }
-
-  // ── ADD / EDIT ACTIVITY MODAL ──
-  if(st.actModal){
-    const na=st.na;
-    const locais=getAllLocais();
-    const mods=getAllMods();
-    const bairros=getAllBairros();
-    const isEdit=!!st.actEditId;
-
-    h+=`<div class="ov" onclick="closeActModal()"><div class="mo" onclick="event.stopPropagation()"><div class="mot">${isEdit?'editar atividade':'nova atividade'}</div>`;
-
-    // 1. local — lista gerenciável
-    h+=`<div class="fi2"><label class="fl">local <button class="eb ${st.editLocais?'on':''}" style="margin-left:6px" onclick="toggleEditLocais()">${st.editLocais?'pronto':'gerenciar'}</button></label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:5px">`;
-    locais.forEach(l=>{
-      if(st.editLocais){h+=`<span class="fc on">${l}<span style="cursor:pointer;margin-left:6px;font-weight:700" onclick="removeLocal('${l.replace(/'/g,"\\'")}')">✕</span></span>`;}
-      else{h+=`<span class="fc ${na.n===l?'on':''}" onclick="selectLocal('${l.replace(/'/g,"\\'")}')">${l}</span>`;}
-    });
-    h+=`</div><div class="arow"><input id="na-local-new" class="inp" style="flex:1;font-size:12px;margin-top:6px" placeholder="novo local"><button class="abtn" onclick="addLocal()">+</button></div></div>`;
-
-    // 2. detalhe (opcional)
-    h+=`<div class="fi2"><label class="fl">detalhe <span style="font-weight:400;color:var(--mu)">(opcional)</span></label><input id="na-sub" class="inp" value="${(na.sub||'').replace(/"/g,'&quot;')}" placeholder="ex: one to one, alef, avançado..."></div>`;
-
-    // 3. modalidade
-    h+=`<div class="fi2"><label class="fl">modalidade</label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:5px">`;
-    mods.forEach(m=>{h+=`<span class="fc ${na.m===m?'on':''}" onclick="setNaChip('m','${m.replace(/'/g,"\\'")}')">${m}</span>`;});
-    h+=`</div><div class="arow"><input id="na-m-new" class="inp" style="flex:1;font-size:12px;margin-top:6px" placeholder="outra modalidade"><button class="abtn" onclick="addNaMod()">+</button></div></div>`;
-
-    // 4. bairro
-    h+=`<div class="fi2"><label class="fl">bairro</label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:5px">`;
-    bairros.forEach(b=>{h+=`<span class="fc ${na.b===b?'on':''}" onclick="setNaChip('b','${b.replace(/'/g,"\\'")}')">${b}</span>`;});
-    h+=`</div><div class="arow"><input id="na-b-new" class="inp" style="flex:1;font-size:12px;margin-top:6px" placeholder="outro bairro"><button class="abtn" onclick="addNaBairro()">+</button></div></div>`;
-
-    // 5. dias
-    h+=`<div class="fi2"><label class="fl">dias da semana</label><div class="days-grid">`;
-    WEEK.forEach(i=>{h+=`<label class="day-cb"><input type="checkbox" onchange="toggleDay(${i})" ${na.days.includes(i)?'checked':''}><span>${DS[i]}</span></label>`;});
-    h+=`</div></div>`;
-
-    // 6. horário
-    h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="fi2"><label class="fl">início</label><input type="time" id="na-start" class="inp" value="${na.start||'09:00'}"></div><div class="fi2"><label class="fl">fim <span style="font-weight:400;color:var(--mu)">(opcional)</span></label><input type="time" id="na-end" class="inp" value="${na.end||''}"></div></div>`;
-
-    const canSave=na.n&&na.days.length;
-    h+=`<button style="width:100%;background:${canSave?'var(--w)':'var(--bd)'};color:${canSave?'#fff':'var(--mu)'};font-size:15px;font-weight:600;border:none;border-radius:14px;padding:16px;cursor:${canSave?'pointer':'default'};margin-top:1rem" onclick="${canSave?'saveAct()':''}">${isEdit?'salvar':'adicionar'}</button>`;
-    if(isEdit)h+=`<div class="del" onclick="deleteAct(${st.actEditId})">excluir atividade</div>`;
-    h+=`<button class="moc" onclick="closeActModal()">cancelar</button></div></div>`;
-  }
-
-  // ── HÁBITOS ──
-  if(st.tab==='hab'){
-    const td=today();
-    const now=new Date();
-    // Get Mon-Sun dates of current week
-    const dow=now.getDay(); // 0=sun
-    const mondayOffset=dow===0?-6:1-dow;
-    const weekDates=Array.from({length:7},(_,i)=>{const d=new Date(now);d.setDate(now.getDate()+mondayOffset+i);return d;});
-    const dayLabels=['seg','ter','qua','qui','sex','sáb','dom'];
-    // Total done today
-    const todayStr=td;
-    const todayDone=HABITS.filter(hb2=>(st.hb[todayStr]||{})[hb2]).length;
-    // Streak
-    let streak=0;
-    for(let i=1;i<=365;i++){const d=new Date(now);d.setDate(now.getDate()-i);const dk=d.toDateString();const dh=st.hb[dk]||{};if(HABITS.every(hb2=>dh[hb2]))streak++;else break;}
-
-    h+=`<div style="padding:1.25rem 1.25rem 0">`;
-    h+=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">`;
-    h+=`<div style="font-size:16px;font-weight:700;color:var(--tx)">esta semana</div>`;
-    if(streak>0)h+=`<div style="font-size:11px;color:var(--w);font-weight:600">${streak} dia${streak!==1?'s':''} completos seguidos</div>`;
-    h+=`</div>`;
-
-    // Grid
-    const cellW=32;
-    h+=`<div style="overflow-x:auto;-webkit-overflow-scrolling:touch">`;
-    h+=`<table style="border-collapse:collapse;width:100%;min-width:330px">`;
-
-    // Header row - day labels
-    h+=`<thead><tr><td style="width:36%;padding-bottom:8px;font-size:10px;color:var(--mu)"></td>`;
-    weekDates.forEach((d,i)=>{
-      const isToday=d.toDateString()===td;
-      h+=`<td style="text-align:center;padding-bottom:8px;font-size:10px;font-weight:${isToday?700:500};color:${isToday?'var(--w)':'var(--mu)'}">${dayLabels[i]}<br><span style="font-size:9px">${d.getDate()}</span></td>`;
-    });
-    h+=`</tr></thead>`;
-
-    // Habit rows
-    h+=`<tbody>`;
-    HABITS.forEach(hab=>{
-      const weekDone=weekDates.filter(d=>(st.hb[d.toDateString()]||{})[hab]).length;
-      h+=`<tr>`;
-      h+=`<td style="padding:4px 6px 4px 0;font-size:11px;font-weight:500;color:var(--tx);vertical-align:middle">${hab}</td>`;
-      weekDates.forEach(d=>{
-        const ds=d.toDateString();
-        const checked=!!(st.hb[ds]&&st.hb[ds][hab]);
-        const isToday=ds===td;
-        const isFuture=d>now&&ds!==td;
-        const safeHab=hab.replace(/'/g,"\\'");
-        const safeDs=ds.replace(/'/g,"\\'");
-        const clickAttr=isFuture?'':'onclick="toggleHabit(\''+safeHab+'\',\''+safeDs+'\')"';
-        h+=`<td style="text-align:center;padding:4px 2px;vertical-align:middle">
-          <div ${clickAttr} style="width:26px;height:26px;border-radius:7px;border:1.5px solid ${checked?'var(--w)':isToday?'var(--w)':'var(--bd)'};background:${checked?'var(--w)':isToday?'var(--wl)':'transparent'};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:${checked?'#fff':'transparent'};cursor:${isFuture?'default':'pointer'};margin:0 auto;opacity:${isFuture?0.35:1}">${checked?'✓':''}</div>
-        </td>`;
-      });
-      h+=`</tr>`;
-    });
-    h+=`</tbody>`;
-
-    // Progress row per day
-    h+=`<tfoot><tr><td style="padding-top:10px;font-size:9px;color:var(--mu)">%</td>`;
-    weekDates.forEach(d=>{
-      const ds=d.toDateString();
-      const dayDone=HABITS.filter(hb2=>(st.hb[ds]||{})[hb2]).length;
-      const pct=Math.round(dayDone/HABITS.length*100);
-      const isToday=ds===td;
-      h+=`<td style="text-align:center;padding-top:10px;vertical-align:top">
-        <div style="font-size:9px;font-weight:600;color:${pct===100?'var(--gn)':isToday?'var(--w)':'var(--mu)'}">${pct}%</div>
-        <div style="height:3px;background:var(--br);border-radius:2px;margin-top:3px;width:24px;margin-left:auto;margin-right:auto">
-          <div style="height:3px;width:${pct}%;background:${pct===100?'var(--gn)':'var(--w)'};border-radius:2px"></div>
-        </div>
-      </td>`;
-    });
-    h+=`</tr></tfoot></table></div>`;
-    h+=`</div><div class="spacer"></div>`;
-  }
-
-  // ── ÁGUA ──
-  if(st.tab==='agua'){
-    const td=today();
-    const count=st.wt[td]||0;
-    const pct=Math.min(count/WATER_GOAL,1);
-    const ml=count*WATER_ML;
-    h+=`<div class="sec">`;
-    h+=`<div class="slbl">ingestão de água hoje</div>`;
-    h+=`<div style="text-align:center;padding:1.5rem 0 1rem">`;
-    h+=`<div style="font-size:52px;font-weight:700;color:var(--w);line-height:1">${count}</div>`;
-    h+=`<div style="font-size:13px;color:var(--mu);margin-top:4px">${ml}ml de ${WATER_GOAL*WATER_ML}ml · ${count}/${WATER_GOAL} garrafas</div>`;
-    h+=`</div>`;
-    // progress bar
-    h+=`<div style="margin:0 1.25rem 1.5rem;height:8px;background:var(--br);border-radius:4px;overflow:hidden"><div style="height:8px;width:${Math.round(pct*100)}%;background:var(--w);border-radius:4px;transition:width .3s"></div></div>`;
-    // bottles visual
-    h+=`<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 1.25rem 1.5rem">`;
-    for(let i=0;i<WATER_GOAL;i++){const full=i<count;h+=`<div style="width:42px;height:60px;border-radius:8px;border:2px solid ${full?'var(--w)':'var(--bd)'};background:${full?'var(--wl)':'transparent'};display:flex;align-items:center;justify-content:center;font-size:18px">${full?'💧':'○'}</div>`;}
-    h+=`</div>`;
-    // buttons
-    h+=`<div style="display:flex;gap:10px;padding:0 1.25rem">`;
-    h+=`<button style="flex:1;padding:14px;border-radius:12px;border:1.5px solid var(--bd);background:var(--wh);font-size:22px;cursor:pointer" onclick="removeWater()" ${count===0?'disabled':''}>−</button>`;
-    h+=`<button style="flex:2;padding:14px;border-radius:12px;border:none;background:var(--w);color:#fff;font-size:15px;font-weight:600;cursor:pointer" onclick="addWater()">+ garrafa 750ml</button>`;
-    h+=`</div>`;
-    if(count>=WATER_GOAL)h+=`<div style="text-align:center;padding:1rem;font-size:13px;color:var(--gn);font-weight:500">meta atingida! 🎉</div>`;
-    h+=`</div><div class="spacer"></div>`;
-  }
-
+  h+=`<div class="hd"><div><h1>liz</h1><div class="hn">${DF[d.getDay()]}</div></div>`;
+  h+=`<div><div class="hc">${M.full}</div><div class="hl">${M.t}</div></div></div>`;
+  h+=`<div class="mt">`;
+  ['hoje','comer','compras','semana'].forEach(k=>{h+=`<div class="${st.tab===k?'a':''}" onclick="setTab('${k}')">${k}</div>`});
+  h+=`</div>`;
+  if(st.tab==='hoje')h+=viewHoje(mi,td);
+  if(st.tab==='comer')h+=viewComer(mi);
+  if(st.tab==='compras')h+=viewCompras();
+  if(st.tab==='semana')h+=viewSemana(td);
+  h+=`<div class="spacer"></div>`;
   document.getElementById('app').innerHTML=h;
 }
 
-// ── ACTIONS ──
-function setDay(i){st.vd=i;st.selSlot=null;render();}
-function setTab(t){st.tab=t;render();}
-function setSub(t){st.sub=t;render();}
-function setRecFilt(f){st.recFilt=f;render();}
-function fToggle(key,v){toggleF(key,v);render();}
-function selSlot(k){st.selSlot=st.selSlot===k?null:k;render();}
-function toggleCI(){const w=wk();if(!st.ci[w])st.ci[w]={};if(st.ci[w][st.vd])delete st.ci[w][st.vd];else st.ci[w][st.vd]=true;sv('liz_ci',st.ci);render();}
-function togglePlace(i){st.places[i]=!st.places[i];sv('liz_pl',st.places);render();}
-function addPlace(){const el=document.getElementById('pl-new');const val=el?el.value.trim().toLowerCase():'';if(!val)return;st.customPlaces.push(val);sv('liz_cp',st.customPlaces);if(el)el.value='';render();}
-function deletePlace(i){const defLen=PLACES_DEFAULT.length;if(i<defLen)return;const ci=i-defLen;st.customPlaces.splice(ci,1);sv('liz_cp',st.customPlaces);render();}
-function toggleFridge(item){st.fridge[item]=!st.fridge[item];sv('liz_fr',st.fridge);render();}
-function moveCat(i,dir){const a=st.catOrder,j=i+dir;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];sv('liz_cat',a);render();}
-function addFI(cat,sid){const el=document.getElementById('fi-'+sid);const val=el?el.value.trim().toLowerCase():'';if(!val)return;if(!st.fi[cat])st.fi[cat]=[];if(!st.fi[cat].includes(val))st.fi[cat].push(val);sv('liz_fi',st.fi);render();}
-function removeFI(cat,item){if(!st.fi[cat])return;st.fi[cat]=st.fi[cat].filter(i=>i!==item);delete st.fridge[item];sv('liz_fi',st.fi);sv('liz_fr',st.fridge);render();}
-function addFICat(){const el=document.getElementById('fi-newcat');const val=el?el.value.trim().toLowerCase():'';if(!val||st.fi[val])return;st.fi[val]=[];if(!st.catOrder.includes(val))st.catOrder.push(val);sv('liz_fi',st.fi);sv('liz_cat',st.catOrder);render();}
-function swapRec(a,b){if(a<0||b<0)return;[st.recOrd[a],st.recOrd[b]]=[st.recOrd[b],st.recOrd[a]];sv('liz_ro',st.recOrd);render();}
-function openModal(d,m){st.modal={day:d,meal:m};render();}
-function pickMeal(id){if(!st.modal)return;st.plan[getPK(st.modal.day,st.modal.meal)]=id;sv('liz_pn',st.plan);st.modal=null;render();}
-function clearMeal(){if(!st.modal)return;delete st.plan[getPK(st.modal.day,st.modal.meal)];sv('liz_pn',st.plan);st.modal=null;render();}
-function swapMeal(ka,kb){const ta=st.plan[ka],tb=st.plan[kb];if(tb)st.plan[ka]=tb;else delete st.plan[ka];if(ta)st.plan[kb]=ta;else delete st.plan[kb];sv('liz_pn',st.plan);render();}
-function openNew(){const newId=Date.now();st.editModal=newId;st.em={n:'',cat:'almoço',req:[]};st.newIngr='';render();}
-function openEdit(id){const r=getRecipe(id);if(!r)return;st.editModal=id;st.em={n:r.n,cat:r.cat,req:[...r.req]};st.newIngr='';render();}
-function saveEdit(){const n=(document.getElementById('re-n')||{}).value||'';const c=(document.getElementById('re-c')||{}).value||'';if(!n.trim())return;const id=st.editModal;st.ov[id]={n:n.trim().toLowerCase(),cat:c,req:st.em.req};sv('liz_ov',st.ov);if(!st.recOrd.includes(id)){st.recOrd.push(id);sv('liz_ro',st.recOrd);}st.editModal=null;render();}
-function deleteRec(id){st.ov[id]={...(st.ov[id]||{}),deleted:true};sv('liz_ov',st.ov);st.recOrd=st.recOrd.filter(x=>x!==id);sv('liz_ro',st.recOrd);st.editModal=null;render();}
-function toggleEI(item){const n=(document.getElementById('re-n')||{}).value;const c=(document.getElementById('re-c')||{}).value;if(n)st.em.n=n;if(c)st.em.cat=c;const idx=st.em.req.indexOf(item);if(idx>=0)st.em.req.splice(idx,1);else st.em.req.push(item);render();}
-function addEI(){const n=(document.getElementById('re-n')||{}).value;const c=(document.getElementById('re-c')||{}).value;if(n)st.em.n=n;if(c)st.em.cat=c;const el=document.getElementById('re-ni');const val=el?el.value.trim().toLowerCase():'';if(val&&!st.em.req.includes(val)){st.em.req.push(val);if(!allFI().includes(val)){if(!st.fi['outros'])st.fi['outros']=[];if(!st.fi['outros'].includes(val))st.fi['outros'].push(val);sv('liz_fi',st.fi);}}render();}
-function toggleNote(id,e){e.stopPropagation();st.openNotes[id]=!st.openNotes[id];render();}
-function saveNote(id){const el=document.getElementById('nta-'+id);if(el){st.notes[id]=el.value;sv('liz_nt',st.notes);}}
-function captureNa(){const g=id=>document.getElementById(id);if(g('na-sub'))st.na.sub=g('na-sub').value;if(g('na-start'))st.na.start=g('na-start').value;if(g('na-end'))st.na.end=g('na-end').value;}
-function endToTime(e){if(!e)return'';const m=String(e).replace(/h/g,'').trim();const p=m.split(':');const h=parseInt(p[0]);if(isNaN(h))return'';const mi=p[1]?parseInt(p[1]):0;return`${String(h).padStart(2,'0')}:${String(mi||0).padStart(2,'0')}`;}
-function openNewAct(){st.actModal=true;st.actEditId=null;st.editLocais=false;st.na={n:'',sub:'',b:'',m:'',days:[st.vd],start:'09:00',end:''};render();}
-function openEditAct(id){const a=st.acts.find(x=>x.id===id);if(!a)return;st.actModal=true;st.actEditId=id;st.editLocais=false;const sh=Math.floor(a.s/60),sm=a.s%60;st.na={n:a.n||'',sub:a.sub||'',b:a.b||'',m:a.m||'',days:[...(a.days||[])],start:`${String(sh).padStart(2,'0')}:${String(sm).padStart(2,'0')}`,end:endToTime(a.e)};render();}
-function closeActModal(){st.actModal=false;st.actEditId=null;st.editLocais=false;st.na={n:'',sub:'',b:'',m:'',days:[],start:'09:00',end:''};render();}
-function selectLocal(name){captureNa();st.na.n=st.na.n===name?'':name;render();}
-function addLocal(){captureNa();const el=document.getElementById('na-local-new');const val=el?el.value.trim().toLowerCase():'';if(!val)return;if(!st.locais.includes(val)){st.locais.push(val);sv('liz_locais',st.locais);}st.na.n=val;render();}
-function removeLocal(name){st.locais=st.locais.filter(l=>l!==name);sv('liz_locais',st.locais);if(st.na.n===name)st.na.n='';render();}
-function toggleEditLocais(){captureNa();st.editLocais=!st.editLocais;render();}
-function toggleDay(i){captureNa();const idx=st.na.days.indexOf(i);if(idx>=0)st.na.days.splice(idx,1);else st.na.days.push(i);render();}
-function setNaChip(field,val){captureNa();st.na[field]=st.na[field]===val?'':val;render();}
-function addNaMod(){captureNa();const el=document.getElementById('na-m-new');const val=el?el.value.trim().toLowerCase():'';if(!val)return;if(!st.mods.includes(val)){st.mods.push(val);sv('liz_mods',st.mods);}st.na.m=val;render();}
-function addNaBairro(){captureNa();const el=document.getElementById('na-b-new');const val=el?el.value.trim().toLowerCase():'';if(!val)return;if(!st.bairros.includes(val)){st.bairros.push(val);sv('liz_bairros',st.bairros);}st.na.b=val;render();}
-function saveAct(){
-  captureNa();
-  const lg=document.getElementById('na-local-new');
-  if(!st.na.n&&lg&&lg.value.trim())st.na.n=lg.value.trim().toLowerCase();
-  if(!st.na.n||!st.na.days.length)return;
-  if(!st.locais.includes(st.na.n)){st.locais.push(st.na.n);sv('liz_locais',st.locais);}
-  const [sh,sm]=(st.na.start||'09:00').split(':').map(Number);
-  const s=(sh||0)*60+(sm||0);
-  let e='';if(st.na.end){const[eh,em]=st.na.end.split(':').map(Number);e=em?`${eh}:${String(em).padStart(2,'0')}h`:`${eh}h`;}
-  const data={n:st.na.n,sub:(st.na.sub||'').trim().toLowerCase(),b:st.na.b||'',m:st.na.m||'',s,e,days:[...st.na.days]};
-  if(st.actEditId){const i=st.acts.findIndex(a=>a.id===st.actEditId);if(i>=0)st.acts[i]={...st.acts[i],...data};}
-  else{st.acts.push({id:Date.now(),...data});}
-  sv('liz_acts',st.acts);closeActModal();
+// ─────────── hoje ───────────
+function viewHoje(mi,td){
+  const M=MEALS[mi],lg=logged(M.k),r=lg?rec(lg):suggest(mi);
+  let h='';
+  h+=`<div class="now"><div class="nowh">agora · ${M.full}<span>${M.t}</span></div><div class="nowb">`;
+  if(r){
+    h+=`<div class="nwn">${r.n}</div><div class="nwt">${r.t} min de preparo</div>`;
+    h+=`<div class="nwi">${lineOf(r)}</div>`;
+    h+=`<div class="nwa"><button class="${lg?'done':'pri'}" onclick="logMeal('${M.k}',${r.id})">${lg?'✓ comi isso':'comi isso'}</button>`;
+    if(!lg)h+=`<button onclick="swapSug(${mi})">outra opção</button>`;
+    h+=`</div>`;
+  }
+  h+=`</div><div class="lnk" onclick="goComer('${M.k}')">ver as ${byMeal(M.k).length} opções de ${M.full} →</div></div>`;
+  if(mi<3){const N=MEALS[mi+1];h+=`<div class="nxt">depois: ${N.full} às ${N.t}</div>`}
+
+  const ml=waterMl(td),pct=Math.min(ml/WATER_GOAL*100,100);
+  h+=`<div class="sec"><div class="slbl">água <b>${ml}ml de ${WATER_GOAL}ml</b></div><div class="card">`;
+  h+=`<div class="wbar"><div style="width:${pct}%"></div></div>`;
+  h+=`<div style="font-size:11px;color:${ml>=WATER_GOAL?'var(--gn)':'var(--mu)'};font-weight:${ml>=WATER_GOAL?600:400}">${ml>=WATER_GOAL?'meta batida hoje 🎉':'faltam '+(WATER_GOAL-ml)+'ml'}</div>`;
+  h+=`<div class="wbtn"><button onclick="addWater(250)">+ copo 250ml</button><button class="pri" onclick="addWater(750)">+ garrafa 750ml</button>`;
+  h+=`<button onclick="undoWater()" style="flex:0 0 46px">−</button></div></div></div>`;
+
+  const done=st.habits.filter(x=>(st.hb[td]||{})[x]).length;
+  h+=`<div class="sec"><div class="slbl">hábitos de hoje <b>${done}/${st.habits.length}</b></div><div class="card" style="padding:2px 14px">`;
+  st.habits.forEach((hb,i)=>{const on=!!(st.hb[td]||{})[hb];
+    h+=`<div class="hrow" onclick="toggleHabit(${i},'${td}')"><div class="hbx ${on?'on':''}">✓</div><div class="hnm ${on?'on':''}">${hb}</div></div>`});
+  h+=`</div></div>`;
+
+  const fo=st.accOpen['fora'];
+  h+=`<div class="sec"><div class="acc"><div class="acch" onclick="toggleAcc('fora')"><div><div class="acct">tô na rua / sem nada pronto</div><div class="accs">o que fazer quando não dá pra seguir a receita</div></div><span style="color:var(--mu);font-size:12px">${fo?'▴':'▾'}</span></div>`;
+  if(fo){h+=`<div class="accb prose">`;FORA.forEach(x=>{h+=`<div style="font-size:12px;line-height:1.65;margin-bottom:8px">• ${x}</div>`});h+=`</div>`}
+  h+=`</div></div>`;
+  return h;
 }
-function toggleHabit(hab,ds){const k=ds||today();if(!st.hb[k])st.hb[k]={};st.hb[k][hab]=!st.hb[k][hab];sv('liz_hb',st.hb);render();}
-function togglePrep(item){const ws=getWkStart();if(!st.prep[ws])st.prep[ws]={};st.prep[ws][item]=!st.prep[ws][item];sv('liz_prep',st.prep);render();}
-function clearPrep(){const ws=getWkStart();st.prep[ws]={};sv('liz_prep',st.prep);render();}
-function addPrepItem(){const el=document.getElementById('prep-new');const val=el?el.value.trim().toLowerCase():'';if(!val)return;if(!st.prepItems.includes(val)){st.prepItems.push(val);sv('liz_prepitems',st.prepItems);}render();}
-function removePrepItem(item){st.prepItems=st.prepItems.filter(p=>p!==item);sv('liz_prepitems',st.prepItems);render();}
-function flushState(){sv('liz_ci',st.ci);sv('liz_pl',st.places);sv('liz_cp',st.customPlaces);sv('liz_fr',st.fridge);sv('liz_pn',st.plan);sv('liz_cat',st.catOrder);sv('liz_ro',st.recOrd);sv('liz_ov',st.ov);sv('liz_fi',st.fi);sv('liz_nt',st.notes);sv('liz_acts',st.acts);sv('liz_locais',st.locais);sv('liz_bairros',st.bairros);sv('liz_mods',st.mods);sv('liz_sc',st.sc);sv('liz_se',st.se);sv('liz_hb',st.hb);sv('liz_wt',st.wt);sv('liz_prep',st.prep);sv('liz_prepitems',st.prepItems);}
-function exportData(){flushState();const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf('liz_')===0)o[k]=localStorage.getItem(k);}return JSON.stringify(o);}
-function genBackup(){const t=exportData();const el=document.getElementById('backup-out');if(el)el.value=t;try{if(navigator.clipboard)navigator.clipboard.writeText(t);}catch(e){}}
-function restoreBackup(){const el=document.getElementById('backup-in');if(!el||!el.value.trim())return;let o;try{o=JSON.parse(el.value);}catch(e){alert('backup inválido — confira o texto colado');return;}if(!confirm('isso vai substituir os dados atuais do app por esse backup. continuar?'))return;Object.keys(o).forEach(k=>{if(k.indexOf('liz_')===0)localStorage.setItem(k,o[k]);});location.reload();}
-function addWater(){const td=today();st.wt[td]=(st.wt[td]||0)+1;sv('liz_wt',st.wt);render();}
-function removeWater(){const td=today();if((st.wt[td]||0)>0)st.wt[td]--;sv('liz_wt',st.wt);render();}
-function deleteAct(id){st.acts=st.acts.filter(a=>a.id!==id);sv('liz_acts',st.acts);if(st.actEditId===id)closeActModal();else render();}
-function toggleShopItem(item){st.sc[item]=!st.sc[item];sv('liz_sc',st.sc);render();}
-function addShopExtra(){const el=document.getElementById('se-new');const val=el?el.value.trim().toLowerCase():'';if(!val)return;st.se.push(val);sv('liz_se',st.se);if(el)el.value='';render();}
-function removeShopExtra(i){st.se.splice(i,1);sv('liz_se',st.se);render();}
-function clearShopChecked(){st.sc={};sv('liz_sc',st.sc);render();}
+
+// ─────────── comer ───────────
+function viewComer(mi){
+  const filt=st.mealFilt||MEALS[mi].k;
+  let list=byMeal(filt);
+  if(st.fast)list=list.filter(r=>r.t<=6);
+  const lg=logged(filt);
+  let h='';
+  h+=`<div class="fseg">`;
+  MEALS.forEach(m=>{h+=`<span class="${filt===m.k?'a':''}" onclick="setMeal('${m.k}')">${m.k}</span>`});
+  h+=`<span class="${st.fast?'a':''}" onclick="toggleFast()">⚡ até 6 min</span></div>`;
+  h+=`<div class="sec">`;
+  if(!list.length)h+=`<div class="card" style="text-align:center;color:var(--mu);font-size:13px">nenhuma receita até 6 min nessa refeição — toque no filtro pra desligar</div>`;
+  list.forEach(r=>{
+    const op=!!st.open[r.id],isLg=lg===r.id;
+    h+=`<div class="rc ${op?'on':''}"><div class="rch" onclick="toggleOpen(${r.id})"><div style="flex:1;min-width:0">`;
+    h+=`<div class="rn">${r.n}</div><div class="rt">${r.t} min · ${r.sl.length} componentes</div>`;
+    h+=`<div class="ri">${lineOf(r)}</div></div>`;
+    h+=`<div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">`;
+    h+=`<span class="pill ${isLg?'d':r.t<=6?'f':''}">${isLg?'comi':r.t<=6?'rápido':r.t+'min'}</span>`;
+    h+=`<span style="font-size:11px;color:var(--mu)">${op?'▴':'▾'}</span></div></div>`;
+    if(op){
+      h+=`<div class="rbody"><div style="font-size:10px;color:var(--mu);margin-bottom:10px">toque pra trocar por uma substituição do plano — a gramatura já vem ajustada</div>`;
+      r.sl.forEach((s,si)=>{
+        h+=`<div class="slot"><div class="sll">${s.l}</div><div class="chips">`;
+        s.o.forEach((o,oi)=>{h+=`<span class="chip ${pickOf(r.id,si)===oi?'on':''}" onclick="setPick(${r.id},${si},${oi})">${o}</span>`});
+        h+=`</div></div>`;
+      });
+      if(r.mp)h+=`<div class="mp prose"><div class="mph">preparo</div>${r.mp}</div>`;
+      h+=`<textarea class="nta" id="nt-${r.id}" onblur="saveNote(${r.id})" placeholder="suas anotações, links do tiktok...">${esc(st.notes[r.id]||'')}</textarea>`;
+      h+=`<button class="big" onclick="logMeal('${r.m}',${r.id})" ${isLg?'style="background:var(--gn)"':''}>${isLg?'✓ registrado hoje':'comi isso'}</button></div>`;
+    }
+    h+=`</div>`;
+  });
+  h+=`</div>`;
+
+  const feitos=ATALHOS.filter(a=>atalhoDone(a.n)).length,ao=st.accOpen['atalhos'];
+  h+=`<div class="sec"><div class="acc"><div class="acch" onclick="toggleAcc('atalhos')"><div><div class="acct">atalhos do domingo</div><div class="accs">${feitos} de ${ATALHOS.length} feitos · opcional, só acelera</div></div><span style="color:var(--mu);font-size:12px">${ao?'▴':'▾'}</span></div>`;
+  if(ao){
+    h+=`<div class="accb"><div style="font-size:11px;color:var(--mu);line-height:1.55;margin-bottom:10px">nada aqui é pré-requisito. cada item só deixa algumas receitas mais rápidas durante a semana.</div>`;
+    ATALHOS.forEach((a,i)=>{const on=atalhoDone(a.n);
+      h+=`<div class="prow" onclick="toggleAtalho(${i})"><div class="hbx ${on?'on':''}" style="margin-top:1px">✓</div><div style="flex:1"><div class="pnm ${on?'on':''}">${a.n}</div>`;
+      const sub=[a.d,a.r.length?`acelera ${a.r.length} receita${a.r.length>1?'s':''}`:''].filter(Boolean).join(' · ');
+      if(sub)h+=`<div class="pds">${sub}</div>`;
+      h+=`</div></div>`});
+    h+=`<button class="ghost" onclick="clearAtalhos()">limpar a semana</button></div>`;
+  }
+  h+=`</div></div>`;
+  return h;
+}
+
+// ─────────── compras ───────────
+function viewCompras(){
+  const n=buyCount();
+  let h='';
+  h+=`<div class="sec"><div class="slbl">lista de compras <b>${n} ${n===1?'item':'itens'}</b> <button class="eb ${st.editL?'on':''}" onclick="st.editL=!st.editL;render()">${st.editL?'pronto':'editar'}</button></div>`;
+  h+=`<div style="font-size:11.5px;color:var(--mu);line-height:1.55;margin-bottom:12px">marque só o que acabou. no mercado, vá desmarcando.</div>`;
+  if(n)h+=`<button class="ghost" style="margin:0 0 4px" onclick="clearBuy()">limpar lista (já comprei)</button>`;
+  h+=`</div>`;
+  Object.keys(st.lista).forEach(cat=>{
+    const items=st.lista[cat];if(!items)return;
+    const sid=cat.replace(/\W/g,''),mk=items.filter(i=>st.buy[i]).length;
+    h+=`<div style="padding:1rem 1.25rem 0"><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--mu);margin-bottom:7px">${cat}${mk?` · ${mk}`:''}</div>`;
+    h+=`<div class="chips">`;
+    items.forEach((it,ii)=>{
+      if(st.editL)h+=`<span class="chip on">${it}<span style="margin-left:7px;cursor:pointer" onclick="rmItem('${esc(cat)}',${ii})">✕</span></span>`;
+      else h+=`<span class="chip ${st.buy[it]?'on':''}" onclick="toggleBuy('${esc(it)}')">${it}</span>`;
+    });
+    h+=`</div>`;
+    if(st.editL)h+=`<div class="arow"><input id="li-${sid}" class="inp" style="font-size:12px" placeholder="novo item em ${cat}"><button class="abtn" onclick="addItem('${esc(cat)}','${sid}')">+</button></div>`;
+    h+=`</div>`;
+  });
+  if(st.editL)h+=`<div class="sec"><div class="slbl">nova categoria</div><div class="arow"><input id="li-newcat" class="inp" style="font-size:12px" placeholder="nome da categoria"><button class="abtn" onclick="addCat()">+</button></div></div>`;
+
+  const bo=st.accOpen['bk'];
+  h+=`<div class="sec"><div class="acc"><div class="acch" onclick="toggleAcc('bk')"><div><div class="acct">backup dos dados</div><div class="accs">salvar ou passar pra outro aparelho</div></div><span style="color:var(--mu);font-size:12px">${bo?'▴':'▾'}</span></div>`;
+  if(bo){
+    h+=`<div class="accb"><div style="font-size:11px;color:var(--mu);line-height:1.55;margin-bottom:9px">salva tudo do app (lista, escolhas das receitas, hábitos, água, refeições registradas). os dados ficam só neste navegador.</div>`;
+    h+=`<button class="big" style="margin-top:0" onclick="genBackup()">gerar backup (copia automático)</button>`;
+    h+=`<textarea id="bk-out" class="nta" readonly placeholder="o backup vai aparecer aqui"></textarea>`;
+    h+=`<textarea id="bk-in" class="nta" placeholder="cole um backup aqui pra restaurar"></textarea>`;
+    h+=`<button class="ghost" onclick="restoreBackup()">restaurar backup</button></div>`;
+  }
+  h+=`</div></div>`;
+  return h;
+}
+
+// ─────────── semana ───────────
+function viewSemana(td){
+  const wd=weekDates(),now=new Date();
+  let h='',tot=0;
+  const past=wd.filter(d=>d<=now||d.toDateString()===td);
+  past.forEach(d=>{const k=d.toDateString();MEALS.forEach(m=>{if((st.log[k]||{})[m.k])tot++})});
+  h+=`<div class="sec"><div class="slbl">refeições registradas <b>${tot} de ${past.length*4}</b></div><div class="card">`;
+  h+=`<table class="gtbl"><thead><tr><td style="width:22%"></td>`;
+  wd.forEach((d,i)=>{h+=`<td class="gday ${d.toDateString()===td?'td':''}">${DS[i]}<br><span style="font-size:9px">${d.getDate()}</span></td>`});
+  h+=`</tr></thead><tbody>`;
+  MEALS.forEach(m=>{
+    h+=`<tr><td class="glbl">${m.k}</td>`;
+    wd.forEach(d=>{const k=d.toDateString(),on=!!(st.log[k]||{})[m.k],fu=d>now&&k!==td;
+      h+=`<td><div class="gcel ${on?'on':''} ${k===td&&!on?'td':''} ${fu?'fu':''}">${on?'✓':''}</div></td>`});
+    h+=`</tr>`});
+  h+=`</tbody></table></div></div>`;
+
+  let streak=0;
+  for(let i=1;i<=365;i++){const d=new Date(now);d.setDate(now.getDate()-i);const dh=st.hb[d.toDateString()]||{};if(st.habits.length&&st.habits.every(x=>dh[x]))streak++;else break}
+  h+=`<div class="sec"><div class="slbl">hábitos${streak?` <b>${streak} dia${streak>1?'s':''} completos seguidos</b>`:''} <button class="eb ${st.editH?'on':''}" onclick="st.editH=!st.editH;render()">${st.editH?'pronto':'editar'}</button></div><div class="card">`;
+  h+=`<div style="overflow-x:auto"><table class="gtbl" style="min-width:320px"><thead><tr><td style="width:34%"></td>`;
+  wd.forEach((d,i)=>{h+=`<td class="gday ${d.toDateString()===td?'td':''}">${DS[i]}</td>`});
+  h+=`</tr></thead><tbody>`;
+  st.habits.forEach((hb,hi)=>{
+    h+=`<tr><td class="glbl">${hb}${st.editH?` <button class="xb" onclick="rmHabit(${hi})">✕</button>`:''}</td>`;
+    wd.forEach(d=>{const k=d.toDateString(),on=!!(st.hb[k]||{})[hb],fu=d>now&&k!==td;
+      h+=`<td><div class="gcel ${on?'on':''} ${k===td&&!on?'td':''} ${fu?'fu':''}" ${fu?'':`onclick="toggleHabit(${hi},'${k}')"`}>${on?'✓':''}</div></td>`});
+    h+=`</tr>`});
+  h+=`</tbody></table></div>`;
+  if(st.editH)h+=`<div class="arow"><input id="hb-new" class="inp" style="font-size:12px" placeholder="novo hábito"><button class="abtn" onclick="addHabit()">+</button></div>`;
+  h+=`</div></div>`;
+
+  h+=`<div class="sec"><div class="slbl">água na semana</div><div class="card"><div class="mini">`;
+  wd.forEach(d=>{const p=Math.min(waterMl(d.toDateString())/WATER_GOAL*100,100);h+=`<div><i style="height:${p}%"></i></div>`});
+  h+=`</div><div class="minix">`;
+  wd.forEach((d,i)=>{h+=`<span>${DS[i]}</span>`});
+  h+=`</div></div></div>`;
+  return h;
+}
+
+// ═══════════════ ações ═══════════════
+function setTab(t){st.tab=t;if(t!=='comer')st.mealFilt=null;window.scrollTo(0,0);render()}
+function setMeal(k){st.mealFilt=k;render()}
+function goComer(k){st.tab='comer';st.mealFilt=k;window.scrollTo(0,0);render()}
+function toggleFast(){st.fast=!st.fast;render()}
+function toggleOpen(id){st.open[id]=!st.open[id];render()}
+function toggleAcc(k){st.accOpen[k]=!st.accOpen[k];render()}
+function setPick(rid,si,oi){if(!st.pick[rid])st.pick[rid]={};st.pick[rid][si]=oi;sv('liz_pick',st.pick);render()}
+function saveNote(id){const el=document.getElementById('nt-'+id);if(el){st.notes[id]=el.value;sv('liz_notes',st.notes)}}
+function logMeal(mk,id){const t=today();if(!st.log[t])st.log[t]={};if(st.log[t][mk]===id)delete st.log[t][mk];else st.log[t][mk]=id;sv('liz_log',st.log);render()}
+function swapSug(mi){const k=today()+'_'+mi;st.swap[k]=(st.swap[k]||0)+1;sv('liz_swap',st.swap);render()}
+function addWater(ml){const t=today();if(!Array.isArray(st.water[t]))st.water[t]=[];st.water[t].push(ml);sv('liz_water',st.water);render()}
+function undoWater(){const t=today();if(Array.isArray(st.water[t])&&st.water[t].length){st.water[t].pop();sv('liz_water',st.water);render()}}
+function toggleHabit(hi,ds){const hb=st.habits[hi];if(!hb)return;if(!st.hb[ds])st.hb[ds]={};st.hb[ds][hb]=!st.hb[ds][hb];sv('liz_hb',st.hb);render()}
+function addHabit(){const el=document.getElementById('hb-new'),v=el?el.value.trim().toLowerCase():'';if(!v||st.habits.includes(v))return;st.habits.push(v);sv('liz_habits',st.habits);render()}
+function rmHabit(i){st.habits.splice(i,1);sv('liz_habits',st.habits);render()}
+function toggleAtalho(i){const w=wkStart(),n=ATALHOS[i].n;if(!st.atalhos[w])st.atalhos[w]={};st.atalhos[w][n]=!st.atalhos[w][n];sv('liz_atalhos',st.atalhos);render()}
+function clearAtalhos(){st.atalhos[wkStart()]={};sv('liz_atalhos',st.atalhos);render()}
+function toggleBuy(it){st.buy[it]=!st.buy[it];sv('liz_buy',st.buy);render()}
+function clearBuy(){st.buy={};sv('liz_buy',st.buy);render()}
+function addItem(cat,sid){const el=document.getElementById('li-'+sid),v=el?el.value.trim().toLowerCase():'';if(!v)return;if(!st.lista[cat])st.lista[cat]=[];if(!st.lista[cat].includes(v))st.lista[cat].push(v);sv('liz_lista',st.lista);render()}
+function rmItem(cat,ii){if(!st.lista[cat])return;const it=st.lista[cat][ii];st.lista[cat].splice(ii,1);delete st.buy[it];sv('liz_lista',st.lista);sv('liz_buy',st.buy);render()}
+function addCat(){const el=document.getElementById('li-newcat'),v=el?el.value.trim().toLowerCase():'';if(!v||st.lista[v])return;st.lista[v]=[];sv('liz_lista',st.lista);render()}
+function genBackup(){const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf('liz_')===0)o[k]=localStorage.getItem(k)}const t=JSON.stringify(o);const el=document.getElementById('bk-out');if(el)el.value=t;try{if(navigator.clipboard)navigator.clipboard.writeText(t)}catch(e){}}
+function restoreBackup(){const el=document.getElementById('bk-in');if(!el||!el.value.trim())return;let o;try{o=JSON.parse(el.value)}catch(e){alert('backup inválido — confira o texto colado');return}if(!confirm('isso vai substituir os dados atuais do app por esse backup. continuar?'))return;Object.keys(o).forEach(k=>{if(k.indexOf('liz_')===0)localStorage.setItem(k,o[k])});location.reload()}
 
 render();
 </script>
