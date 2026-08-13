@@ -75,6 +75,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg
 .hbx.on{background:var(--w);border-color:var(--w);color:#fff}
 .hnm{font-size:13px;font-weight:500;flex:1}
 .hnm.on{color:var(--mu);text-decoration:line-through}
+.hsub{font-size:10.5px;color:var(--mu);line-height:1.45;margin-top:2px}
+.mp a{color:var(--w);font-weight:600}
 .acc{margin:0 0 10px;background:var(--wh);border:1.5px solid var(--br);border-radius:14px;overflow:hidden}
 .acch{padding:13px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 .acct{font-size:13px;font-weight:600}
@@ -134,7 +136,7 @@ const RB=[
      {l:'cremoso',o:['creme de ricota light 30g','requeijão light 20g','cottage 30g','muçarela 12g','queijo coalho 10g','minas frescal 20g']},
      {l:'fruta',o:['mamão formosa 150g','uva 125g','manga 90g','melancia 220g','melão 275g','banana 65g','abacate 40g']},
      {l:'finalizar',o:['mix de sementes 5g']}],
- mp:'chia por cima da fruta e o mix de abóbora+linhaça por cima do ovo. dá pra variar com patê de ovo cozido: cozinhar 10-12min, amassar com garfo e misturar com o creme de ricota, sal, pimenta e cebolinha.'},
+ mp:'chia por cima da fruta e o mix de abóbora+linhaça por cima do ovo. dá pra variar com patê de ovo cozido: cozinhar 10-12min, amassar com garfo e misturar com o creme de ricota, sal, pimenta e cebolinha. se escolher a goma de tapioca, vale virar crepioca — sozinha, uma tapioca de 45g fica pequena e sacia pouco: bater os 2 ovos com o garfo, misturar a goma até ficar homogêneo e levar à frigideira untada; quando soltar das bordas, rechear com o creme de ricota.'},
 
 {id:102,m:'café',n:'avo toast',t:8,
  sl:[{l:'pão',o:['pão francês 1un (50g)','pão integral 2 fatias (50g)','goma de tapioca 45g']},
@@ -193,8 +195,8 @@ const RB=[
      {l:'carbo',o:['macarrão cozido 95g','macarrão integral 95g','batata inglesa cozida 210g','batata inglesa assada 125g','croutons 1,5 fatia']},
      {l:'fruta',o:['manga em cubinhos 60g']},
      {l:'folhas',o:['alface, rúcula, tomate, pepino e cenoura à vontade']},
-     {l:'molho',o:['mostarda com mel','mel + azeite + limão + mostarda','iogurte grego com mostarda','cottage com mostarda','limão + mostarda + ketchup + azeite 8g + adoçante e sal','ranch mr taste','caesar hellmann 12g']}],
- mp:'gergelim torrado e triturado por cima fica ótimo. dá pra deixar o molho pronto num potinho no domingo.'},
+     {l:'molho',o:['mostarda com mel','mel 2cs + azeite 1cs + ½ limão + mostarda 1cs','iogurte grego com mostarda','iogurte natural ⅓ xícara + mostarda 1cs + mel 1 colher de sobremesa + água 2cs','cottage com mostarda','½ limão + mostarda 1cs + ketchup 1cs + azeite 8g (pesar) + adoçante 4-5 gotas + pitada de sal','ranch mr taste','caesar hellmann\'s 12g (1 colher de sopa)']}],
+ mp:'os molhos misturados (o de mel com azeite, o de iogurte natural e o de limão com ketchup) é só misturar tudo e usar. atenção no de azeite: pesar os 8g, porque a gordura do dia já está contada. o de iogurte natural rende mais de uma porção e dura no máximo 3 dias na geladeira. as verduras são de livre escolha — as da lista são só sugestões. gergelim torrado por cima fica ótimo: comprar a granel, tostar numa frigideira em quantidade grande mexendo até dourar, depois triturar no liquidificador até virar uma farofinha. duas saladas da Sara pra testar: <a href="https://www.instagram.com/reel/DYnWuL_vnVu/?igsh=MXZpMzZzd2Z0bTJwbg==" target="_blank" rel="noopener">reel 1</a> · <a href="https://www.instagram.com/reel/DYXOJQAzLG9/?igsh=MXU3YW11YWk3Mnc3bg==" target="_blank" rel="noopener">reel 2</a>'},
 
 // ─────────── lanche ───────────
 {id:121,m:'lanche',n:'iogurte com uva e granola',t:2,
@@ -307,7 +309,28 @@ const LISTA_DEF={
 };
 
 const HABITS_DEF=['água em jejum','raspar a língua','shot matinal','creatina','chá','alongar','meditar','ler','escrever','treinar','separar roupa'];
-const WATER_GOAL=2250;
+
+// as quantidades que a Sara prescreveu pra cada hábito da rotina matinal
+const HABIT_INFO={
+ 'água em jejum':'200ml morna + 500ml natural, assim que acordar',
+ 'raspar a língua':'antes da água — raspador de cobre, inox ou uma colher',
+ 'shot matinal':'cúrcuma 1 c. café rasa + gengibre em pó ½ c. café + própolis 18 gotas + 1 limão',
+ 'creatina':'5g (max titanium), com os 500ml do desjejum às 06:00',
+ 'chá':'diurético de manhã: hibisco 1½cs + chá verde 1cs + cavalinha 1cs'
+};
+
+const ROTINA=[
+ 'antes de beber água, escovar os dentes e raspar a língua — raspador de cobre, aço inox ou uma colher deixada no banheiro. raspando, você não engole as bactérias ruins.',
+ 'em jejum: 200ml de água morna + 500ml de água natural ou fria. a morna ativa a digestão, ajuda na motilidade intestinal e na absorção de nutrientes.',
+ 'shot matinal (opcional, mas ajuda na digestão): cúrcuma 1 colher de café rasa + gengibre em pó ½ colher de café rasa + extrato de própolis alcoólico 18 gotas + 1 limão + água.',
+ 'creatina monohidratada 5g (max titanium), junto com os 500ml de água das 06:00.',
+ 'chá diurético (manhã e início da tarde): ferver a água e desligar. adicionar 1½ colher de sopa de flor de hibisco, 1 colher de sopa de chá verde e 1 colher de sopa de cavalinha. deixar em infusão 10-15min, peneirar e guardar na garrafa — gelado ou quente.',
+ 'chá digestivo: erva-doce, canela em pau, dente de leão, alecrim, anis estrelado, gengibre ou hortelã — sozinhos ou em mix.',
+ 'chá noturno: camomila, mulungu ou passiflora — sozinhos ou em mix.'
+];
+
+// o plano pede 40–45ml de água por kg; o peso fica editável porque não está no PDF
+const ML_POR_KG=45;
 
 const FORA=[
  'monte o prato na mesma proporção do plano: 1 proteína + 1 carbo + salada e legumes à vontade.',
@@ -377,8 +400,9 @@ const st={
  lista:ld('liz_lista',null)||JSON.parse(JSON.stringify(LISTA_DEF)),
  buy:ld('liz_buy',{}),
  atalhos:ld('liz_atalhos',{}),
+ peso:ld('liz_peso',50),
  accOpen:{},
- editH:false,editL:false
+ editH:false,editL:false,editMeta:false
 };
 
 // ═══════════════ helpers ═══════════════
@@ -409,6 +433,7 @@ function suggest(mi){
   return use[(base+off)%use.length];
 }
 function waterMl(ds){const a=st.water[ds||today()];return Array.isArray(a)?a.reduce((x,y)=>x+y,0):0}
+function metaAgua(){return Math.round((st.peso||50)*ML_POR_KG)}
 function atalhoDone(n){return!!((st.atalhos[wkStart()]||{})[n])}
 function buyCount(){return Object.keys(st.buy).filter(k=>st.buy[k]).length}
 
@@ -444,10 +469,14 @@ function viewHoje(mi,td){
   h+=`</div><div class="lnk" onclick="goComer('${M.k}')">ver as ${byMeal(M.k).length} opções de ${M.full} →</div></div>`;
   if(mi<3){const N=MEALS[mi+1];h+=`<div class="nxt">depois: ${N.full} às ${N.t}</div>`}
 
-  const ml=waterMl(td),pct=Math.min(ml/WATER_GOAL*100,100);
-  h+=`<div class="sec"><div class="slbl">água <b>${ml}ml de ${WATER_GOAL}ml</b></div><div class="card">`;
+  const meta=metaAgua(),ml=waterMl(td),pct=Math.min(ml/meta*100,100);
+  h+=`<div class="sec"><div class="slbl">água <b>${ml}ml de ${meta}ml</b> <button class="eb ${st.editMeta?'on':''}" onclick="st.editMeta=!st.editMeta;render()">${st.editMeta?'pronto':'meta'}</button></div><div class="card">`;
+  if(st.editMeta){
+    h+=`<div style="font-size:11px;color:var(--mu);line-height:1.55;margin-bottom:8px">a Sara pede 40–45ml por kg de peso. o app usa ${ML_POR_KG}ml/kg — seu peso não está no plano, então confira aqui.</div>`;
+    h+=`<div class="arow" style="margin:0 0 12px"><input id="peso" class="inp" type="number" inputmode="decimal" value="${st.peso}" style="font-size:13px"><span style="font-size:12px;color:var(--mu);flex-shrink:0">kg</span><button class="abtn" onclick="setPeso()">✓</button></div>`;
+  }
   h+=`<div class="wbar"><div style="width:${pct}%"></div></div>`;
-  h+=`<div style="font-size:11px;color:${ml>=WATER_GOAL?'var(--gn)':'var(--mu)'};font-weight:${ml>=WATER_GOAL?600:400}">${ml>=WATER_GOAL?'meta batida hoje 🎉':'faltam '+(WATER_GOAL-ml)+'ml'}</div>`;
+  h+=`<div style="font-size:11px;color:${ml>=meta?'var(--gn)':'var(--mu)'};font-weight:${ml>=meta?600:400}">${ml>=meta?'meta batida hoje 🎉':'faltam '+(meta-ml)+'ml'}</div>`;
   h+=`<div class="wbtn"><button onclick="addWater(250)">+ copo 250ml</button><button class="pri" onclick="addWater(750)">+ garrafa 750ml</button>`;
   h+=`<button onclick="undoWater()" style="flex:0 0 46px">−</button></div></div></div>`;
 
@@ -460,8 +489,8 @@ function viewHoje(mi,td){
       h+=`<button class="hmv" onclick="moveHabit(${i},1)" ${i===st.habits.length-1?'disabled':''}>↓</button>`;
       h+=`<button class="xb" onclick="rmHabit(${i})">✕</button></div>`;
     }else{
-      const on=!!(st.hb[td]||{})[hb];
-      h+=`<div class="hrow" onclick="toggleHabit(${i},'${td}')"><div class="hbx ${on?'on':''}">✓</div><div class="hnm ${on?'on':''}">${hb}</div></div>`;
+      const on=!!(st.hb[td]||{})[hb],info=HABIT_INFO[hb];
+      h+=`<div class="hrow" onclick="toggleHabit(${i},'${td}')"><div class="hbx ${on?'on':''}">✓</div><div style="flex:1"><div class="hnm ${on?'on':''}">${hb}</div>${info?`<div class="hsub">${info}</div>`:''}</div></div>`;
     }});
   if(st.editH){
     h+=`<div class="arow" style="padding:4px 0 12px"><input id="hb-new2" class="inp" style="font-size:12px" placeholder="novo hábito"><button class="abtn" onclick="addHabit('hb-new2')">+</button></div>`;
@@ -469,8 +498,13 @@ function viewHoje(mi,td){
   }
   h+=`</div></div>`;
 
+  const ro=st.accOpen['rotina'];
+  h+=`<div class="sec"><div class="acc"><div class="acch" onclick="toggleAcc('rotina')"><div><div class="acct">rotina da manhã</div><div class="accs">as quantidades e os modos de preparo do plano</div></div><span style="color:var(--mu);font-size:12px">${ro?'▴':'▾'}</span></div>`;
+  if(ro){h+=`<div class="accb prose">`;ROTINA.forEach(x=>{h+=`<div style="font-size:12px;line-height:1.65;margin-bottom:9px">• ${x}</div>`});h+=`</div>`}
+  h+=`</div>`;
+
   const fo=st.accOpen['fora'];
-  h+=`<div class="sec"><div class="acc"><div class="acch" onclick="toggleAcc('fora')"><div><div class="acct">tô na rua / sem nada pronto</div><div class="accs">o que fazer quando não dá pra seguir a receita</div></div><span style="color:var(--mu);font-size:12px">${fo?'▴':'▾'}</span></div>`;
+  h+=`<div class="acc"><div class="acch" onclick="toggleAcc('fora')"><div><div class="acct">tô na rua / sem nada pronto</div><div class="accs">o que fazer quando não dá pra seguir a receita</div></div><span style="color:var(--mu);font-size:12px">${fo?'▴':'▾'}</span></div>`;
   if(fo){h+=`<div class="accb prose">`;FORA.forEach(x=>{h+=`<div style="font-size:12px;line-height:1.65;margin-bottom:8px">• ${x}</div>`});h+=`</div>`}
   h+=`</div></div>`;
   return h;
@@ -595,7 +629,7 @@ function viewSemana(td){
   h+=`</div></div>`;
 
   h+=`<div class="sec"><div class="slbl">água na semana</div><div class="card"><div class="mini">`;
-  wd.forEach(d=>{const p=Math.min(waterMl(d.toDateString())/WATER_GOAL*100,100);h+=`<div><i style="height:${p}%"></i></div>`});
+  wd.forEach(d=>{const p=Math.min(waterMl(d.toDateString())/metaAgua()*100,100);h+=`<div><i style="height:${p}%"></i></div>`});
   h+=`</div><div class="minix">`;
   wd.forEach((d,i)=>{h+=`<span>${DS[i]}</span>`});
   h+=`</div></div></div>`;
@@ -603,7 +637,7 @@ function viewSemana(td){
 }
 
 // ═══════════════ ações ═══════════════
-function setTab(t){st.tab=t;if(t!=='comer')st.mealFilt=null;st.editH=false;st.editL=false;window.scrollTo(0,0);render()}
+function setTab(t){st.tab=t;if(t!=='comer')st.mealFilt=null;st.editH=false;st.editL=false;st.editMeta=false;window.scrollTo(0,0);render()}
 function setMeal(k){st.mealFilt=k;render()}
 function goComer(k){st.tab='comer';st.mealFilt=k;window.scrollTo(0,0);render()}
 function toggleFast(){st.fast=!st.fast;render()}
@@ -615,6 +649,7 @@ function logMeal(mk,id){const t=today();if(!st.log[t])st.log[t]={};if(st.log[t][
 function swapSug(mi){const k=today()+'_'+mi;st.swap[k]=(st.swap[k]||0)+1;sv('liz_swap',st.swap);render()}
 function addWater(ml){const t=today();if(!Array.isArray(st.water[t]))st.water[t]=[];st.water[t].push(ml);sv('liz_water',st.water);render()}
 function undoWater(){const t=today();if(Array.isArray(st.water[t])&&st.water[t].length){st.water[t].pop();sv('liz_water',st.water);render()}}
+function setPeso(){const el=document.getElementById('peso'),v=el?parseFloat(String(el.value).replace(',','.')):NaN;if(!isFinite(v)||v<25||v>250)return;st.peso=v;sv('liz_peso',v);st.editMeta=false;render()}
 function toggleHabit(hi,ds){const hb=st.habits[hi];if(!hb)return;if(!st.hb[ds])st.hb[ds]={};st.hb[ds][hb]=!st.hb[ds][hb];sv('liz_hb',st.hb);render()}
 function addHabit(id){const el=document.getElementById(id||'hb-new'),v=el?el.value.trim().toLowerCase():'';if(!v||st.habits.includes(v))return;st.habits.push(v);sv('liz_habits',st.habits);render()}
 function rmHabit(i){st.habits.splice(i,1);sv('liz_habits',st.habits);render()}
