@@ -99,6 +99,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg
 .arow{display:flex;gap:7px;align-items:center;margin-top:8px}
 .abtn{background:var(--w);color:#fff;border:none;border-radius:9px;width:36px;height:36px;font-size:19px;cursor:pointer;flex-shrink:0}
 .xb{font-size:11px;color:#c0392b;cursor:pointer;background:none;border:none;flex-shrink:0;padding:4px 6px}
+.hmv{width:28px;height:28px;border-radius:7px;border:1.5px solid var(--bd);background:var(--wh);color:var(--w);font-size:12px;cursor:pointer;flex-shrink:0}
+.hmv:disabled{opacity:.3;cursor:default}
 .big{width:100%;background:var(--w);color:#fff;font-size:14px;font-weight:600;border:none;border-radius:12px;padding:14px;cursor:pointer;margin-top:10px}
 .ghost{width:100%;background:var(--wh);color:var(--w);font-size:13px;font-weight:600;border:1.5px solid var(--bd);border-radius:12px;padding:12px;cursor:pointer;margin-top:8px}
 .spacer{height:2rem}
@@ -134,14 +136,14 @@ const RB=[
      {l:'finalizar',o:['mix de sementes 5g']}],
  mp:'chia por cima da fruta e o mix de abóbora+linhaça por cima do ovo. dá pra variar com patê de ovo cozido: cozinhar 10-12min, amassar com garfo e misturar com o creme de ricota, sal, pimenta e cebolinha.'},
 
-{id:102,m:'café',n:'pão com ovo e tomatinhos',t:8,
+{id:102,m:'café',n:'avo toast',t:8,
  sl:[{l:'pão',o:['pão francês 1un (50g)','pão integral 2 fatias (50g)','goma de tapioca 45g']},
      {l:'proteína',o:['ovo médio 2un (90g)']},
      {l:'cremoso',o:['cottage lacfree 30g','requeijão light 20g','creme de ricota 30g','muçarela 12g','minas frescal 20g']},
      {l:'vegetal',o:['tomate à vontade','tomate cereja à vontade']},
-     {l:'fruta',o:['mamão formosa 150g','uva 120g','manga 85g','melancia 220g','melão 275g','banana 65g','abacate 40g']},
+     {l:'fruta',o:['abacate 40g','mamão formosa 150g','uva 120g','manga 85g','melancia 220g','melão 275g','banana 65g']},
      {l:'finalizar',o:['mix de sementes 5g']}],
- mp:'avocado toast: trocar a fruta por 40g de abacate (dá pra deixar guacamole pronta pra semana e pesar na hora). toast de banana: metade do pão com ovo/tomate/sementes e a outra metade com banana fatiada dourada na frigideira + queijo cremoso.'},
+ mp:'amassar o abacate com sal, pimenta e limão e espalhar sobre o pão com o ovo — dá pra deixar a guacamole pronta pra semana e só pesar na hora. trocando o abacate por uma fruta, vira o pão com ovo e tomatinhos do plano. toast de banana: metade do pão com ovo/tomate/sementes e a outra metade com banana fatiada dourada na frigideira + queijo cremoso.'},
 
 {id:103,m:'café',n:'bowl de iogurte',t:3,
  sl:[{l:'iogurte',o:['pense zero 250g','lacfree 210g','danone natural 145ml','yorgus grego 125g']},
@@ -336,6 +338,30 @@ if(ld('liz_appver',null)!==APP_VER){
   sv('liz_appver',APP_VER);
 }
 
+// as escolhas passaram a ser guardadas pelo nome do alimento, não pela posição,
+// pra que reordenar ou editar uma receita não troque a escolha salva por outra coisa
+const PICK_VER='nome';
+if(ld('liz_pickver',null)!==PICK_VER){
+  const old=ld('liz_pick',null);
+  if(old&&typeof old==='object'){
+    // ordem da fruta do avo toast antes do abacate subir pra primeira opção
+    const FRUTA_102=['mamão formosa 150g','uva 120g','manga 85g','melancia 220g','melão 275g','banana 65g','abacate 40g'];
+    const novo={};
+    Object.keys(old).forEach(rid=>{
+      const r=RB.find(x=>x.id===+rid);if(!r||!old[rid])return;
+      const out={};
+      Object.keys(old[rid]).forEach(si=>{
+        const i=old[rid][si];if(typeof i!=='number')return;
+        const src=(+rid===102&&+si===4)?FRUTA_102:(r.sl[si]?r.sl[si].o:null);
+        if(src&&src[i]!==undefined)out[si]=src[i];
+      });
+      if(Object.keys(out).length)novo[rid]=out;
+    });
+    sv('liz_pick',novo);
+  }
+  sv('liz_pickver',PICK_VER);
+}
+
 const st={
  tab:'hoje',
  mealFilt:null,
@@ -363,7 +389,13 @@ function nowMin(){const d=new Date();return d.getHours()*60+d.getMinutes()}
 function curMealIdx(){const m=nowMin();for(let i=0;i<MEALS.length;i++)if(m<MEALS[i].to)return i;return 3}
 function byMeal(k){return RB.filter(r=>r.m===k)}
 function rec(id){return RB.find(r=>r.id===id)}
-function pickOf(rid,si){const p=st.pick[rid];return(p&&p[si]!==undefined)?p[si]:0}
+function pickOf(rid,si){
+  const r=rec(rid);if(!r||!r.sl[si])return 0;
+  const v=st.pick[rid]&&st.pick[rid][si];
+  if(v===undefined)return 0;
+  const i=r.sl[si].o.indexOf(v);
+  return i>=0?i:0;
+}
 function lineOf(r){return r.sl.map((s,i)=>s.o[pickOf(r.id,i)]||s.o[0]).join(' · ')}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 function logged(mk,ds){return(st.log[ds||today()]||{})[mk]}
@@ -420,9 +452,21 @@ function viewHoje(mi,td){
   h+=`<button onclick="undoWater()" style="flex:0 0 46px">−</button></div></div></div>`;
 
   const done=st.habits.filter(x=>(st.hb[td]||{})[x]).length;
-  h+=`<div class="sec"><div class="slbl">hábitos de hoje <b>${done}/${st.habits.length}</b></div><div class="card" style="padding:2px 14px">`;
-  st.habits.forEach((hb,i)=>{const on=!!(st.hb[td]||{})[hb];
-    h+=`<div class="hrow" onclick="toggleHabit(${i},'${td}')"><div class="hbx ${on?'on':''}">✓</div><div class="hnm ${on?'on':''}">${hb}</div></div>`});
+  h+=`<div class="sec"><div class="slbl">hábitos de hoje <b>${done}/${st.habits.length}</b> <button class="eb ${st.editH?'on':''}" onclick="st.editH=!st.editH;render()">${st.editH?'pronto':'editar'}</button></div><div class="card" style="padding:2px 14px">`;
+  st.habits.forEach((hb,i)=>{
+    if(st.editH){
+      h+=`<div class="hrow" style="cursor:default"><div class="hnm">${hb}</div>`;
+      h+=`<button class="hmv" onclick="moveHabit(${i},-1)" ${i===0?'disabled':''}>↑</button>`;
+      h+=`<button class="hmv" onclick="moveHabit(${i},1)" ${i===st.habits.length-1?'disabled':''}>↓</button>`;
+      h+=`<button class="xb" onclick="rmHabit(${i})">✕</button></div>`;
+    }else{
+      const on=!!(st.hb[td]||{})[hb];
+      h+=`<div class="hrow" onclick="toggleHabit(${i},'${td}')"><div class="hbx ${on?'on':''}">✓</div><div class="hnm ${on?'on':''}">${hb}</div></div>`;
+    }});
+  if(st.editH){
+    h+=`<div class="arow" style="padding:4px 0 12px"><input id="hb-new2" class="inp" style="font-size:12px" placeholder="novo hábito"><button class="abtn" onclick="addHabit('hb-new2')">+</button></div>`;
+    h+=`<div style="font-size:10.5px;color:var(--mu);line-height:1.5;padding-bottom:12px">tirar um hábito não apaga o histórico dele — se você adicionar de volta com o mesmo nome, os dias marcados voltam.</div>`;
+  }
   h+=`</div></div>`;
 
   const fo=st.accOpen['fora'];
@@ -559,21 +603,22 @@ function viewSemana(td){
 }
 
 // ═══════════════ ações ═══════════════
-function setTab(t){st.tab=t;if(t!=='comer')st.mealFilt=null;window.scrollTo(0,0);render()}
+function setTab(t){st.tab=t;if(t!=='comer')st.mealFilt=null;st.editH=false;st.editL=false;window.scrollTo(0,0);render()}
 function setMeal(k){st.mealFilt=k;render()}
 function goComer(k){st.tab='comer';st.mealFilt=k;window.scrollTo(0,0);render()}
 function toggleFast(){st.fast=!st.fast;render()}
 function toggleOpen(id){st.open[id]=!st.open[id];render()}
 function toggleAcc(k){st.accOpen[k]=!st.accOpen[k];render()}
-function setPick(rid,si,oi){if(!st.pick[rid])st.pick[rid]={};st.pick[rid][si]=oi;sv('liz_pick',st.pick);render()}
+function setPick(rid,si,oi){const r=rec(rid);if(!r||!r.sl[si])return;if(!st.pick[rid])st.pick[rid]={};st.pick[rid][si]=r.sl[si].o[oi];sv('liz_pick',st.pick);render()}
 function saveNote(id){const el=document.getElementById('nt-'+id);if(el){st.notes[id]=el.value;sv('liz_notes',st.notes)}}
 function logMeal(mk,id){const t=today();if(!st.log[t])st.log[t]={};if(st.log[t][mk]===id)delete st.log[t][mk];else st.log[t][mk]=id;sv('liz_log',st.log);render()}
 function swapSug(mi){const k=today()+'_'+mi;st.swap[k]=(st.swap[k]||0)+1;sv('liz_swap',st.swap);render()}
 function addWater(ml){const t=today();if(!Array.isArray(st.water[t]))st.water[t]=[];st.water[t].push(ml);sv('liz_water',st.water);render()}
 function undoWater(){const t=today();if(Array.isArray(st.water[t])&&st.water[t].length){st.water[t].pop();sv('liz_water',st.water);render()}}
 function toggleHabit(hi,ds){const hb=st.habits[hi];if(!hb)return;if(!st.hb[ds])st.hb[ds]={};st.hb[ds][hb]=!st.hb[ds][hb];sv('liz_hb',st.hb);render()}
-function addHabit(){const el=document.getElementById('hb-new'),v=el?el.value.trim().toLowerCase():'';if(!v||st.habits.includes(v))return;st.habits.push(v);sv('liz_habits',st.habits);render()}
+function addHabit(id){const el=document.getElementById(id||'hb-new'),v=el?el.value.trim().toLowerCase():'';if(!v||st.habits.includes(v))return;st.habits.push(v);sv('liz_habits',st.habits);render()}
 function rmHabit(i){st.habits.splice(i,1);sv('liz_habits',st.habits);render()}
+function moveHabit(i,d){const j=i+d;if(j<0||j>=st.habits.length)return;[st.habits[i],st.habits[j]]=[st.habits[j],st.habits[i]];sv('liz_habits',st.habits);render()}
 function toggleAtalho(i){const w=wkStart(),n=ATALHOS[i].n;if(!st.atalhos[w])st.atalhos[w]={};st.atalhos[w][n]=!st.atalhos[w][n];sv('liz_atalhos',st.atalhos);render()}
 function clearAtalhos(){st.atalhos[wkStart()]={};sv('liz_atalhos',st.atalhos);render()}
 function toggleBuy(it){st.buy[it]=!st.buy[it];sv('liz_buy',st.buy);render()}
