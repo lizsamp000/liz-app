@@ -214,10 +214,10 @@ const RB=[
 
 {id:123,m:'lanche',n:'crepioca de frango',t:6,
  sl:[{l:'massa',o:['ovo médio 1un (45g) + goma de tapioca 30g']},
-     {l:'proteína',o:['frango desfiado 40g','atum ralado 55g']},
+     {l:'proteína',o:['frango desfiado 40g','frango desfiado 50g','atum ralado 55g','atum ralado 65g']},
      {l:'cremoso',o:['requeijão light 25g','cottage yorgus 35g','creme de ricota 30g']}],
  mp:'misturar bem o ovo, a goma e o sal até ficar uniforme. frigideira antiaderente, tampar por 3-4min e rechear.',
- chk:'no PDF essa opção aparece com dois valores: frango desfiado "40 grama(s) (50g)" e atum ralado "55 grama(s) (65g)". o app usa o primeiro (40g e 55g). na crepioca do jantar os dois valores batem, então vale confirmar com a Sara qual vale aqui.'},
+ chk:'o PDF traz dois valores nesta opção: frango desfiado "40 grama(s) (50g)" e atum ralado "55 grama(s) (65g)" — os pares 40/55 e 50/65. na crepioca do jantar os dois valores batem, então aqui é erro de digitação em algum dos campos. como a diferença é de ~10g (uns 3g de proteína), os dois estão na lista pra você escolher — vale confirmar com a Sara qual vale.'},
 
 {id:124,m:'lanche',n:'panqueca de banana',t:8,
  sl:[{l:'massa',o:['ovo médio 1un (45g) + clara 1un (30g)']},
@@ -254,8 +254,7 @@ const RB=[
      {l:'cremoso',o:['requeijão light 25g','creme de ricota 35g','cottage lacfree 35g','minas frescal 30g','muçarela 20g']},
      {l:'vegetal',o:['alface e tomate à vontade']},
      {l:'molho',o:['ketchup 1 colher de sopa (12g)']}],
- mp:'espalhar a carne moída crua por todo o rap10, montar vários e guardar em saquinhos no freezer. na hora é só ir pra frigideira e rechear com o queijo e a alface.',
- chk:'a prescrição é 110g de patinho, mas o modo de preparo do PDF cita 120g — que é justamente a quantidade do frango moído. o app usa os 110g prescritos; vale confirmar com a Sara.'},
+ mp:'espalhar a carne moída crua por todo o rap10, montar vários e guardar em saquinhos no freezer. na hora é só ir pra frigideira e rechear com o queijo e a alface. o texto do plano cita 120g nesse preparo, mas a porção prescrita de patinho é 110g — os 120g são a quantidade do frango moído, que é a substituição. vale os 110g.'},
 
 {id:133,m:'jantar',n:'pizza fake',t:5,
  sl:[{l:'massa',o:['rap10 muito fit 1un (40g)']},
@@ -332,7 +331,7 @@ const ROTINA=[
  'chá noturno: camomila, mulungu ou passiflora — sozinhos ou em mix.'
 ];
 
-// o plano pede 40–45ml de água por kg; o peso fica editável porque não está no PDF
+// o plano pede 40–45ml de água por kg; o peso não está no PDF, foi confirmado pela Liz em 50kg
 const ML_POR_KG=45;
 
 const FORA=[
@@ -488,7 +487,7 @@ function viewHoje(mi,td){
   const meta=metaAgua(),ml=waterMl(td),pct=Math.min(ml/meta*100,100);
   h+=`<div class="sec"><div class="slbl">água <b>${ml}ml de ${meta}ml</b> <button class="eb ${st.editMeta?'on':''}" onclick="st.editMeta=!st.editMeta;render()">${st.editMeta?'pronto':'meta'}</button></div><div class="card">`;
   if(st.editMeta){
-    h+=`<div style="font-size:11px;color:var(--mu);line-height:1.55;margin-bottom:8px">a Sara pede 40–45ml por kg de peso. o app usa ${ML_POR_KG}ml/kg — seu peso não está no plano, então confira aqui.</div>`;
+    h+=`<div style="font-size:11px;color:var(--mu);line-height:1.55;margin-bottom:8px">a Sara pede 40–45ml por kg de peso e o app usa ${ML_POR_KG}ml/kg. só mexa aqui se o seu peso mudar.</div>`;
     h+=`<div class="arow" style="margin:0 0 12px"><input id="peso" class="inp" type="number" inputmode="decimal" value="${st.peso}" style="font-size:13px"><span style="font-size:12px;color:var(--mu);flex-shrink:0">kg</span><button class="abtn" onclick="setPeso()">✓</button></div>`;
   }
   h+=`<div class="wbar"><div style="width:${pct}%"></div></div>`;
