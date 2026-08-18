@@ -102,8 +102,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg
 .arow{display:flex;gap:7px;align-items:center;margin-top:8px}
 .abtn{background:var(--w);color:#fff;border:none;border-radius:9px;width:36px;height:36px;font-size:19px;cursor:pointer;flex-shrink:0}
 .xb{font-size:11px;color:#c0392b;cursor:pointer;background:none;border:none;flex-shrink:0;padding:4px 6px}
-.hmv{width:28px;height:28px;border-radius:7px;border:1.5px solid var(--bd);background:var(--wh);color:var(--w);font-size:12px;cursor:pointer;flex-shrink:0}
-.hmv:disabled{opacity:.3;cursor:default}
+.dgh{width:30px;height:30px;border-radius:8px;border:none;background:none;color:var(--bd);font-size:15px;line-height:1;cursor:grab;flex-shrink:0;touch-action:none;padding:0}
+.dgh:active{cursor:grabbing;color:var(--w)}
+.draglist{position:relative}
+.dragging{background:var(--wl)!important;border-radius:10px;box-shadow:0 6px 18px rgba(107,26,42,.22);position:relative;z-index:5;border-bottom-color:transparent!important;will-change:transform}
 .big{width:100%;background:var(--w);color:#fff;font-size:14px;font-weight:600;border:none;border-radius:12px;padding:14px;cursor:pointer;margin-top:10px}
 .ghost{width:100%;background:var(--wh);color:var(--w);font-size:13px;font-weight:600;border:1.5px solid var(--bd);border-radius:12px;padding:12px;cursor:pointer;margin-top:8px}
 .spacer{height:2rem}
@@ -499,19 +501,19 @@ function viewHoje(mi,td){
 
   const done=st.habits.filter(x=>(st.hb[td]||{})[x]).length;
   h+=`<div class="sec"><div class="slbl">hábitos de hoje <b>${done}/${st.habits.length}</b> <button class="eb ${st.editH?'on':''}" onclick="st.editH=!st.editH;render()">${st.editH?'pronto':'editar'}</button></div><div class="card" style="padding:2px 14px">`;
+  h+=`<div class="draglist" id="dl-hab">`;
   st.habits.forEach((hb,i)=>{
     if(st.editH){
-      h+=`<div class="hrow" style="cursor:default"><div class="hnm">${hb}</div>`;
-      h+=`<button class="hmv" onclick="moveHabit(${i},-1)" ${i===0?'disabled':''}>↑</button>`;
-      h+=`<button class="hmv" onclick="moveHabit(${i},1)" ${i===st.habits.length-1?'disabled':''}>↓</button>`;
+      h+=`<div class="hrow" data-di="${i}" style="cursor:default"><button class="dgh" onpointerdown="dragStart(event,'hab')" aria-label="arrastar">⠿</button><div class="hnm">${hb}</div>`;
       h+=`<button class="xb" onclick="rmHabit(${i})">✕</button></div>`;
     }else{
       const on=!!(st.hb[td]||{})[hb],info=HABIT_INFO[hb];
       h+=`<div class="hrow" onclick="toggleHabit(${i},'${td}')"><div class="hbx ${on?'on':''}">✓</div><div style="flex:1"><div class="hnm ${on?'on':''}">${hb}</div>${info?`<div class="hsub">${info}</div>`:''}</div></div>`;
     }});
+  h+=`</div>`;
   if(st.editH){
     h+=`<div class="arow" style="padding:4px 0 12px"><input id="hb-new2" class="inp" style="font-size:12px" placeholder="novo hábito"><button class="abtn" onclick="addHabit('hb-new2')">+</button></div>`;
-    h+=`<div style="font-size:10.5px;color:var(--mu);line-height:1.5;padding-bottom:12px">tirar um hábito não apaga o histórico dele — se você adicionar de volta com o mesmo nome, os dias marcados voltam.</div>`;
+    h+=`<div style="font-size:10.5px;color:var(--mu);line-height:1.5;padding-bottom:12px">arraste pelo ⠿ pra reordenar. tirar um hábito não apaga o histórico dele — se você adicionar de volta com o mesmo nome, os dias marcados voltam.</div>`;
   }
   h+=`</div></div>`;
 
@@ -569,11 +571,10 @@ function viewComer(mi){
     h+=`<div class="accb"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="font-size:11px;color:var(--mu);line-height:1.55;flex:1">nada aqui é pré-requisito. cada item só deixa algumas receitas mais rápidas durante a semana.</div>`;
     h+=`<button class="eb ${st.editA?'on':''}" onclick="st.editA=!st.editA;render()">${st.editA?'pronto':'editar'}</button></div>`;
     if(!L.length)h+=`<div style="font-size:12px;color:var(--mu);padding:8px 0">nenhum atalho na lista — toque em editar pra adicionar.</div>`;
+    h+=`<div class="draglist" id="dl-at">`;
     L.forEach((a,i)=>{
       if(st.editA){
-        h+=`<div class="prow" style="cursor:default;align-items:center"><div style="flex:1"><div class="pnm">${a.n}</div>${a.d?`<div class="pds">${a.d}</div>`:''}</div>`;
-        h+=`<button class="hmv" onclick="moveAtalho(${i},-1)" ${i===0?'disabled':''}>↑</button>`;
-        h+=`<button class="hmv" onclick="moveAtalho(${i},1)" ${i===L.length-1?'disabled':''}>↓</button>`;
+        h+=`<div class="prow" data-di="${i}" style="cursor:default;align-items:center"><button class="dgh" onpointerdown="dragStart(event,'at')" aria-label="arrastar">⠿</button><div style="flex:1"><div class="pnm">${a.n}</div>${a.d?`<div class="pds">${a.d}</div>`:''}</div>`;
         h+=`<button class="xb" onclick="rmAtalho(${i})">✕</button></div>`;
       }else{
         const on=atalhoDone(a.n);
@@ -582,9 +583,10 @@ function viewComer(mi){
         if(sub)h+=`<div class="pds">${sub}</div>`;
         h+=`</div></div>`;
       }});
+    h+=`</div>`;
     if(st.editA){
       h+=`<div class="arow"><input id="at-new" class="inp" style="font-size:12px" placeholder="novo atalho"><button class="abtn" onclick="addAtalho()">+</button></div>`;
-      h+=`<div style="font-size:10.5px;color:var(--mu);line-height:1.5;margin-top:8px">tirar um atalho não mexe no que já está marcado nas outras semanas.</div>`;
+      h+=`<div style="font-size:10.5px;color:var(--mu);line-height:1.5;margin-top:8px">arraste pelo ⠿ pra reordenar. tirar um atalho não mexe no que já está marcado nas outras semanas.</div>`;
       h+=`<button class="ghost" onclick="resetAtalhos()">voltar à lista original</button>`;
     }else{
       h+=`<button class="ghost" onclick="clearAtalhos()">limpar a semana</button>`;
@@ -694,11 +696,80 @@ function setPeso(){const el=document.getElementById('peso'),v=el?parseFloat(Stri
 function toggleHabit(hi,ds){const hb=st.habits[hi];if(!hb)return;if(!st.hb[ds])st.hb[ds]={};st.hb[ds][hb]=!st.hb[ds][hb];sv('liz_hb',st.hb);render()}
 function addHabit(id){const el=document.getElementById(id||'hb-new'),v=el?el.value.trim().toLowerCase():'';if(!v||st.habits.includes(v))return;st.habits.push(v);sv('liz_habits',st.habits);render()}
 function rmHabit(i){st.habits.splice(i,1);sv('liz_habits',st.habits);render()}
-function moveHabit(i,d){const j=i+d;if(j<0||j>=st.habits.length)return;[st.habits[i],st.habits[j]]=[st.habits[j],st.habits[i]];sv('liz_habits',st.habits);render()}
+let drag=null,dragTimer=null;
+// tudo em coordenadas do documento (com scrollY), porque a página rola durante o arrasto
+function dragStart(e,tipo){
+  const alca=e.currentTarget,linha=alca.closest('[data-di]');
+  if(!linha)return;
+  e.preventDefault();e.stopPropagation();
+  drag={tipo,cont:linha.parentElement,linha,y:e.clientY,
+        ancora:e.clientY+window.scrollY,
+        topo:linha.getBoundingClientRect().top+window.scrollY};
+  linha.classList.add('dragging');
+  try{alca.setPointerCapture(e.pointerId)}catch(err){}
+  alca.onpointermove=dragMove;
+  alca.onpointerup=alca.onpointercancel=dragEnd;
+  dragTimer=setInterval(()=>{if(drag)autoScroll()},16);
+}
+// faixa estreita e velocidade proporcional: não sai rolando só porque a linha está perto da borda
+const SCROLL_ZONA=56,SCROLL_MAX=14;
+function autoScroll(){
+  const h=window.innerHeight,antes=window.scrollY;
+  let v=0;
+  if(drag.y<SCROLL_ZONA)v=-Math.ceil((SCROLL_ZONA-drag.y)/SCROLL_ZONA*SCROLL_MAX);
+  else if(drag.y>h-SCROLL_ZONA)v=Math.ceil((drag.y-(h-SCROLL_ZONA))/SCROLL_ZONA*SCROLL_MAX);
+  if(v)window.scrollBy(0,v);
+  if(window.scrollY!==antes)posiciona();
+}
+function posiciona(){
+  const {linha}=drag;
+  const dy=(drag.y+window.scrollY)-drag.ancora;
+  linha.style.transform=`translateY(${dy}px)`;
+  return dy;
+}
+function dragMove(e){
+  if(!drag)return;
+  e.preventDefault();
+  drag.y=e.clientY;
+  const {cont,linha}=drag;
+  const dy=posiciona();
+  const centro=drag.topo+dy+linha.offsetHeight/2;
+  const irmaos=[...cont.querySelectorAll('[data-di]')].filter(x=>x!==linha);
+  let alvo=null;
+  for(const s of irmaos){
+    const r=s.getBoundingClientRect();
+    if(centro<r.top+window.scrollY+r.height/2){alvo=s;break}
+  }
+  const vizinho=linha.nextElementSibling;
+  if(alvo)cont.insertBefore(linha,alvo);
+  else if(irmaos.length)cont.insertBefore(linha,irmaos[irmaos.length-1].nextSibling);
+  // trocou de lugar: a linha mudou de posição no layout, então o deslocamento
+  // precisa compensar essa diferença — senão ela pula sob o dedo e dispara trocas em cascata
+  if(linha.nextElementSibling!==vizinho){
+    const topoNovo=linha.getBoundingClientRect().top+window.scrollY-dy;
+    const dyNovo=dy+drag.topo-topoNovo;
+    drag.topo=topoNovo;
+    drag.ancora=(drag.y+window.scrollY)-dyNovo;
+    posiciona();
+  }
+}
+function dragEnd(e){
+  clearInterval(dragTimer);dragTimer=null;
+  if(!drag)return;
+  const {tipo,cont,linha}=drag;
+  linha.classList.remove('dragging');
+  linha.style.transform='';
+  const alca=e&&e.currentTarget;
+  if(alca){alca.onpointermove=alca.onpointerup=alca.onpointercancel=null}
+  const ordem=[...cont.querySelectorAll('[data-di]')].map(x=>+x.dataset.di);
+  drag=null;
+  if(tipo==='hab'){st.habits=ordem.map(i=>st.habits[i]);sv('liz_habits',st.habits)}
+  else{st.atalhoList=ordem.map(i=>st.atalhoList[i]);sv('liz_atalholist',st.atalhoList)}
+  render();
+}
 function toggleAtalho(i){const a=st.atalhoList[i];if(!a)return;const w=wkStart(),n=a.n;if(!st.atalhos[w])st.atalhos[w]={};st.atalhos[w][n]=!st.atalhos[w][n];sv('liz_atalhos',st.atalhos);render()}
 function addAtalho(){const el=document.getElementById('at-new'),v=el?el.value.trim().toLowerCase():'';if(!v||st.atalhoList.some(a=>a.n===v))return;st.atalhoList.push({n:v,d:'',r:[]});sv('liz_atalholist',st.atalhoList);render()}
 function rmAtalho(i){st.atalhoList.splice(i,1);sv('liz_atalholist',st.atalhoList);render()}
-function moveAtalho(i,d){const j=i+d;if(j<0||j>=st.atalhoList.length)return;[st.atalhoList[i],st.atalhoList[j]]=[st.atalhoList[j],st.atalhoList[i]];sv('liz_atalholist',st.atalhoList);render()}
 function resetAtalhos(){if(!confirm('isso devolve a lista original de atalhos do plano, descartando os seus. continuar?'))return;st.atalhoList=ATALHOS_DEF.map(a=>({...a,r:[...a.r]}));sv('liz_atalholist',st.atalhoList);render()}
 function clearAtalhos(){st.atalhos[wkStart()]={};sv('liz_atalhos',st.atalhos);render()}
 function toggleBuy(it){st.buy[it]=!st.buy[it];sv('liz_buy',st.buy);render()}
