@@ -472,13 +472,13 @@ function render(){
 
 // ─────────── hoje ───────────
 function viewHoje(mi,td){
-  const M=MEALS[mi],lg=logged(M.k),r=lg?rec(lg):suggest(mi);
+  const M=MEALS[mi],lg=logged(M.k),r=(lg&&rec(lg))||suggest(mi);
   let h='';
   h+=`<div class="now"><div class="nowh">agora · ${M.full}<span>${M.t}</span></div><div class="nowb">`;
   if(r){
     h+=`<div class="nwn">${r.n}</div><div class="nwt">${r.t} min de preparo</div>`;
     h+=`<div class="nwi">${lineOf(r)}</div>`;
-    h+=`<div class="nwa"><button class="${lg?'done':'pri'}" onclick="logMeal('${M.k}',${r.id})">${lg?'✓ comi isso':'comi isso'}</button>`;
+    h+=`<div class="nwa"><button class="${lg?'done':'pri'}" onclick="${lg?`toggleLog('${td}','${M.k}')`:`logMeal('${M.k}',${r.id})`}">${lg?'✓ comi isso':'comi isso'}</button>`;
     if(!lg)h+=`<button onclick="swapSug(${mi})">outra opção</button>`;
     h+=`</div>`;
   }
@@ -624,13 +624,14 @@ function viewSemana(td){
   const past=wd.filter(d=>d<=now||d.toDateString()===td);
   past.forEach(d=>{const k=d.toDateString();MEALS.forEach(m=>{if((st.log[k]||{})[m.k])tot++})});
   h+=`<div class="sec"><div class="slbl">refeições registradas <b>${tot} de ${past.length*4}</b></div><div class="card">`;
+  h+=`<div style="font-size:10.5px;color:var(--mu);line-height:1.5;margin-bottom:10px">esqueceu de marcar? toque no quadradinho do dia.</div>`;
   h+=`<table class="gtbl"><thead><tr><td style="width:22%"></td>`;
   wd.forEach((d,i)=>{h+=`<td class="gday ${d.toDateString()===td?'td':''}">${DS[i]}<br><span style="font-size:9px">${d.getDate()}</span></td>`});
   h+=`</tr></thead><tbody>`;
   MEALS.forEach(m=>{
     h+=`<tr><td class="glbl">${m.k}</td>`;
     wd.forEach(d=>{const k=d.toDateString(),on=!!(st.log[k]||{})[m.k],fu=d>now&&k!==td;
-      h+=`<td><div class="gcel ${on?'on':''} ${k===td&&!on?'td':''} ${fu?'fu':''}">${on?'✓':''}</div></td>`});
+      h+=`<td><div class="gcel ${on?'on':''} ${k===td&&!on?'td':''} ${fu?'fu':''}" ${fu?'':`onclick="toggleLog('${k}','${m.k}')"`}>${on?'✓':''}</div></td>`});
     h+=`</tr>`});
   h+=`</tbody></table></div></div>`;
 
@@ -667,6 +668,7 @@ function toggleAcc(k){st.accOpen[k]=!st.accOpen[k];render()}
 function setPick(rid,si,oi){const r=rec(rid);if(!r||!r.sl[si])return;if(!st.pick[rid])st.pick[rid]={};st.pick[rid][si]=r.sl[si].o[oi];sv('liz_pick',st.pick);render()}
 function saveNote(id){const el=document.getElementById('nt-'+id);if(el){st.notes[id]=el.value;sv('liz_notes',st.notes)}}
 function logMeal(mk,id){const t=today();if(!st.log[t])st.log[t]={};if(st.log[t][mk]===id)delete st.log[t][mk];else st.log[t][mk]=id;sv('liz_log',st.log);render()}
+function toggleLog(ds,mk){if(!st.log[ds])st.log[ds]={};if(st.log[ds][mk])delete st.log[ds][mk];else st.log[ds][mk]=true;if(!Object.keys(st.log[ds]).length)delete st.log[ds];sv('liz_log',st.log);render()}
 function swapSug(mi){const k=today()+'_'+mi;st.swap[k]=(st.swap[k]||0)+1;sv('liz_swap',st.swap);render()}
 function addWater(ml){const t=today();if(!Array.isArray(st.water[t]))st.water[t]=[];st.water[t].push(ml);sv('liz_water',st.water);render()}
 function undoWater(){const t=today();if(Array.isArray(st.water[t])&&st.water[t].length){st.water[t].pop();sv('liz_water',st.water);render()}}
