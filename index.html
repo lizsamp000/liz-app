@@ -275,8 +275,8 @@ const RB=[
      {l:'cremoso',o:['requeijão light 20g','creme de ricota 30g','cottage lacfree 30g','muçarela 12g','queijo coalho 10g','minas frescal light 20g','minas padrão sem lactose 15g']}]}
 ];
 
-// atalhos do domingo — aceleram receitas, nunca bloqueiam
-const ATALHOS=[
+// atalhos do domingo — aceleram receitas, nunca bloqueiam. a lista é editável (liz_atalholist)
+const ATALHOS_DEF=[
  {n:'frango desfiado',d:'cozinhar e desfiar ~400g de peito',r:[104,122,123,133,134,135]},
  {n:'peito de frango grelhado',d:'grelhar em porções de 100g',r:[111,114]},
  {n:'carne moída refogada',d:'patinho temperado',r:[134]},
@@ -403,9 +403,10 @@ const st={
  lista:ld('liz_lista',null)||JSON.parse(JSON.stringify(LISTA_DEF)),
  buy:ld('liz_buy',{}),
  atalhos:ld('liz_atalhos',{}),
+ atalhoList:ld('liz_atalholist',null)||ATALHOS_DEF.map(a=>({...a,r:[...a.r]})),
  peso:ld('liz_peso',50),
  accOpen:{},soFalta:false,
- editH:false,editL:false,editMeta:false
+ editH:false,editL:false,editMeta:false,editA:false
 };
 
 // ═══════════════ helpers ═══════════════
@@ -562,16 +563,33 @@ function viewComer(mi){
   });
   h+=`</div>`;
 
-  const feitos=ATALHOS.filter(a=>atalhoDone(a.n)).length,ao=st.accOpen['atalhos'];
-  h+=`<div class="sec"><div class="acc"><div class="acch" onclick="toggleAcc('atalhos')"><div><div class="acct">atalhos do domingo</div><div class="accs">${feitos} de ${ATALHOS.length} feitos · opcional, só acelera</div></div><span style="color:var(--mu);font-size:12px">${ao?'▴':'▾'}</span></div>`;
+  const L=st.atalhoList,feitos=L.filter(a=>atalhoDone(a.n)).length,ao=st.accOpen['atalhos'];
+  h+=`<div class="sec"><div class="acc"><div class="acch" onclick="toggleAcc('atalhos')"><div><div class="acct">atalhos do domingo</div><div class="accs">${feitos} de ${L.length} feitos · opcional, só acelera</div></div><span style="color:var(--mu);font-size:12px">${ao?'▴':'▾'}</span></div>`;
   if(ao){
-    h+=`<div class="accb"><div style="font-size:11px;color:var(--mu);line-height:1.55;margin-bottom:10px">nada aqui é pré-requisito. cada item só deixa algumas receitas mais rápidas durante a semana.</div>`;
-    ATALHOS.forEach((a,i)=>{const on=atalhoDone(a.n);
-      h+=`<div class="prow" onclick="toggleAtalho(${i})"><div class="hbx ${on?'on':''}" style="margin-top:1px">✓</div><div style="flex:1"><div class="pnm ${on?'on':''}">${a.n}</div>`;
-      const sub=[a.d,a.r.length?`acelera ${a.r.length} receita${a.r.length>1?'s':''}`:''].filter(Boolean).join(' · ');
-      if(sub)h+=`<div class="pds">${sub}</div>`;
-      h+=`</div></div>`});
-    h+=`<button class="ghost" onclick="clearAtalhos()">limpar a semana</button></div>`;
+    h+=`<div class="accb"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="font-size:11px;color:var(--mu);line-height:1.55;flex:1">nada aqui é pré-requisito. cada item só deixa algumas receitas mais rápidas durante a semana.</div>`;
+    h+=`<button class="eb ${st.editA?'on':''}" onclick="st.editA=!st.editA;render()">${st.editA?'pronto':'editar'}</button></div>`;
+    if(!L.length)h+=`<div style="font-size:12px;color:var(--mu);padding:8px 0">nenhum atalho na lista — toque em editar pra adicionar.</div>`;
+    L.forEach((a,i)=>{
+      if(st.editA){
+        h+=`<div class="prow" style="cursor:default;align-items:center"><div style="flex:1"><div class="pnm">${a.n}</div>${a.d?`<div class="pds">${a.d}</div>`:''}</div>`;
+        h+=`<button class="hmv" onclick="moveAtalho(${i},-1)" ${i===0?'disabled':''}>↑</button>`;
+        h+=`<button class="hmv" onclick="moveAtalho(${i},1)" ${i===L.length-1?'disabled':''}>↓</button>`;
+        h+=`<button class="xb" onclick="rmAtalho(${i})">✕</button></div>`;
+      }else{
+        const on=atalhoDone(a.n);
+        h+=`<div class="prow" onclick="toggleAtalho(${i})"><div class="hbx ${on?'on':''}" style="margin-top:1px">✓</div><div style="flex:1"><div class="pnm ${on?'on':''}">${a.n}</div>`;
+        const sub=[a.d,a.r.length?`acelera ${a.r.length} receita${a.r.length>1?'s':''}`:''].filter(Boolean).join(' · ');
+        if(sub)h+=`<div class="pds">${sub}</div>`;
+        h+=`</div></div>`;
+      }});
+    if(st.editA){
+      h+=`<div class="arow"><input id="at-new" class="inp" style="font-size:12px" placeholder="novo atalho"><button class="abtn" onclick="addAtalho()">+</button></div>`;
+      h+=`<div style="font-size:10.5px;color:var(--mu);line-height:1.5;margin-top:8px">tirar um atalho não mexe no que já está marcado nas outras semanas.</div>`;
+      h+=`<button class="ghost" onclick="resetAtalhos()">voltar à lista original</button>`;
+    }else{
+      h+=`<button class="ghost" onclick="clearAtalhos()">limpar a semana</button>`;
+    }
+    h+=`</div>`;
   }
   h+=`</div></div>`;
   return h;
@@ -659,7 +677,7 @@ function viewSemana(td){
 }
 
 // ═══════════════ ações ═══════════════
-function setTab(t){st.tab=t;if(t!=='comer')st.mealFilt=null;st.editH=false;st.editL=false;st.editMeta=false;window.scrollTo(0,0);render()}
+function setTab(t){st.tab=t;if(t!=='comer')st.mealFilt=null;st.editH=false;st.editL=false;st.editMeta=false;st.editA=false;window.scrollTo(0,0);render()}
 function setMeal(k){st.mealFilt=k;render()}
 function goComer(k){st.tab='comer';st.mealFilt=k;window.scrollTo(0,0);render()}
 function toggleFast(){st.fast=!st.fast;render()}
@@ -677,7 +695,11 @@ function toggleHabit(hi,ds){const hb=st.habits[hi];if(!hb)return;if(!st.hb[ds])s
 function addHabit(id){const el=document.getElementById(id||'hb-new'),v=el?el.value.trim().toLowerCase():'';if(!v||st.habits.includes(v))return;st.habits.push(v);sv('liz_habits',st.habits);render()}
 function rmHabit(i){st.habits.splice(i,1);sv('liz_habits',st.habits);render()}
 function moveHabit(i,d){const j=i+d;if(j<0||j>=st.habits.length)return;[st.habits[i],st.habits[j]]=[st.habits[j],st.habits[i]];sv('liz_habits',st.habits);render()}
-function toggleAtalho(i){const w=wkStart(),n=ATALHOS[i].n;if(!st.atalhos[w])st.atalhos[w]={};st.atalhos[w][n]=!st.atalhos[w][n];sv('liz_atalhos',st.atalhos);render()}
+function toggleAtalho(i){const a=st.atalhoList[i];if(!a)return;const w=wkStart(),n=a.n;if(!st.atalhos[w])st.atalhos[w]={};st.atalhos[w][n]=!st.atalhos[w][n];sv('liz_atalhos',st.atalhos);render()}
+function addAtalho(){const el=document.getElementById('at-new'),v=el?el.value.trim().toLowerCase():'';if(!v||st.atalhoList.some(a=>a.n===v))return;st.atalhoList.push({n:v,d:'',r:[]});sv('liz_atalholist',st.atalhoList);render()}
+function rmAtalho(i){st.atalhoList.splice(i,1);sv('liz_atalholist',st.atalhoList);render()}
+function moveAtalho(i,d){const j=i+d;if(j<0||j>=st.atalhoList.length)return;[st.atalhoList[i],st.atalhoList[j]]=[st.atalhoList[j],st.atalhoList[i]];sv('liz_atalholist',st.atalhoList);render()}
+function resetAtalhos(){if(!confirm('isso devolve a lista original de atalhos do plano, descartando os seus. continuar?'))return;st.atalhoList=ATALHOS_DEF.map(a=>({...a,r:[...a.r]}));sv('liz_atalholist',st.atalhoList);render()}
 function clearAtalhos(){st.atalhos[wkStart()]={};sv('liz_atalhos',st.atalhos);render()}
 function toggleBuy(it){st.buy[it]=!st.buy[it];sv('liz_buy',st.buy);render()}
 function toggleSoFalta(){st.soFalta=!st.soFalta;render()}
